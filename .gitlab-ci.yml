@@ -13,7 +13,6 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
-  - ping -c 5 www.google.com
 
 build:
   stage: build
