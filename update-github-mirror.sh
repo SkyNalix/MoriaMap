@@ -3,6 +3,7 @@
 if ! [ "$4" ]; then
     echo "Usage: ${0##*/} <gaufre login> <gaufre password> <GitHub login> <GitHub token>"
     echo "To create a GitHub token, visit https://github.com/settings/tokens"
+    exit 0
 fi
 
 cd /tmp
