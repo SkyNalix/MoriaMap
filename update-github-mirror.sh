@@ -6,6 +6,7 @@ if ! [ "$4" ]; then
 fi
 
 cd /tmp
+rm -rf moriamap.git
 git clone --mirror https://"$1":"$2"@gaufre.informatique.univ-paris-diderot.fr/tazouev/moriamap.git
 cd moriamap.git
 git remote set-url --push origin https://"$3":"$4"@github.com/SkyNalix/MoriaMap.git
