@@ -144,4 +144,32 @@ public class GeographicPositionTest {
         GeographicPosition p2 = GeographicPosition.at(43.234, 35.4853);
         assert(p1.equals(p2) && p2.equals(p1));
     }
+
+    @Test void geographicPositionIsNotEqualToInteger() {
+        GeographicPosition p1 = GeographicPosition.at(54.34, 89.245);
+        Integer i = 5;
+        assert(!i.equals(p1) && !p1.equals(i));
+    }
+
+    @Test void hashCodeOfEqualObjectIsEqual() {
+        GeographicPosition p1 = GeographicPosition.at(43.352, 59.435);
+        GeographicPosition p2 = GeographicPosition.at(43.352, 59.435);
+        assert(
+          p1.hashCode() == p2.hashCode()
+          && p1.equals(p2)
+          && p2.equals(p1)
+        );
+    }
+
+    @Test void differentLongitudeOfGPsMakesThemNotEqual() {
+        GeographicPosition p1 = GeographicPosition.at(45.235, 139.3);
+        GeographicPosition p2 = GeographicPosition.at(45.235, -24.355);
+        assert(!p1.equals(p2) && !p2.equals(p1));
+    }
+
+    @Test void differentLatitudeOfGPsMakesThemNotEqual() {
+        GeographicPosition p1 = GeographicPosition.at(39.3, -24.355);
+        GeographicPosition p2 = GeographicPosition.at(45.235, -24.355);
+        assert(!p1.equals(p2) && !p2.equals(p1));
+    }
 }
