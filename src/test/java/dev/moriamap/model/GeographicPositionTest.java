@@ -128,4 +128,20 @@ public class GeographicPositionTest {
         double distance = GeographicPosition.EARTH_RADIUS;
         assertEquals(2 * distance, northPole.distanceFrom(southPole));
     }
+
+    @Test void sameGPInstancesAreEqual() {
+        GeographicPosition pos = GeographicPosition.at(42.0, -32.0);
+        assert(pos.equals(pos));
+    }
+
+    @Test void gpInstanceIsNotEqualToNull() {
+        GeographicPosition pos = GeographicPosition.at(27.435, 59.235);
+        assertFalse(pos.equals(null));
+    }
+
+    @Test void sameGPAreEqual() {
+        GeographicPosition p1 = GeographicPosition.at(43.234, 35.4853);
+        GeographicPosition p2 = GeographicPosition.at(43.234, 35.4853);
+        assert(p1.equals(p2) && p2.equals(p1));
+    }
 }
