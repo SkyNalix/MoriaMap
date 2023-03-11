@@ -203,4 +203,31 @@ public final class GeographicPosition {
             resAsList.add(res[i]);
         return resAsList;
     }
+
+    /**
+     * Returns true if this.latitude == ((GeographicPosition)object).latitude
+     * and this.longitude == ((GeographicPosition)object).longitude.
+     *
+     * @return this.latitude == ((GeographicPosition)object).latitude
+     *         and this.longitude == ((GeographicPosition)object).longitude
+     */
+    @Override public boolean equals(Object object) {
+        if (this == object)
+            return true;
+        if (object == null || object.getClass() != this.getClass())
+            return false;
+        GeographicPosition other = (GeographicPosition) object;
+        return other.latitude == this.latitude
+            && other.longitude == this.longitude;
+    }
+
+    @Override public int hashCode() {
+        final int prime = 7;
+        int hash = 1;
+        hash *= prime;
+        hash += Math.ceil(this.latitude);
+        hash *= prime;
+        hash += Math.ceil(this.longitude);
+        return hash;
+    }
 }
