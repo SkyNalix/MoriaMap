@@ -98,6 +98,11 @@ public abstract class Graph {
             return true;
         }
 
+        if (!this.vertices.contains(e.getFrom()) && !(this.vertices.contains(e.getTo()))) {
+            this.addVertex(e.getFrom());
+            this.addVertex(e.getTo());
+        }
+
         if (this.vertices.contains(e.getFrom())) {
             this.addVertex(e.getTo());
         }
@@ -105,6 +110,9 @@ public abstract class Graph {
         if (this.vertices.contains(e.getTo())) {
             this.addVertex(e.getFrom());
         }
+
+        e.getFrom().addNeighbor(e.getTo());
+        e.getTo().addNeighbor(e.getFrom());
         return this.edges.add(e);
     }
 }
