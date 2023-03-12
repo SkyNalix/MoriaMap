@@ -1,9 +1,8 @@
 #!/bin/sh
 
-if ! cd -- "$(git rev-parse --show-toplevel)"; then
-  echo 'Not in a git repository'
-  exit 1
-fi
+repo_root=$(git rev-parse --show-toplevel) || exit
+
+cd -- "$repo_root" || exit
 
 if ./gradlew javadoc build test; then
   echo 'No errors found, you can commit'
