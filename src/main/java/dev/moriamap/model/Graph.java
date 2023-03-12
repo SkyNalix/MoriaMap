@@ -93,24 +93,8 @@ public abstract class Graph {
             throw new IllegalArgumentException("null edge is not allowed.");
         }
 
-        if (this.vertices.contains(e.getFrom()) && this.vertices.contains(e.getTo())) {
-            this.edges.add(e);
-            return true;
-        }
-
-        if (!this.vertices.contains(e.getFrom()) && !(this.vertices.contains(e.getTo()))) {
-            this.addVertex(e.getFrom());
-            this.addVertex(e.getTo());
-        }
-
-        if (this.vertices.contains(e.getFrom())) {
-            this.addVertex(e.getTo());
-        }
-
-        if (this.vertices.contains(e.getTo())) {
-            this.addVertex(e.getFrom());
-        }
-
+        this.addVertex(e.getFrom());
+        this.addVertex(e.getTo());
         e.getFrom().addNeighbor(e.getTo());
         e.getTo().addNeighbor(e.getFrom());
         return this.edges.add(e);
