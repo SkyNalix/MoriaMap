@@ -226,6 +226,11 @@ public final class GeographicPosition {
             && other.longitude == this.longitude;
     }
 
+    /**
+     * Returns the hash code of this GeographicPosition.
+     *
+     * @return the hash code of this GeographicPosition.
+     */
     @Override public int hashCode() {
         final int prime = 7;
         int hash = 1;
