@@ -30,7 +30,7 @@ public final class GeographicPosition {
         new GeographicPosition(0.0, 0.0);
 
     /**
-     * The greographic position of the north pole on Earth.
+     * The geographic position of the north pole on Earth.
      */
     public static final GeographicPosition NORTH_POLE =
         new GeographicPosition(90.0, 0.0);
@@ -78,15 +78,15 @@ public final class GeographicPosition {
 
     /**
      * Converts the specified GeographicPositions to cartesian representation
-     * and computes the euclidian distance between the obtained vectors.
+     * and computes the euclidean distance between the obtained vectors.
      *
      * @param p1 a GeographicPosition
      * @param p2 a GeographicPosition
      * @param radius the radius of the sphere on which p1 and p2 are
      * @throw IllegalArgumentException if radius <= 0.0
-     * @return the euclidian distance between p1 and p2
+     * @return the euclidean distance between p1 and p2
      */
-    public static double euclidianDistance(
+    public static double euclideanDistance(
       GeographicPosition p1,
       GeographicPosition p2,
       double radius
@@ -101,29 +101,29 @@ public final class GeographicPosition {
     }
 
     /**
-     * Returns the euclidian distance between the specified GeographicPosition
-     * on Earth. Equivalent to `euclidianDistance(p1, p2, EARTH_RADIUS)`.
+     * Returns the euclidean distance between the specified GeographicPosition
+     * on Earth. Equivalent to `euclideanDistance(p1, p2, EARTH_RADIUS)`.
      *
      * @param p1 a GeographicPosition
      * @param p2 a GeographicPosition
-     * @return the euclidian distance between p1 and p2 with Earth's radius
+     * @return the euclidean distance between p1 and p2 with Earth's radius
      */
-    public static double euclidianDistanceOnEarth(
+    public static double euclideanDistanceOnEarth(
       GeographicPosition p1,
       GeographicPosition p2
     ) {
-        return euclidianDistance(p1, p2, EARTH_RADIUS);
+        return euclideanDistance(p1, p2, EARTH_RADIUS);
     }
 
     /**
-     * Computes the euclidian distance on Earth from this GeographicPosition
+     * Computes the euclidean distance on Earth from this GeographicPosition
      * to the specified GeographicPosition.
      *
      * @param other a GeographicPosition
-     * @return `euclidianDistanceOnEarth(this, other)`
+     * @return `euclideanDistanceOnEarth(this, other)`
      */
     public double distanceFrom(GeographicPosition other) {
-        return GeographicPosition.euclidianDistanceOnEarth(this, other);
+        return GeographicPosition.euclideanDistanceOnEarth(this, other);
     }
 
     // Class constructor specifying latitude and longitude coordinates.
