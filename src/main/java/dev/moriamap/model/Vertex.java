@@ -1,16 +1,15 @@
 package dev.moriamap.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a vertex of a graph
  */
 public abstract class Vertex {
 
-    // The list of neighbors to which this vertex is linked.
+    /**
+     * The list of neighbors to which this vertex is linked.
+     */
     protected List<Vertex> neighbors;
 
     /**
@@ -33,19 +32,24 @@ public abstract class Vertex {
     /**
      * Adds a neighbor to the caller.
      * @param neighbor to be added.
+     * @return true if neighbor was added, false if it was already there.
      */
-    public void addNeighbor(Vertex neighbor) {
+    public boolean addNeighbor(Vertex neighbor) {
 
         if (!this.neighbors.contains(neighbor)) {
             this.neighbors.add(neighbor);
+            return true;
         }
+        return false;
     }
+
 
     /**
      * Removes a neighbor to the caller.
      * @param neighbor to be removed.
+     * @return true if the neighbor was removed.
      */
-    public void removeNeighbor(Vertex neighbor) {
-        this.neighbors.remove(neighbor);
+    public boolean removeNeighbor(Vertex neighbor) {
+        return this.neighbors.remove(neighbor);
     }
 }
