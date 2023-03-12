@@ -1,6 +1,8 @@
 package dev.moriamap.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public abstract class Vertex {
 
+    // The list of neighbors to which this vertex is linked.
     protected List<Vertex> neighbors;
 
     /**
@@ -18,11 +21,13 @@ public abstract class Vertex {
     }
 
     /**
-     * Neighbors getter.
-     * @return the neighbor's list of the caller.
+     * Gets the list of the neighbors.
+     * @return a copy of the neighbor's list of the caller.
      */
     public List<Vertex> getNeighbors() {
-        return this.neighbors;
+        List<Vertex> res = new ArrayList<>();
+        Collections.copy(res,this.neighbors);
+        return res;
     }
 
     /**
@@ -30,7 +35,10 @@ public abstract class Vertex {
      * @param neighbor to be added.
      */
     public void addNeighbor(Vertex neighbor) {
-        this.neighbors.add(neighbor);
+
+        if (!this.neighbors.contains(neighbor)) {
+            this.neighbors.add(neighbor);
+        }
     }
 
     /**
