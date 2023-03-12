@@ -24,8 +24,10 @@ public abstract class Vertex {
      * @return a copy of the neighbor's list of the caller.
      */
     public List<Vertex> getNeighbors() {
-        List<Vertex> res = new ArrayList<>();
-        Collections.copy(res,this.neighbors);
+        List<Vertex> res = new ArrayList<>(this.neighbors.size());
+        for (Vertex v : this.neighbors) {
+            res.add(v);
+        }
         return res;
     }
 
