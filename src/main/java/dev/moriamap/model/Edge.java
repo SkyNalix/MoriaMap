@@ -26,14 +26,14 @@ public abstract class Edge {
     }
 
     /**
-     * @return the origin Vertex of this Edge
+     * {@return the origin Vertex of this Edge}
      */
     public Vertex getFrom() {
         return this.from;
     }
 
     /**
-     * @return the destination Vertex of this Edge
+     * {@return the destination Vertex of this Edge}
      */
     public Vertex getTo() {
         return this.to;
