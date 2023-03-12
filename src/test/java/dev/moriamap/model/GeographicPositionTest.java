@@ -93,9 +93,9 @@ public class GeographicPositionTest {
         );
     }
 
-    @Test void euclidianDistanceBetweenSameGPIs0() {
+    @Test void euclideanDistanceBetweenSameGPIs0() {
         GeographicPosition point = GeographicPosition.at(-42.0, -42.0);
-        double res = GeographicPosition.euclidianDistance(
+        double res = GeographicPosition.euclideanDistance(
           point,
           point,
           GeographicPosition.EARTH_RADIUS
@@ -103,22 +103,22 @@ public class GeographicPositionTest {
         assertEquals(0.0, res);
     }
 
-    @Test void euclidianDistanceBetweenNorthAndSouthPoleIsTwiceEarthRadius() {
+    @Test void euclideanDistanceBetweenNorthAndSouthPoleIsTwiceEarthRadius() {
         GeographicPosition northPole = GeographicPosition.NORTH_POLE;
         GeographicPosition southPole = GeographicPosition.SOUTH_POLE;
         double distance = GeographicPosition.EARTH_RADIUS;
         assertEquals(
           2 * distance,
-          GeographicPosition.euclidianDistance(northPole, southPole, distance)
+          GeographicPosition.euclideanDistance(northPole, southPole, distance)
         );
     }
 
-    @Test void euclidianDistanceWithNegativeRadiusThrowsException() {
+    @Test void euclideanDistanceWithNegativeRadiusThrowsException() {
         GeographicPosition p1 = GeographicPosition.at(32.0, 42.0);
         GeographicPosition p2 = GeographicPosition.at(42.0, 15.0);
         assertThrows(
           IllegalArgumentException.class,
-          () -> GeographicPosition.euclidianDistance(p1, p2, -0.0)
+          () -> GeographicPosition.euclideanDistance(p1, p2, -0.0)
         );
     }
 
