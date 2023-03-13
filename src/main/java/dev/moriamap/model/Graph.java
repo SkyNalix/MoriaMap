@@ -27,16 +27,17 @@ public abstract class Graph {
         this.edges = new ArrayList<>();
     }
 
-    /**
+    /*
      * Class constructor specifying vertices and edges.
      *
      * @param vertices the vertices of this new Graph
      * @param edges the edges of this new Graph
-     */
+
     public Graph(List<Vertex> vertices, List<Edge> edges) {
         this.vertices = vertices;
         this.edges = edges;
     }
+    */
 
     /**
      * {@return the vertices of this Graph}
