@@ -56,7 +56,7 @@ public abstract class Graph {
      * @return true if the vertex was added
      * @throws IllegalArgumentException if the given vertex is null
      */
-    public boolean addVertex(Vertex v) throws IllegalArgumentException{
+    public boolean addVertex(Vertex v) {
         if(this.vertices.contains(v)) {
             return false;
         }
@@ -76,7 +76,7 @@ public abstract class Graph {
      * @return true if the edge was added
      * @throws IllegalArgumentException if the given edge is null
      */
-    public boolean addEdge(Edge e) throws IllegalArgumentException{
+    public boolean addEdge(Edge e) {
         if (this.edges.contains(e)) {
             return false;
         }
@@ -87,6 +87,7 @@ public abstract class Graph {
 
         this.addVertex(e.getFrom());
         this.addVertex(e.getTo());
+        e.getFrom().addNeighbor(e.getTo());
         return this.edges.add(e);
     }
 }
