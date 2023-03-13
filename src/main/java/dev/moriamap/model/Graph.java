@@ -27,18 +27,6 @@ public abstract class Graph {
         this.edges = new ArrayList<>();
     }
 
-    /*
-     * Class constructor specifying vertices and edges.
-     *
-     * @param vertices the vertices of this new Graph
-     * @param edges the edges of this new Graph
-
-    public Graph(List<Vertex> vertices, List<Edge> edges) {
-        this.vertices = vertices;
-        this.edges = edges;
-    }
-    */
-
     /**
      * {@return the vertices of this Graph}
      */
@@ -66,8 +54,9 @@ public abstract class Graph {
      *
      * @param v the vertex to be added
      * @return true if the vertex was added
+     * @throws IllegalArgumentException if the given vertex is null
      */
-    public boolean addVertex(Vertex v) {
+    public boolean addVertex(Vertex v) throws IllegalArgumentException{
         if(this.vertices.contains(v)) {
             return false;
         }
@@ -81,11 +70,13 @@ public abstract class Graph {
     /**
      * Adds the given edge to this Graph.
      * If the graph does not contain vertices of the given edge, we add them.
+     * Neighbor relationship between vertices of the given edge is not modified.
      *
      * @param e the edge to be added
      * @return true if the edge was added
+     * @throws IllegalArgumentException if the given edge is null
      */
-    public boolean addEdge(Edge e) {
+    public boolean addEdge(Edge e) throws IllegalArgumentException{
         if (this.edges.contains(e)) {
             return false;
         }
@@ -96,8 +87,6 @@ public abstract class Graph {
 
         this.addVertex(e.getFrom());
         this.addVertex(e.getTo());
-        e.getFrom().addNeighbor(e.getTo());
-        e.getTo().addNeighbor(e.getFrom());
         return this.edges.add(e);
     }
 }
