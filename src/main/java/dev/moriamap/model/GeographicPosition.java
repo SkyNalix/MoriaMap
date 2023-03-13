@@ -95,7 +95,7 @@ public final class GeographicPosition {
         double res = 0.0;
         for (int i = 0; i < p1_cart.length; i++) {
             res += Math.pow(p2_cart[i] - p1_cart[i], 2);
-        }p
+        }
         return Math.sqrt(res);
     }
 
