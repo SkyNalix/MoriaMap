@@ -12,7 +12,7 @@ public class Stop extends GeographicVertex {
      * @param name The name of this stop
      * @param gp The Geographic position of this stop
      */
-    protected Stop(String name,GeographicPosition gp){
+    private Stop(String name,GeographicPosition gp){
         super(gp);
         this.name = name;
     }
@@ -25,6 +25,13 @@ public class Stop extends GeographicVertex {
      */
     public static Stop from(String name, GeographicPosition gp){
         return new Stop(name,gp);
-    }    
+    }
+    /**
+     * Gets the name of this stop
+     * @return the name of this stop
+     */
+    public String getName(){
+        return this.name;
+    }
 
 }
