@@ -59,7 +59,7 @@ public class GeographicVertexTest {
         assertThrows(NullPointerException.class, () -> v.addNeighbor(null));
     }
 
-    @Test void nullGeoPosOnGeoVertexCreatioThrowsException() {
+    @Test void nullGeoPosOnGeoVertexCreationThrowsException() {
         assertThrows(
           IllegalArgumentException.class,
           () -> GeographicVertex.at(null)
