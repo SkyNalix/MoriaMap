@@ -60,40 +60,6 @@ public class GeographicVertexTest {
         assertThrows(NullPointerException.class, () -> v.addNeighbor(null));
     }
 
-    @Test void usingEqualsWithTheCallerReturnsTrue() {
-        GeographicVertex v = GeographicVertex.at(58.134, 22.4);
-        assertEquals(v,v);
-    }
-
-    @Test void usingEqualsWithObjectsThatAreEqualWithoutBeingSameReferenceReturnsTrue() {
-        GeographicVertex u = GeographicVertex.at(58.134, 22.4);
-        GeographicVertex v = GeographicVertex.at(58.134, 22.4);
-        assertEquals(u,v);
-    }
-
-    @Test void usingEqualsWithObjectsThatAreNotEqualReturnsFalse() {
-        GeographicVertex u = GeographicVertex.at(58.134, 22.4);
-        GeographicVertex v = GeographicVertex.at(58.134, 12.4);
-        assertNotEquals(u,v);
-    }
-
-    @Test void usingEqualsWhithNullParameterReturnsFalse() {
-        GeographicVertex v = GeographicVertex.at(58.134, 12.4);
-        assertNotEquals(v,null);
-    }
-
-    @Test void usingEqualsWithAnObjectThatHasNotTheSameClassReturnsFalse() {
-        GeographicVertex v = GeographicVertex.at(75.0,90.0);
-        Object o = new Object();
-        assertNotEquals(v,o);
-    }
-
-    @Test void hashCodeOfEqualsObjectsIsEqual() {
-        GeographicVertex u = GeographicVertex.at(88.134, 25.4);
-        GeographicVertex v = GeographicVertex.at(88.134, 25.4);
-        assertEquals(u.hashCode(), v.hashCode());
-    }
-
     @Test void nullGeoPosOnGeoVertexCreationThrowsException() {
         assertThrows(
           IllegalArgumentException.class,
@@ -135,3 +101,4 @@ public class GeographicVertexTest {
         assertEquals(u.hashCode(), v.hashCode());
     }
 }
+
