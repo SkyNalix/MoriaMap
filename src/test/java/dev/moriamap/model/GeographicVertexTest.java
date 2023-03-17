@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GeographicVertexTest {
 
@@ -12,7 +13,7 @@ public class GeographicVertexTest {
           GeographicPosition.NULL_ISLAND
         );
         List<Vertex> neighbors = sut.getNeighbors();
-        assert(neighbors.isEmpty());
+        assertTrue(neighbors.isEmpty());
     }
 
     @Test void geoPosOfGeoVertexAtNorthPoleIsNorthPole() {
@@ -46,7 +47,7 @@ public class GeographicVertexTest {
         );
         v.addNeighbor(n);
         v.removeNeighbor(n);
-        assert(v.getNeighbors().isEmpty());
+        assertTrue(v.getNeighbors().isEmpty());
     }
 
     @Test void vertexAddedToItsNeighborsThrowsException() {
@@ -57,5 +58,39 @@ public class GeographicVertexTest {
     @Test void nullAddedToNeighborsThrowsException() {
         Vertex v = GeographicVertex.at(58.134, 22.4);
         assertThrows(NullPointerException.class, () -> v.addNeighbor(null));
+    }
+
+    @Test void usingEqualsWithTheCallerReturnsTrue() {
+        GeographicVertex v = GeographicVertex.at(58.134, 22.4);
+        assertEquals(v,v);
+    }
+
+    @Test void usingEqualsWithObjectsThatAreEqualWithoutBeingSameReferenceReturnsTrue() {
+        GeographicVertex u = GeographicVertex.at(58.134, 22.4);
+        GeographicVertex v = GeographicVertex.at(58.134, 22.4);
+        assertEquals(u,v);
+    }
+
+    @Test void usingEqualsWithObjectsThatAreNotEqualReturnsFalse() {
+        GeographicVertex u = GeographicVertex.at(58.134, 22.4);
+        GeographicVertex v = GeographicVertex.at(58.134, 12.4);
+        assertNotEquals(u,v);
+    }
+
+    @Test void usingEqualsWhithNullParameterReturnsFalse() {
+        GeographicVertex v = GeographicVertex.at(58.134, 12.4);
+        assertNotEquals(v,null);
+    }
+
+    @Test void usingEqualsWithAnObjectThatHasNotTheSameClassReturnsFalse() {
+        GeographicVertex v = GeographicVertex.at(75.0,90.0);
+        Object o = new Object();
+        assertNotEquals(v,o);
+    }
+
+    @Test void hashCodeOfEqualsObjectsIsEqual() {
+        GeographicVertex u = GeographicVertex.at(88.134, 25.4);
+        GeographicVertex v = GeographicVertex.at(88.134, 25.4);
+        assertEquals(u.hashCode(), v.hashCode());
     }
 }
