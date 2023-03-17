@@ -93,4 +93,11 @@ public class GeographicVertexTest {
         GeographicVertex v = GeographicVertex.at(88.134, 25.4);
         assertEquals(u.hashCode(), v.hashCode());
     }
+
+    @Test void nullGeoPosOnGeoVertexCreationThrowsException() {
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> GeographicVertex.at(null)
+        );
+    }
 }
