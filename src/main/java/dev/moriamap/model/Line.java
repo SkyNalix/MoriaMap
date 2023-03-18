@@ -13,7 +13,7 @@ public class Line {
      *
      * @param  name the name of this Line
      */
-    public Line(String name) {
+    private Line(String name) {
         this.name = name;
     }
 
@@ -26,10 +26,15 @@ public class Line {
 
     /**
      * Static factory.
+     *
      * @param name of this line
+     * @throws IllegalArgumentException if name is null
      * @return a new Line with the given name
      */
     public static Line of(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Null name is not allowed");
+        }
         return new Line(name);
     }
 }
