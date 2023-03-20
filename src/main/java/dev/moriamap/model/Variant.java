@@ -13,9 +13,6 @@ public class Variant {
 
     /**
      * Class constructor.
-     * <p>
-     * Initializes start and end stops to null.
-     * <p/>
      *
      * @param id of this Variant
      * @param line of this Variant
@@ -27,9 +24,6 @@ public class Variant {
 
     /**
      * Static factory.
-     * <p>
-     *     As the Variant is empty its start and end stops
-     *     are initialized as null.
      *
      * @param id if this Variant
      * @param line of this Variant
@@ -55,46 +49,21 @@ public class Variant {
     }
 
     /**
-     * Sets the id of this Variant to the given value.
-     * <p>
-     *     Only positive values are allowed.
-     * </p>
-     *
-     * @param id the new id of this Variant
-     * @return true if the id value is allowed and has been set
-     */
-    public boolean setId(int id) {
-        if (id  < 1) {
-            return false;
-        }
-        this.id = id;
-        return true;
-    }
-
-    /**
      * {@return the line to which this Variant belongs.}
      */
     public Line getLine() {
-        return line;
+        return this.line;
     }
 
     /**
-     * Sets the line of this Variant to the given value.
-     *<p>
-     *     If the new ine is null it remains unchanged.
+     * Check if this variant is equal to the given line.
+     * <p>
+     *     Two variants are equal if they have the same
+     *     (by a call to equals) line and the same id.
      *
-     * @param line the new line to which this Variant belongs
-     * @return true if the line is not null and has been set correctly
+     * @param object to be compared to
+     * @return true if this is equal to object
      */
-    public boolean setLine(Line line) {
-        if (line == null) {
-            return false;
-        }
-        this.line = line;
-        return true;
-    }
-
-
     @Override public boolean equals(Object object) {
         if (this == object)
             return true;

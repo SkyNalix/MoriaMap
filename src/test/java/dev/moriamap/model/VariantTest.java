@@ -23,31 +23,6 @@ public class VariantTest {
         );
     }
 
-    @Test public void testSetVariantNegativeIdIsNotAllowed() {
-        Variant v = Variant.empty(1, Line.of("7"));
-        assertFalse(v.setId(0));
-    }
-
-    @Test public void testSetVariantNewPositiveIdIsSetCorrectly() {
-        Variant v = Variant.empty(1, Line.of("7"));
-        v.setId(3);
-        assertEquals(3,v.getId());
-    }
-
-    @Test public void setLineToNullDoesNotChangeIt() {
-        Variant v = Variant.empty(1, Line.of("8"));
-        Line l = v.getLine();
-        v.setLine(null);
-        assertEquals(l, v.getLine());
-    }
-
-    @Test public void setLineToANotNullChangesItCorrectly() {
-        Variant v = Variant.empty(4,Line.of("5"));
-        Line l = Line.of("1");
-        v.setLine(l);
-        assertEquals(l,v.getLine());
-    }
-
     @Test public void variantsHavingSameIdAndLinesWithSameReferencesAreEqual() {
         Line l = Line.of("14");
         Variant v = Variant.empty(1,l);
@@ -89,5 +64,11 @@ public class VariantTest {
         Variant v = Variant.empty(2, Line.of("2"));
         Variant v1 = Variant.empty(2, Line.of("3"));
         assertNotEquals(v,v1);
+    }
+
+    @Test public void testGetLine() {
+        Line l = Line.of("13");
+        Variant v = Variant.empty(3, l);
+        assertEquals(l, v.getLine());
     }
 }
