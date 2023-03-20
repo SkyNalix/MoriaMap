@@ -3,7 +3,7 @@ package dev.moriamap.model;
 /**
  * Represents a Line variant.
  */
-public class Variant {
+public final class Variant {
 
     // id of this variant.
     private int id;
