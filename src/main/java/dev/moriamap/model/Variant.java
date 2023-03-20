@@ -60,7 +60,7 @@ public final class Variant {
      * <p>
      *     Two variants are equal if they have the same
      *     (by a call to equals) line and the same id.
-     *
+     * </p>
      * @param object to be compared to
      * @return true if this is equal to object
      */
