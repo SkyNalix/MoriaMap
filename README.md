@@ -10,7 +10,7 @@ and unzip it into a directory which we will call `<SONARQUBE_HOME>`
   - On Linux: `<SONARQUBE_HOME>/bin/linux-x86-64/sonar.sh start`
   - On macOS: `<SONARQUBE_HOME>/bin/macosx-universal-64/sonar.sh start`
   - On Windows: `<SONARQUBE_HOME>/bin/windows-x86-64/StartSonar.bat`
-- Login on http://localhost:9000 with username admin and password admin, then
+- Login on http://localhost:9000 with username `admin` and password `admin`, then
 change the password to `F9Erj73eUynRrGP`.
 - Now you can check out the branch you want to analyze e.g. `git checkout 11-my-feature` and
 run `./gradlew test sonar`. You can then visit http://localhost:9000 to view the results
