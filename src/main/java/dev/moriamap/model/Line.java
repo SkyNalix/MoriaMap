@@ -96,6 +96,7 @@ public final class Line {
      * <p>
      *     Two lines are equal if they have the same name and the same
      *     (by a call to equals) variants in the same order.
+     * </p>
      * @param object to be compared to
      * @return true if this is equal to object
      */
