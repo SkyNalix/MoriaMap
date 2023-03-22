@@ -1,5 +1,6 @@
 package dev.moriamap.model;
-//TODO: 18/03/2023 add TransportSegment
+import java.util.List;
+
 /**
  * Represents a Line variant.
  */
@@ -10,6 +11,8 @@ public final class Variant {
 
     // the line to which this variant belongs.
     private Line line;
+
+    private List<TransportSegment> transportSegments;
 
     /**
      * Class constructor.
@@ -39,6 +42,22 @@ public final class Variant {
         }
 
         return new Variant(id, line);
+    }
+
+    /**
+     * Add the given TransportSegment to our TransportSegments list.
+     * @param ts TransportSegment to be added
+     * @throws IllegalArgumentException if the TransportSegment is Null or already contained in the list
+     */
+    public void addTransportSegments(TransportSegment ts){
+        if (ts == null) {
+            throw new IllegalArgumentException("Null TransportSegment is not allowed");
+        }
+
+        if (this.transportSegments.contains(ts)) {
+            throw new IllegalArgumentException("The list already contains the given value");
+        }
+        this.transportSegments.add(ts);
     }
 
     /**
