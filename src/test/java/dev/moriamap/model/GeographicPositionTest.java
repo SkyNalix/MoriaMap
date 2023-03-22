@@ -172,4 +172,27 @@ public class GeographicPositionTest {
         GeographicPosition p2 = GeographicPosition.at(45.235, -24.355);
         assert(!p1.equals(p2) && !p2.equals(p1));
     }
+
+    @Test void approximativeValueFunctionFrom() { // check if the function from has the approximate value
+        String lattitude = "41°24'12.2\"N";   
+        String longitude = "2°10'26.5\"E";
+        
+        GeographicPosition gp = GeographicPosition.from(lattitude, longitude);
+        Double resultLatitude = gp.getLatitude() - 41.403333;
+        Double resultLongitude = gp.getLongitude() - 2.17403;
+        assert( resultLatitude < 0.05 && resultLatitude > -0.05 && resultLongitude < 0.05 && resultLongitude > -0.05);
+
+        lattitude = "41 24.2028";   
+        longitude = "2 10.4418";
+        gp = GeographicPosition.from(lattitude, longitude);
+        assert( resultLatitude < 0.05 && resultLatitude > -0.05 && resultLongitude < 0.05 && resultLongitude > -0.05);
+
+        lattitude = "41.403333";   
+        longitude = "2.174028";
+        gp = GeographicPosition.from(lattitude, longitude);
+        assert( resultLatitude < 0.05 && resultLatitude > -0.05 && resultLongitude < 0.05 && resultLongitude > -0.05);
+    }
+
+    
+
 }

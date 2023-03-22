@@ -133,6 +133,79 @@ public final class GeographicPosition {
         this.longitude = longitude;
     }
 
+
+
+    /**  Create a new Geographic position from 2 String of different formats :
+    *    The 2 strings must be of the same format
+    *    Decimals : 41.403333°,2.174028°
+    *    Degrees minutes decimals : 41°24'12.2"N 2°10'26.5"E
+    *    Degrees and minutes decimals 41 24.2028,2 10.4418 
+    *    @param str1 the String containing lattitude 
+    *    @param str2 the String containing  
+    *    @return a geographic position
+    */
+
+    public static GeographicPosition from(String str1,String str2){
+         
+        // conversion degree minutes decimals to decimals degrees 
+        if(str1.contains("°")){
+           Double resultLatitude = auxFromFormat1(str1);
+           Double resultLongitude = auxFromFormat1(str2);
+           return new GeographicPosition(resultLatitude,resultLongitude);
+        }else if(str1.contains(" ")){
+            Double resultLatitude = auxFromFormat2(str1);
+            Double resultLongitude = auxFromFormat2(str2);
+            return new GeographicPosition(resultLatitude,resultLongitude);
+        }
+        
+        return new GeographicPosition(Double.parseDouble(str1),Double.parseDouble(str2));
+    }
+
+    /**
+     * @param str String that is either latitude or longitude  
+     * @return String that is degree- decimal
+    */
+    public static Double auxFromFormat1(String str){
+
+        String[] geoArray = {"","",""};
+            int index = 0;
+            for(int i =0; i < str.length();i++){
+                if(str.charAt(i) == '°' ){
+                    index ++;
+                }else if(str.charAt(i) == '"' ){
+                    break;
+                }else if(str.charAt(i) == '\'' ) {
+                    index ++;
+                }else{
+                    geoArray[index] += str.charAt(i);
+                }    
+            }
+
+        System.out.println(geoArray[1]);
+        System.out.println(geoArray[2]);
+        Double sec = Double.parseDouble(geoArray[2]) / 3600;
+        Double min = Double.parseDouble(geoArray[1]) / 60;
+        System.out.println(min +  sec  );
+        
+
+        return (Double.parseDouble(geoArray[0]) + min + sec); 
+    }
+
+    public static Double auxFromFormat2(String str1){
+        String[] geoArray = {"",""};
+        int index = 0;
+        for(int i=0;i< str1.length();i++){
+            if(str1.charAt(i) == ' '){
+                index ++;
+            }else{
+                geoArray[index] = String.valueOf(str1.charAt(i))  ;
+            }
+        }
+
+        return Double.parseDouble(geoArray[0]) + (Double.parseDouble(geoArray[1])/60) ;
+    }
+
+
     /**
      * Gets the value of the angle in Celsius degrees formed by this
      * GeographicPosition and the Equator (latitude of 0.0).
