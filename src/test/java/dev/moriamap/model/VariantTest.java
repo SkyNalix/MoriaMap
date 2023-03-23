@@ -3,6 +3,9 @@ package dev.moriamap.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -16,9 +19,7 @@ class VariantTest {
     }
 
     @Test void testEmptyVariantWithNegativeIdThrowsException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> Variant.empty(-1, "3")
-                );
+        assertThrows(IllegalArgumentException.class, () -> Variant.empty(-1,"3"));
     }
 
     @Test void testEmptyVariantWithNullLineThrowsException() {
@@ -27,7 +28,7 @@ class VariantTest {
         );
     }
 
-    @Test void variantsHavingSameIdAndSameLineNameAreEqual() {
+    @Test void variantsHavingSameIdAndLinesWithSameReferencesAreEqual() {
         Variant v = Variant.empty(1,"14");
         Variant v1 = Variant.empty(1,"14");
         assertEquals(v,v1);
