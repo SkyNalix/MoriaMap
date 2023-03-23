@@ -44,7 +44,13 @@ public class Stop extends GeographicVertex {
      * @return true if this is equal to the given object
      */
     @Override public boolean equals(Object object) {
-        return super.equals(object) && this.name.equals(((Stop)object).name);
+        if (this == object)
+            return true;
+        if (object == null || object.getClass() != this.getClass())
+            return false;
+        Stop other = (Stop) object;
+        return other.geographicPosition.equals(this.geographicPosition) &&
+                other.name.equals(this.name);
     }
 
     /**
