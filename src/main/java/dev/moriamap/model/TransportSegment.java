@@ -70,4 +70,18 @@ public class TransportSegment extends Edge{
         return this.lineVariantName.equals(other.lineVariantName) && this.distance == other.distance && this.travelTime.equals(other.travelTime);
     }
 
+    /**
+     * Gets the name of this transport segment
+     * @return the name of this transport segment
+     */
+    @Override public int hashCode(){
+        final int prime = 13;
+        int hash = super.hashCode();
+        hash *= prime;
+        hash += this.lineVariantName.hashCode();
+        hash += this.travelTime.hashCode();
+        hash += Long.valueOf(Double.doubleToLongBits(this.distance)).hashCode();
+        return hash;
+    }
+
 }
