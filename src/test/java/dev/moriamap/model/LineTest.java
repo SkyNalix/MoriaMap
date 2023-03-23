@@ -52,7 +52,7 @@ public class LineTest {
 
     @Test public void testEqualsOnItselfReturnsTrue(){
         Line l = Line.of("14");
-        assertTrue(l.equals(l));
+        assertEquals(l,l);
     }
 
     @Test void testLinesSameLinesWithSameVariantsAreEqual() {
