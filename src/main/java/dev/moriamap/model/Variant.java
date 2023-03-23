@@ -1,4 +1,5 @@
 package dev.moriamap.model;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,10 +8,10 @@ import java.util.List;
 public final class Variant {
 
     // id of this variant.
-    private int id;
+    public int id;
 
     // the line to which this variant belongs.
-    private String lineName;
+    public String lineName;
 
     private List<TransportSegment> transportSegments;
 
@@ -61,24 +62,21 @@ public final class Variant {
     }
 
     /**
-     * {@return the id of this Variant.}
+     * @return a copy of this variant's transportSegments list
      */
-    public int getId() {
-        return id;
-    }
+    public List<TransportSegment> getTransportSegments(){
+        List <TransportSegment> res = new ArrayList<>(this.transportSegments.size());
+        for (TransportSegment ts : this.transportSegments)
+            res.add(ts);
 
-    /**
-     * {@return the line to which this Variant belongs.}
-     */
-    public String getLineName() {
-        return this.lineName;
+        return res;
     }
 
     /**
      * Check if this variant is equal to the given line.
      * <p>
-     *     Two variants are equal if they have the same
-     *     (by a call to equals) line and the same id.
+     *     Two variants are equal if they have the same lineName, the same id 
+     *     and the same (by a call to equals) transportSegments in the same order.
      * </p>
      * @param object to be compared to
      * @return true if this is equal to object
@@ -89,6 +87,12 @@ public final class Variant {
         if (object == null || object.getClass() != this.getClass())
             return false;
         Variant other = (Variant) object;
+        if (other.transportSegments.size() != this.transportSegments.size())
+            return false;
+        for (int i = 0; i < this.transportSegments.size(); i++) {
+            if (!this.transportSegments.get(i).equals(other.transportSegments.get(i)))
+                return false;
+        }
         return other.lineName.equals(this.lineName)
                 && other.id == this.id;
     }
