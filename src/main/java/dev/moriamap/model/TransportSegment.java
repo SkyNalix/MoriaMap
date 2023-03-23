@@ -52,4 +52,22 @@ public class TransportSegment extends Edge{
         return travelTime.getSeconds() + distance;
     }
 
+    /**
+     * Check if this transport segment is equal to the given transport segment.
+     * <p>
+     *     Two transport segment are equal if they have the same lineVariantName, the same
+     *     distance and the same travelTime
+     * </p>
+     * @param object to be compared to
+     * @return true if this is equal to object
+     */
+    public boolean equals(Object object){
+        if (this ==  object)
+            return true;
+        if (object == null || object.getClass() != this.getClass())
+            return false;
+        TransportSegment other = (TransportSegment) object;
+        return this.lineVariantName.equals(other.lineVariantName) && this.distance == other.distance && this.travelTime.equals(other.travelTime);
+    }
+
 }

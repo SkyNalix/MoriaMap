@@ -50,6 +50,11 @@ public class LineTest {
         assertNotEquals(l,l1);
     }
 
+    @Test public void testEqualsOnItselfReturnsTrue(){
+        Line l = Line.of("14");
+        assertTrue(l.equals(l));
+    }
+
     @Test void testLinesSameLinesWithSameVariantsAreEqual() {
         Line l = Line.of("14");
         Line l1 = Line.of("14");
