@@ -10,7 +10,7 @@ public final class Variant {
     private int id;
 
     // the line to which this variant belongs.
-    private Line line;
+    private String lineName;
 
     private List<TransportSegment> transportSegments;
 
@@ -18,30 +18,30 @@ public final class Variant {
      * Class constructor.
      *
      * @param id of this Variant
-     * @param line of this Variant
+     * @param lineName of this Variant
      */
-    private Variant(int id, Line line) {
+    private Variant(int id, String lineName) {
         this.id = id;
-        this.line = line;
+        this.lineName = lineName;
     }
 
     /**
      * Static factory.
      *
      * @param id if this Variant
-     * @param line of this Variant
-     * @return a new empty Variant with the given id and line
+     * @param lineName of this Variant
+     * @return a new empty Variant with the given id and lineName
      */
-    public static Variant empty(int id, Line line) {
+    public static Variant empty(int id, String lineName) {
         if (id < 0) {
             throw new IllegalArgumentException("id can not be negative.");
         }
 
-        if (line == null) {
-            throw new IllegalArgumentException(" line can not be null.");
+        if (lineName.equals("")) {
+            throw new IllegalArgumentException(" line can not be an empty string.");
         }
 
-        return new Variant(id, line);
+        return new Variant(id, lineName);
     }
 
     /**
@@ -70,8 +70,8 @@ public final class Variant {
     /**
      * {@return the line to which this Variant belongs.}
      */
-    public Line getLine() {
-        return this.line;
+    public String getLineName() {
+        return this.lineName;
     }
 
     /**
@@ -89,7 +89,7 @@ public final class Variant {
         if (object == null || object.getClass() != this.getClass())
             return false;
         Variant other = (Variant) object;
-        return other.line.equals(this.line)
+        return other.lineName.equals(this.lineName)
                 && other.id == this.id;
     }
 }
