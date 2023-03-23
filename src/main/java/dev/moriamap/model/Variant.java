@@ -24,6 +24,7 @@ public final class Variant {
     private Variant(int id, String lineName) {
         this.id = id;
         this.lineName = lineName;
+        this.transportSegments = new ArrayList<>();
     }
 
     /**
@@ -37,9 +38,9 @@ public final class Variant {
         if (id < 0) {
             throw new IllegalArgumentException("id can not be negative.");
         }
-
-        if (lineName.equals("")) {
-            throw new IllegalArgumentException(" line can not be an empty string.");
+        
+        if (lineName == null) {
+            throw new IllegalArgumentException(" lineName can not be null");
         }
 
         return new Variant(id, lineName);
@@ -48,20 +49,22 @@ public final class Variant {
     /**
      * Add the given TransportSegment to our TransportSegments list.
      * @param ts TransportSegment to be added
-     * @throws IllegalArgumentException if the TransportSegment is Null or already contained in the list
+     * @return false if the given transport segment was added
+     * @throws IllegalArgumentException if the TransportSegment is Null
      */
-    public void addTransportSegments(TransportSegment ts){
+    public boolean addTransportSegments(TransportSegment ts){
         if (ts == null) {
             throw new IllegalArgumentException("Null TransportSegment is not allowed");
         }
 
         if (this.transportSegments.contains(ts)) {
-            throw new IllegalArgumentException("The list already contains the given value");
+            return false;
         }
-        this.transportSegments.add(ts);
+        return this.transportSegments.add(ts);
     }
 
     /**
+     * Gets the list of the transportSegments
      * @return a copy of this variant's transportSegments list
      */
     public List<TransportSegment> getTransportSegments(){

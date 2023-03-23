@@ -19,7 +19,7 @@ public class LineTest {
 
     @Test void testAddingTwiceTheSameVariantsDoesNothing() {
         Line l = Line.of("14");
-        Variant v = Variant.empty(1,l);
+        Variant v = Variant.empty(1,"14");
         l.addVariant(v);
         assertEquals(1, l.getVariants().size());
     }
@@ -34,7 +34,7 @@ public class LineTest {
     @Test void testAddingAVariantWhichWasAddedBeforeDoesNothing() {
         Line l = Line.of("14");
 
-        Variant v = Variant.empty(1,l);
+        Variant v = Variant.empty(1,"14");
         l.addVariant(v);
         assertFalse(l.addVariant(v));
     }
@@ -42,8 +42,8 @@ public class LineTest {
     @Test void testLinesThatDoNotHaveSameNumberOfVariantsAreNotEqual() {
         Line l = Line.of("14");
         Line l1 = Line.of("14");
-        Variant v = Variant.empty(1,l);
-        Variant v1 = Variant.empty(2,l);
+        Variant v = Variant.empty(1,"14");
+        Variant v1 = Variant.empty(2,"14");
         l.addVariant(v);
         l.addVariant(v1);
         l1.addVariant(v);
@@ -53,8 +53,8 @@ public class LineTest {
     @Test void testLinesSameLinesWithSameVariantsAreEqual() {
         Line l = Line.of("14");
         Line l1 = Line.of("14");
-        Variant v = Variant.empty(1,l);
-        Variant v1 = Variant.empty(2,l);
+        Variant v = Variant.empty(1,"14");
+        Variant v1 = Variant.empty(2,"14");
         l.addVariant(v);
         l.addVariant(v1);
         l1.addVariant(v);
@@ -65,8 +65,8 @@ public class LineTest {
     @Test void testLinesThatHaveAtLeastOneDifferentVariantAreNotEqual() {
             Line l = Line.of("14");
             Line l1 = Line.of("14");
-            Variant v = Variant.empty(1,l);
-            Variant v1 = Variant.empty(2,l);
+            Variant v = Variant.empty(1,"14");
+            Variant v1 = Variant.empty(2,"14");
             l.addVariant(v);
             l.addVariant(v1);
             l1.addVariant(v1);
