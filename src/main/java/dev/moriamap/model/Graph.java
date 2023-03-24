@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * A graph is a set of vertices and a set of edges between those vertices.
@@ -77,5 +78,22 @@ public abstract class Graph {
             if (!outgoingEdges.contains(edge))
                 outgoingEdges.add(edge);
         }
+    }
+
+    /**
+     * @param vertex some Vertex
+     * {@return the list of outgoing Edges of the specified Vertex}
+     * @throws IllegalArgumentException if vertex is null
+     * @throws NoSuchElementException if vertex is not in this Graph
+     */
+    public List<Edge> getOutgoingEdgesOf(Vertex vertex) {
+        if (vertex == null)
+            throw new IllegalArgumentException("Vertex can not be null");
+        if (!this.vertexToOutgoingEdges.containsKey(vertex))
+            throw new NoSuchElementException("Vertex is absent");
+        List<Edge> edges = this.vertexToOutgoingEdges.get(vertex);
+        if (edges == null)
+            return new ArrayList<>();
+        return edges;
     }
 }
