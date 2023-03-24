@@ -76,7 +76,7 @@ public class TransportSegment extends Edge{
      */
     @Override public int hashCode(){
         final int prime = 13;
-        int hash = super.hashCode();
+        int hash = 1;
         hash *= prime;
         hash += this.lineVariantName.hashCode();
         hash += this.travelTime.hashCode();
