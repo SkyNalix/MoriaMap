@@ -98,17 +98,19 @@ public abstract class Graph {
     }
 
     /**
-     * Returns the list of outgoing edges of the specified Vertex.
      * @param vertex some Vertex
-     * @return the list of outgoing edges of vertex
+     * {@return the list of outgoing Edges of the specified Vertex}
      * @throws IllegalArgumentException if vertex is null
-     * @throes NoSuchElementException if vertex is not in this Graph
+     * @throws NoSuchElementException if vertex is not in this Graph
      */
     public List<Edge> getOutgoingEdgesOf(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException("Vertex is null");
-        if (!this.vertices.contains(vertex))
-            throw new NoSuchElementException("Vertex not in graph");
-        return new ArrayList<>();
+            throw new IllegalArgumentException("Vertex can not be null");
+        if (!this.vertexToOutgoingEdges.containsKey(vertex))
+            throw new NoSuchElementException("Vertex is absent");
+        List<Edge> edges = this.vertexToOutgoingEdges.get(vertex);
+        if (edges == null)
+            return new ArrayList<>();
+        return edges;
     }
 }
