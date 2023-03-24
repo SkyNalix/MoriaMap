@@ -94,4 +94,12 @@ public class TransportSegmentTest {
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertEquals(s2, ts.getTo());
     }
+
+    @Test void hashCodeOfSemanticallyEqualTransportSegmentsAreEqual(){
+        Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
+        Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts2 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        assertEquals(ts1.hashCode(), ts2.hashCode());
+    }
 }
