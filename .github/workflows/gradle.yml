@@ -28,12 +28,21 @@ jobs:
         with:
           arguments: build
 
-  test:
+  javadoc:
+    name: gradle javadoc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run gradle tests
-        uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: javadoc
+
+  test:
+    name: gradle test and JaCoCo report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gradle/gradle-build-action@v2
         with:
           arguments: test
 
