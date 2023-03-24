@@ -2,6 +2,7 @@ package dev.moriamap.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Represents a Graph with a list of vertices and a list of edges.
@@ -89,5 +90,20 @@ public abstract class Graph {
         this.addVertex(e.getTo());
         e.getFrom().addNeighbor(e.getTo());
         return this.edges.add(e);
+    }
+
+    /**
+     * Returns the list of outgoing edges of the specified Vertex.
+     * @param vertex some Vertex
+     * @return the list of outgoing edges of vertex
+     * @throws IllegalArgumentException if vertex is null
+     * @throes NoSuchElementException if vertex is not in this Graph
+     */
+    public List<Edge> getOutgoingEdgesOf(Vertex vertex) {
+        if (vertex == null)
+            throw new IllegalArgumentException("Vertex is null");
+        if (!this.vertices.contains(vertex))
+            throw new NoSuchElementException("Vertex not in graph");
+        return new ArrayList<>();
     }
 }
