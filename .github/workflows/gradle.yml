@@ -24,8 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Gradle
-        uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v2
         with:
           arguments: build
 
