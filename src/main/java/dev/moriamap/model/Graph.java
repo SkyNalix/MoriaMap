@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 /**
  * A graph is a set of vertices and a set of edges between those vertices.
  */
 public abstract class Graph {
+    private static final String NULL_VERTEX_ERROR_MSG =
+        "Vertex can not be null";
+    private static final String ABSENT_VERTEX_ERROR_MSG = "Vertex is absent";
 
     // A map that associates a Vertex to its outgoing edges
     private final Map<Vertex, List<Edge>> vertexToOutgoingEdges;
@@ -49,7 +54,7 @@ public abstract class Graph {
      */
     public void addVertex(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException("Vertex can not be null");
+            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
         this.vertexToOutgoingEdges.putIfAbsent(vertex, null);
     }
 
@@ -98,30 +103,49 @@ public abstract class Graph {
     }
 
     /**
-     * @param vertex some Vertex
-     * {@return the list of outgoing Edges of the specified Vertex}
-     * @throws IllegalArgumentException if vertex is null
-     * @throws NoSuchElementException if vertex is not in this Graph
-     */
-    public List<Edge> getOutgoingEdgesOf(Vertex vertex) {
-        if (vertex == null)
-            throw new IllegalArgumentException("Vertex can not be null");
-        if (!this.vertexToOutgoingEdges.containsKey(vertex))
-            throw new NoSuchElementException("Vertex is absent");
-        List<Edge> edges = this.vertexToOutgoingEdges.get(vertex);
-        if (edges == null)
-            return new ArrayList<>();
-        return edges;
-    }
-
-    /**
-     * @param vertex some vertex that might be in this Graph
      * {@return true if vertex is not null and is in this Graph}
+     * @param vertex some vertex that might be in this Graph
      * @throws IllegalArgumentException if vertex is null
      */
     public boolean contains(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException("Vertex can not be null");
-        return false;
+            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+        return this.vertexToOutgoingEdges.containsKey(vertex);
+    }
+
+    /**
+     * Performs a depth-first search from the specified vertex and computes a
+     * map that associates each visited Vertex to the Edge that led to it during
+     * the traversal.
+     * @param src the starting vertex for the search
+     * @return a map that associates each visited Vertex to the Edge that led to
+     *         it during the traversal
+     * @throws IllegalArgumentException if src is null
+     * @throws NoSuchElementException if src is not in this Graph
+     */
+    public Map<Vertex, Edge> depthFirstSearch(Vertex src) {
+        if (src == null)
+            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+        if (!this.contains(src))
+            throw new NoSuchElementException(ABSENT_VERTEX_ERROR_MSG);
+        Deque<Vertex> stack = new ArrayDeque<>();
+        Map<Vertex, Edge> parents = new HashMap<>();
+        List<Vertex> visited = new ArrayList<>();
+        Vertex tmp = null;
+        Vertex to = null;
+        stack.push(src);
+        visited.add(src);
+        while (!stack.isEmpty()) {
+            tmp = stack.pop();
+            for (Edge outgoingEdge: this.getOutgoingEdgesOf(tmp)) {
+                to = outgoingEdge.getTo();
+                if (!visited.contains(to)) {
+                    visited.add(to);
+                    parents.put(to, outgoingEdge);
+                    stack.push(to);
+                }
+            }
+        }
+        return parents;
     }
 }
