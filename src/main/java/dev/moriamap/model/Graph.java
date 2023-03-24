@@ -113,4 +113,15 @@ public abstract class Graph {
             return new ArrayList<>();
         return edges;
     }
+
+    /**
+     * @param vertex some vertex that might be in this Graph
+     * {@return true if vertex is not null and is in this Graph}
+     * @throws IllegalArgumentException if vertex is null
+     */
+    public boolean contains(Vertex vertex) {
+        if (vertex == null)
+            throw new IllegalArgumentException("Vertex can not be null");
+        return false;
+    }
 }

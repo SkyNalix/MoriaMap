@@ -85,4 +85,9 @@ class GraphTest {
         outgoingEdges.add(edge);
         assertEquals(outgoingEdges, sut.getOutgoingEdgesOf(from));
     }
+
+    @Test void testIfVertexIsInGraphWithNullVertexThrowsException() {
+        Graph sut = new DummyGraph();
+        assertThrows(IllegalArgumentException.class, () -> sut.contains(null));
+    }
 }
