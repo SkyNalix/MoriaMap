@@ -96,7 +96,7 @@ public abstract class Graph {
         if (vertex == null)
             throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
         if (!this.vertexToOutgoingEdges.containsKey(vertex))
-            throw new NoSuchElementException("Vertex is absent");
+            throw new NoSuchElementException(ABSENT_VERTEX_ERROR_MSG);
         List<Edge> edges = this.vertexToOutgoingEdges.get(vertex);
         if (edges == null)
             return new ArrayList<>();
