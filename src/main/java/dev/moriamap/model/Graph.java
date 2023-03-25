@@ -7,14 +7,15 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Deque;
 import java.util.ArrayDeque;
+import java.util.Collections;
 
 /**
  * A graph is a set of vertices and a set of edges between those vertices.
  */
 public abstract class Graph {
-    private static final String NULL_VERTEX_ERROR_MSG =
-        "Vertex can not be null";
-    private static final String ABSENT_VERTEX_ERROR_MSG = "Vertex is absent";
+    private static final String NULL_ARGUMENT_ERROR_MSG =
+        "Argument can not be null";
+    private static final String ABSENT_VERTEX_ERROR_MSG = "No such vertex";
 
     // A map that associates a Vertex to its outgoing edges
     private Map<Vertex, List<Edge>> vertexToOutgoingEdges;
@@ -54,7 +55,7 @@ public abstract class Graph {
      */
     public void addVertex(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+            throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
         this.vertexToOutgoingEdges.putIfAbsent(vertex, null);
     }
 
@@ -93,7 +94,7 @@ public abstract class Graph {
      */
     public List<Edge> getOutgoingEdgesOf(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+            throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
         if (!this.vertexToOutgoingEdges.containsKey(vertex))
             throw new NoSuchElementException(ABSENT_VERTEX_ERROR_MSG);
         List<Edge> edges = this.vertexToOutgoingEdges.get(vertex);
@@ -109,7 +110,7 @@ public abstract class Graph {
      */
     public boolean contains(Vertex vertex) {
         if (vertex == null)
-            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+            throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
         return this.vertexToOutgoingEdges.containsKey(vertex);
     }
 
@@ -125,7 +126,7 @@ public abstract class Graph {
      */
     public Map<Vertex, Edge> depthFirstSearch(Vertex src) {
         if (src == null)
-            throw new IllegalArgumentException(NULL_VERTEX_ERROR_MSG);
+            throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
         if (!this.contains(src))
             throw new NoSuchElementException(ABSENT_VERTEX_ERROR_MSG);
         Deque<Vertex> stack = new ArrayDeque<>();
@@ -147,5 +148,53 @@ public abstract class Graph {
             }
         }
         return parents;
+    }
+
+    /**
+     * {@return a list of Edge that forms a route from src to dst}
+     * @param parents a map that associates each visited Vertex to the Edge that
+     *                led to it during a Graph traversal
+     * @param src the source Vertex
+     * @param dst the destination Vertex
+     * @throws IllegalArgumentException if parents, src or dst are null
+     * @throws NoSuchElementException if dst is not a key of parents
+     */
+    public static List<Edge> getRouteFromTraversal(
+      Map<Vertex, Edge> parents,
+      Vertex src,
+      Vertex dst
+    ) {
+        if (parents == null || src == null || dst == null)
+            throw new IllegalArgumentException(NULL_ARGUMENT_ERROR_MSG);
+        if (!parents.containsKey(dst))
+            throw new NoSuchElementException("Destination is absent");
+        if (!isVertexSourceOfEdgeInTraversalMap(parents, src))
+            throw new NoSuchElementException("Source is absent");
+        List<Edge> route = new ArrayList<>();
+        route.add(parents.get(dst));
+        Vertex parent = parents.get(dst).getFrom();
+        Edge edgeToParent = null;
+        while (!parent.equals(src)) {
+            edgeToParent = parents.get(parent);
+            route.add(edgeToParent);
+            parent = edgeToParent.getFrom();
+        }
+        Collections.reverse(route); // as we start from destination
+        return route;
+    }
+
+    // Returns true if source is a source vertex in at least one of the edges of
+    // the given map
+    private static boolean isVertexSourceOfEdgeInTraversalMap(
+      Map<Vertex, Edge> parents,
+      Vertex source
+    ) {
+        Edge current = null;
+        for (Map.Entry<Vertex, Edge> entries: parents.entrySet()) {
+            current = entries.getValue();
+            if (current != null && current.getFrom().equals(source))
+                return true;
+        }
+        return false;
     }
 }

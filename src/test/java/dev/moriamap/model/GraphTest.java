@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 class GraphTest {
     class DummyGraph extends Graph {}
@@ -166,5 +167,97 @@ class GraphTest {
         assertTrue(parents.containsKey(v5));
         assertTrue(parents.containsKey(v6));
         assertFalse(parents.containsKey(v1));
+    }
+
+    @Test void routeFromTraversalWithNullParentsThrowsException() {
+        Vertex u = new DummyVertex();
+        Vertex v = new DummyVertex();
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> Graph.getRouteFromTraversal(null, v, u)
+        );
+    }
+
+    @Test void routeFromTraversalWithNullSourceThrowsException() {
+        Map<Vertex, Edge> parents = new HashMap<>();
+        Vertex u = new DummyVertex();
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> Graph.getRouteFromTraversal(parents, null, u)
+        );
+    }
+
+    @Test void routeFromTraversalWithNullDestinationThrowsException() {
+        Map<Vertex, Edge> parents = new HashMap<>();
+        Vertex u = new DummyVertex();
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> Graph.getRouteFromTraversal(parents, u, null)
+        );
+    }
+
+    @Test void routeFromTraversalWithAbsentDestinationThrowsException() {
+        Map<Vertex, Edge> parents = new HashMap<>();
+        Vertex u = new DummyVertex();
+        Vertex v = new DummyVertex();
+        assertThrows(
+          NoSuchElementException.class,
+          () -> Graph.getRouteFromTraversal(parents, u, v)
+        );
+    }
+
+    @Test void routeFromTraversalWithAbsentSourceThrowsException() {
+        Map<Vertex, Edge> parents = new HashMap<>();
+        Vertex u = new DummyVertex();
+        Vertex v = new DummyVertex();
+        parents.put(v, new DummyEdge());
+        assertThrows(
+          NoSuchElementException.class,
+          () -> Graph.getRouteFromTraversal(parents, u, v)
+        );
+    }
+
+    @Test void routeFromCorrectTraversalReturnsCorrectRoute() {
+        Map<Vertex, Edge> parents = new HashMap<>();
+        Vertex v1 = new DummyVertex();
+        Vertex v2 = new DummyVertex();
+        Vertex v3 = new DummyVertex();
+        Edge e1 = new DummyEdge(v1, v2);
+        Edge e2 = new DummyEdge(v2, v3);
+        Edge e3 = new DummyEdge(v3, v1);
+        parents.put(v2, e1);
+        parents.put(v3, e2);
+        List<Edge> route = new ArrayList<>();
+        route.add(e1);
+        route.add(e2);
+        assertEquals(route, Graph.getRouteFromTraversal(parents, v1, v3));
+    }
+
+    @Test void dfsOnGraphWithPossibleRouteReturnsOneOfThem() {
+        Graph sut = new DummyGraph();
+        Vertex v1 = new DummyVertex();
+        Vertex v2 = new DummyVertex();
+        Vertex v3 = new DummyVertex();
+        Vertex v4 = new DummyVertex();
+        Vertex v5 = new DummyVertex();
+        Vertex v6 = new DummyVertex();
+        Edge e1 = new DummyEdge(v1, v2);
+        Edge e2 = new DummyEdge(v2, v5);
+        Edge e3 = new DummyEdge(v5, v6);
+        sut.addEdge(e1);
+        sut.addEdge(new DummyEdge(v1, v3));
+        sut.addEdge(e2);
+        sut.addEdge(new DummyEdge(v3, v4));
+        sut.addEdge(new DummyEdge(v4, v1));
+        sut.addEdge(new DummyEdge(v5, v3));
+        sut.addEdge(new DummyEdge(v5, v4));
+        sut.addEdge(e3);
+        sut.addEdge(new DummyEdge(v6, v2));
+        Map<Vertex, Edge> parents = sut.depthFirstSearch(v1);
+        List<Edge> route = new ArrayList<>();
+        route.add(e1);
+        route.add(e2);
+        route.add(e3);
+        assertEquals(route, Graph.getRouteFromTraversal(parents, v1, v6));
     }
 }
