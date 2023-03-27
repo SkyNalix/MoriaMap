@@ -21,7 +21,7 @@ public class VariantTest {
                 );
     }
 
-    @Test public void testEmptyVariantWithNullLineThrowsException() {
+    @Test void testEmptyVariantWithNullLineThrowsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> Variant.empty(1, null)
         );
@@ -79,7 +79,7 @@ public class VariantTest {
         assertNotEquals(v, null);
     }
 
-    @Test public void testObjectIsNotEqualToVariant() {
+    @Test void testObjectIsNotEqualToVariant() {
         Object o = new Object();
         Variant v = Variant.empty(3,"4");
         assertNotEquals(v,o);

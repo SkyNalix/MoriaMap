@@ -6,7 +6,7 @@ package dev.moriamap.model;
 public class GeographicVertex extends Vertex {
 
     // The geographic position of this GeographicVertex
-    private final GeographicPosition geographicPosition;
+    protected final GeographicPosition geographicPosition;
 
     /**
      * Class constructor specifying geographic position.
@@ -71,7 +71,7 @@ public class GeographicVertex extends Vertex {
         final int prime = 11;
         int hash = 1;
         hash *= prime;
-        hash += Math.ceil(this.geographicPosition.hashCode());
+        hash += this.geographicPosition.hashCode();
         return hash;
     }
 }
