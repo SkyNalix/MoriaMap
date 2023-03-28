@@ -99,4 +99,20 @@ public final class Variant {
         return other.lineName.equals(this.lineName)
                 && other.id == this.id;
     }
+
+    /**
+     * Gets the hash code of this variant
+     * @return the hash code of this variant
+     */
+    @Override public int hashCode(){
+        final int prime = 13;
+        int hash = 1;
+        hash *= prime;
+        hash += this.id;
+        hash += this.lineName.hashCode();
+        for(int i=0;i<this.transportSegments.size();i++){
+            hash += this.transportSegments.get(i).hashCode();
+        }
+        return hash;
+    }
 }

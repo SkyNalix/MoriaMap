@@ -71,8 +71,8 @@ public class TransportSegment extends Edge{
     }
 
     /**
-     * Gets the name of this transport segment
-     * @return the name of this transport segment
+     * Gets the hash code of this transport segment
+     * @return the hash code of this transport segment
      */
     @Override public int hashCode(){
         final int prime = 13;

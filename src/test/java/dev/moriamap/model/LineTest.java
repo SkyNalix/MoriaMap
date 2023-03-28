@@ -89,4 +89,13 @@ class LineTest {
         Line l = Line.of("14");
         assertNotEquals(null,l);
     }
+
+    @Test void hashCodeOfSemanticallyEqualLinesAreEqual(){
+        Line l = Line.of("14");
+        Line l1 = Line.of("14");
+        Variant v = Variant.empty(1,"14");
+        l.addVariant(v);
+        l1.addVariant(v);
+        assertEquals(l.hashCode(), l1.hashCode());
+    }
 }
