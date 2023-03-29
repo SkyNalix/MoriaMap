@@ -10,7 +10,6 @@ public final class Variant {
     /**
      * The id of this variant.
      */
-
     public final String id;
 
     /**
