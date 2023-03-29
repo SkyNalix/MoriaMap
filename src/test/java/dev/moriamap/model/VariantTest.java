@@ -7,10 +7,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-
 class VariantTest {
 
     @Test void testConstruction() {
