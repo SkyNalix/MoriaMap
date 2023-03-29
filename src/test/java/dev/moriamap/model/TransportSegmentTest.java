@@ -65,7 +65,7 @@ class TransportSegmentTest {
         TransportSegment ts2 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.between(LocalTime.NOON, LocalTime.MIDNIGHT), 0.0);
         assertNotEquals(ts1, ts2);
     }
-
+    
     @Test void testGetWeight(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
