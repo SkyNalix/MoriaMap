@@ -2,10 +2,10 @@ package dev.moriamap.model;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
 class VariantTest {
 
