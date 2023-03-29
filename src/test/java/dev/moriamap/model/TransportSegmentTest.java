@@ -7,27 +7,27 @@ import java.time.LocalTime;
 
 public class TransportSegmentTest {
     
-    @Test public void testConstruction(){
+    @Test void testConstruction(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertEquals(0.0, ts.distance);
     }
-    @Test public void testTransportSegmentNotEqualToNull(){
+    @Test void testTransportSegmentNotEqualToNull(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertNotEquals(ts, null);
     }
 
-    @Test public void testIsNotEqualToNull(){
+    @Test void testIsNotEqualToNull(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertNotEquals(ts, null);
     }
 
-    @Test public void testObjectIsNotEqualToTransportSegment(){
+    @Test void testObjectIsNotEqualToTransportSegment(){
         Object o = new Object();
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
@@ -35,14 +35,14 @@ public class TransportSegmentTest {
         assertNotEquals(ts, o);
     }
 
-    @Test public void testEqualsOnItselfReturnsTrue(){
+    @Test void testEqualsOnItselfReturnsTrue(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertEquals(ts, ts);
     }
 
-    @Test public void testEqualsOnATransportSegmentWithTheSameValuesReturnsTrue(){
+    @Test void testEqualsOnATransportSegmentWithTheSameValuesReturnsTrue(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
@@ -50,7 +50,7 @@ public class TransportSegmentTest {
         assertEquals(ts1, ts2);
     }
 
-    @Test public void testEqualsOnATransportSegmentWithDifferentDistanceReturnsFalse(){
+    @Test void testEqualsOnATransportSegmentWithDifferentDistanceReturnsFalse(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 1.0);
@@ -58,7 +58,7 @@ public class TransportSegmentTest {
         assertNotEquals(ts1, ts2);
     }
 
-    @Test public void testEqualsOnATransportSegmentWithDifferentDurationReturnsFalse(){
+    @Test void testEqualsOnATransportSegmentWithDifferentDurationReturnsFalse(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 1.0);
@@ -66,7 +66,7 @@ public class TransportSegmentTest {
         assertNotEquals(ts1, ts2);
     }
 
-    @Test public void testEqualsOnATransportSegmentWithDifferentlineVariantNameReturnsFalse(){
+    @Test void testEqualsOnATransportSegmentWithDifferentlineVariantNameReturnsFalse(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 1.0);
@@ -74,21 +74,21 @@ public class TransportSegmentTest {
         assertNotEquals(ts1,ts2);
     }
 
-    @Test public void testGetWeight(){
+    @Test void testGetWeight(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 1.0);
         assertEquals(1.0, ts.getWeight());
     }
 
-    @Test public void testGetFrom(){
+    @Test void testGetFrom(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
         assertEquals(s1, ts.getFrom());
     }
 
-    @Test public void testGetTo(){
+    @Test void testGetTo(){
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
