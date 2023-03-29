@@ -6,16 +6,16 @@ import java.time.Duration;
  */
 public class TransportSegment extends Edge{
     
-    // The variant's name of this TransportSegment
+    /** The variant's name of this TransportSegment */
     public final String variantName;
 
-    // The line's name of this TransportSegment
+    /** The line's name of this TransportSegment */
     public final String lineName;
 
-    // The travel time of this TransportSegment
+    /** The travel time of this TransportSegment */
     public final Duration travelTime;
 
-    // The distance of this TransportSegment
+    /** The distance of this TransportSegment */
     public final double distance;
 
     private TransportSegment(Vertex from, Vertex to,String variantName, String lineName,Duration travelTime, double distance){
