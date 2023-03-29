@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariantTest {
+class VariantTest {
 
     @Test void testConstruction() {
         Variant v = Variant.empty(1, "14");

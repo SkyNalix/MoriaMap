@@ -50,7 +50,7 @@ class LineTest {
         assertNotEquals(l,l1);
     }
 
-    @Test public void testEqualsOnItselfReturnsTrue(){
+    @Test void testEqualsOnItselfReturnsTrue(){
         Line l = Line.of("14");
         assertEquals(l,l);
     }
@@ -87,7 +87,7 @@ class LineTest {
 
     @Test void testLineIsNotEqualToNull() {
         Line l = Line.of("14");
-        assertNotEquals(null,l);
+        assertNotEquals(l,null);
     }
 
     @Test void hashCodeOfSemanticallyEqualLinesAreEqual(){
