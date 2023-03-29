@@ -224,7 +224,6 @@ class GraphTest {
         Vertex v3 = new DummyVertex();
         Edge e1 = new DummyEdge(v1, v2);
         Edge e2 = new DummyEdge(v2, v3);
-        Edge e3 = new DummyEdge(v3, v1);
         parents.put(v2, e1);
         parents.put(v3, e2);
         List<Edge> route = new ArrayList<>();
