@@ -39,7 +39,7 @@ class VariantTest {
         Variant v1 = Variant.empty(1,"14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         v.addTransportSegments(ts);
         v1.addTransportSegments(ts);
         assertEquals(v,v1);
@@ -50,8 +50,8 @@ class VariantTest {
         Variant v1 = Variant.empty(1,"14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
-        TransportSegment ts2 = TransportSegment.from(s1, s2, "14 Variant 2", Duration.ZERO, 0.0);
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts2 = TransportSegment.from(s1, s2, "14","Variant 2", Duration.ZERO, 0.0);
         v.addTransportSegments(ts1);
         v1.addTransportSegments(ts2);
         assertNotEquals(v,v1);
@@ -62,8 +62,8 @@ class VariantTest {
         Variant v1 = Variant.empty(1,"14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts1 = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
-        TransportSegment ts2 = TransportSegment.from(s1, s2, "14 Variant 2", Duration.ZERO, 0.0);
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts2 = TransportSegment.from(s1, s2, "14","Variant 2", Duration.ZERO, 0.0);
         v.addTransportSegments(ts1);
         v.addTransportSegments(ts2);
         v1.addTransportSegments(ts2);
@@ -115,7 +115,7 @@ class VariantTest {
         Variant v = Variant.empty(1, "14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         assertTrue(v.addTransportSegments(ts));
     }
 
@@ -123,7 +123,7 @@ class VariantTest {
         Variant v = Variant.empty(1, "14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         v.addTransportSegments(ts);
         assertFalse(v.addTransportSegments(ts));
     }
@@ -132,7 +132,7 @@ class VariantTest {
         Variant v = Variant.empty(1, "14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         List<TransportSegment> res = new ArrayList<TransportSegment>();
         v.addTransportSegments(ts);
         res.add(ts);
@@ -144,7 +144,7 @@ class VariantTest {
         Variant v2 = Variant.empty(1, "14");
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
-        TransportSegment ts = TransportSegment.from(s1, s2, "14 Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         v1.addTransportSegments(ts);
         v2.addTransportSegments(ts);
         assertEquals(v1.hashCode(), v2.hashCode());
