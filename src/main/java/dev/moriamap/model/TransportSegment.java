@@ -79,8 +79,6 @@ public class TransportSegment extends Edge{
         return this.distance;
     }
 
-
-
     /**
      * Check if this transport segment is equal to the given transport segment.
      * <p>
