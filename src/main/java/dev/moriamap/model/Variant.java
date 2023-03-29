@@ -16,7 +16,6 @@ public final class Variant {
     /**
      * The line to which this variant belongs.
      */
-
     public final String lineName;
 
     private List<TransportSegment> transportSegments;
