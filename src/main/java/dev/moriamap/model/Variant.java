@@ -7,10 +7,16 @@ import java.util.List;
  */
 public final class Variant {
 
-    // id of this variant.
+    /**
+     * The id of this variant.
+     */
+
     public final String id;
 
-    // the line to which this variant belongs.
+    /**
+     * The line to which this variant belongs.
+     */
+
     public final String lineName;
 
     private List<TransportSegment> transportSegments;

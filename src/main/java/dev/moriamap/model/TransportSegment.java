@@ -5,14 +5,22 @@ import java.time.Duration;
  * A TransportSegment is an Edge of our Graph
  */
 public class TransportSegment extends Edge{
-    
-    // The variant's id of this TransportSegment
+
+    /**
+     * The variant's id of this TransportSegment.
+     */
+
     public final String lineVariantName;
 
-    // The travel time of this TransportSegment
+    /**
+     * The travel time of this TransportSegment.
+     */
     public final Duration travelTime;
 
-    // The distance of this TransportSegment
+    /**
+     * The distance of this TransportSegment
+     */
+
     public final double distance;
 
     /**

@@ -5,7 +5,10 @@ package dev.moriamap.model;
  */
 public class GeographicVertex extends Vertex {
 
-    // The geographic position of this GeographicVertex
+    /**
+     * The geographic position of this GeographicVertex.
+     */
+
     protected final GeographicPosition geographicPosition;
 
     /**
