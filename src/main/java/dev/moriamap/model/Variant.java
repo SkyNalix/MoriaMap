@@ -8,10 +8,10 @@ import java.util.List;
 public final class Variant {
 
     // id of this variant.
-    public int id;
+    public final int id;
 
     // the line to which this variant belongs.
-    public String lineName;
+    public final String lineName;
 
     private List<TransportSegment> transportSegments;
 
@@ -64,8 +64,7 @@ public final class Variant {
     }
 
     /**
-     * Gets the list of the transportSegments
-     * @return a copy of this variant's transportSegments list
+     * {@return a copy of this variant's transportSegments list}
      */
     public List<TransportSegment> getTransportSegments(){
         List <TransportSegment> res = new ArrayList<>(this.transportSegments.size());

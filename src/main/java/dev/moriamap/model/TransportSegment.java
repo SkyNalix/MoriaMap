@@ -7,7 +7,7 @@ import java.time.Duration;
 public class TransportSegment extends Edge{
     
     // The variant's id of this TransportSegment
-    public String lineVariantName;
+    public final String lineVariantName;
 
     // The travel time of this TransportSegment
     public final Duration travelTime;
