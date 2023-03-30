@@ -82,8 +82,8 @@ public class TransportSegment extends Edge{
     /**
      * Check if this transport segment is equal to the given transport segment.
      * <p>
-     *     Two transport segment are equal if they have the same lineVariantName, the same
-     *     distance and the same travelDuration
+     *     Two transport segment are equal if they have the same from, the same to, 
+     *      lineVariantName, the same distance and the same travelDuration
      * </p>
      * @param object to be compared to
      * @return true if this is equal to object
@@ -94,7 +94,9 @@ public class TransportSegment extends Edge{
         if (object == null || object.getClass() != this.getClass())
             return false;
         TransportSegment other = (TransportSegment) object;
-        return this.lineName.equals(other.lineName) && this.variantName.equals(other.variantName) && this.distance == other.distance && this.travelDuration.equals(other.travelDuration);
+        return (this.getFrom()).equals(other.getFrom()) && (this.getTo()).equals(other.getTo()) 
+               && this.lineName.equals(other.lineName) && this.variantName.equals(other.variantName) 
+               && this.distance == other.distance && this.travelDuration.equals(other.travelDuration);
     }
 
     /**
@@ -105,6 +107,8 @@ public class TransportSegment extends Edge{
         final int prime = 13;
         int hash = 1;
         hash *= prime;
+        hash += ((Stop)this.getFrom()).hashCode();
+        hash += ((Stop)this.getTo()).hashCode();
         hash += this.lineName.hashCode();
         hash += this.variantName.hashCode();
         hash += this.travelDuration.hashCode();
