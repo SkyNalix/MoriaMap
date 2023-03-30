@@ -89,7 +89,7 @@ class TransportSegmentTest {
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         Stop s3 = Stop.from("s3",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
-        TransportSegment ts2 = TransportSegment.from(s1, s3, "14","Variant 1", Duration.between(LocalTime.NOON, LocalTime.MIDNIGHT), 0.0);
+        TransportSegment ts2 = TransportSegment.from(s1, s3, "14","Variant 1", Duration.ZERO, 0.0);
         assertNotEquals(ts1, ts2);
     }
 
@@ -98,7 +98,7 @@ class TransportSegmentTest {
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         Stop s3 = Stop.from("s3",GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
-        TransportSegment ts2 = TransportSegment.from(s3, s2, "14","Variant 1", Duration.between(LocalTime.NOON, LocalTime.MIDNIGHT), 0.0);
+        TransportSegment ts2 = TransportSegment.from(s3, s2, "14","Variant 1", Duration.ZERO, 0.0);
         assertNotEquals(ts1, ts2);
     }
     
