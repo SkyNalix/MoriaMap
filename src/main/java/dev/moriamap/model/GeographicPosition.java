@@ -229,4 +229,68 @@ public final class GeographicPosition {
         hash += Math.ceil(this.longitude);
         return hash;
     }
+
+    /** Two format : Decimal or complete
+     * Decimal : 2.17 
+     * Complete : 24 12 35 N
+     * @return a GeographicPosition
+    */
+
+    public static GeographicPosition from(String lattitude,String longitude) throws IllegalArgumentException{
+        if(lattitude == null || longitude == null)
+            throw new IllegalArgumentException("one of the argument is null");
+
+        Double lattitudeDouble = 0.0;
+        Double longitudeDouble = 0.0;
+
+        if(lattitude.contains("N") || lattitude.contains("S")){ // if contains N or S then Complete Format for lattitude
+            lattitudeDouble = read_format_complete(lattitude);
+        }else{ 
+            try{ 
+                lattitudeDouble = Double.parseDouble(lattitude); 
+            }catch(Exception e){
+                throw new IllegalArgumentException("Wrong format for the lattitude");
+            } 
+    
+        }
+        
+        if(longitude.contains("E") || longitude.contains("W")){
+            longitudeDouble = read_format_complete(longitude);
+        }else{ 
+            try{ 
+                longitudeDouble = Double.parseDouble(longitude); 
+            }catch(Exception e){
+                throw new IllegalArgumentException("Wrong format for the lattitude");
+            }
+        }
+
+        return new GeographicPosition(lattitudeDouble, longitudeDouble);
+    }
+
+    /**
+     * 
+     * @param str either the latitude or the longitude in this format : 24 12 35 N
+     * @return a double corresponding to the decimal format
+     */
+
+    public static Double read_format_complete(String str){
+        String[] array = str.split(" "); 
+
+        if(array.length != 4 || array[3].length() > 1 ){ throw new IllegalArgumentException("Wrong format of string for the lattitude/longitude"); }
+
+        Double decimal = Double.parseDouble(array[0]);
+        Double minute = Double.parseDouble(array[1]) / 60;
+        Double second = Double.parseDouble(array[2]) / 3600;
+        int orientation = 1;
+        if(array[3].equals("S") || array[3].equals("W"))
+            orientation = -1;
+
+        return (decimal + minute + second) * orientation;
+    }
+
+    public static void main(String[] args){
+        GeographicPosition gp = from("2 12 45 N", "45 24 16 E");
+        System.out.println(gp.latitude);
+        System.out.println(gp.longitude);
+    }
 }
