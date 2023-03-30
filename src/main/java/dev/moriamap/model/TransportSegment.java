@@ -18,7 +18,7 @@ public class TransportSegment extends Edge{
     /** The distance of this TransportSegment */
     private double distance;
 
-    private TransportSegment(Vertex from, Vertex to,String lineName, String variantName,Duration travelDuration, double distance){
+    private TransportSegment(Stop from, Stop to,String lineName, String variantName,Duration travelDuration, double distance){
         super(from, to);
         this.variantName = variantName;
         this.lineName = lineName;
@@ -36,7 +36,7 @@ public class TransportSegment extends Edge{
      * @param distance The distance of this Transport Segment
      * @return a new TransportSegment
      */
-    public static TransportSegment from(Vertex from, Vertex to, String lineName,String variantName, Duration travelDuration, double distance){
+    public static TransportSegment from(Stop from, Stop to, String lineName,String variantName, Duration travelDuration, double distance){
         if(lineName == null || variantName == null || travelDuration == null)
             throw new IllegalArgumentException("Null parameters are not allowed");
         return new TransportSegment(from,to,lineName,variantName,travelDuration,distance);
