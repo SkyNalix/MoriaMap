@@ -7,9 +7,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class pareses data from CSV file and provides it as row string.
+ */
 public final class CSVParser {
 
     private CSVParser(){}
+
+    /**
+     * Parses a CSV file line.
+     * @param line to be parsed
+     * @param delimiter fields separators
+     * @return a list of strings containing each field
+     */
     public static List<String> parseCSVLine(String line, String delimiter) {
         if (line == null) {
             throw new IllegalArgumentException("Line can not be null.");
@@ -26,6 +36,12 @@ public final class CSVParser {
         return new ArrayList<>(Arrays.asList(line.split(delimiter)));
     }
 
+    /**
+     * Parses a CSV file.
+     * @param path to CSV file
+     * @return a list of lists of strings containing raw data.
+     * @throws InconsistentCSVLineException if two lines do not have same number of fields
+     */
     public static List<List<String>> extractLines(String path) throws InconsistentCSVLineException {
         if (path == null) {
             throw new IllegalArgumentException("Path can not be null");
