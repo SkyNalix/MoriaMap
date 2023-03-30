@@ -232,10 +232,11 @@ public final class GeographicPosition {
 
     /** Two format : Decimal or complete
      * Decimal : 2.17 
-     * Complete : 24 12 35 N
+     * Degree Minute Second : 24 12 35 N
+     * @param lattitude a String that contains the latittude in one of the two format
+     * @param longitude a String that contains the longitude in one of the two format
      * @return a GeographicPosition
     */
-
     public static GeographicPosition from(String lattitude,String longitude) throws IllegalArgumentException{
         if(lattitude == null || longitude == null)
             throw new IllegalArgumentException("one of the argument is null");
@@ -268,7 +269,6 @@ public final class GeographicPosition {
     }
 
     /**
-     * 
      * @param str either the latitude or the longitude in this format : 24 12 35 N
      * @return a double corresponding to the decimal format
      */
@@ -286,11 +286,5 @@ public final class GeographicPosition {
             orientation = -1;
 
         return (decimal + minute + second) * orientation;
-    }
-
-    public static void main(String[] args){
-        GeographicPosition gp = from("2 12 45 N", "45 24 16 E");
-        System.out.println(gp.latitude);
-        System.out.println(gp.longitude);
     }
 }
