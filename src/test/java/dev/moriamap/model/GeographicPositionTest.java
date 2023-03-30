@@ -172,4 +172,45 @@ class GeographicPositionTest {
         GeographicPosition p2 = GeographicPosition.at(45.235, -24.355);
         assertTrue(!p1.equals(p2) && !p2.equals(p1));
     }
+
+    @Test void readTwoStringSameFormatDecimal(){
+        GeographicPosition gp = GeographicPosition.from("2.17", "45.2");
+        assertEquals(2.17,gp.getLatitude());
+        assertEquals(45.2,gp.getLongitude());
+    }
+
+    @Test void readTwoStringSameFormatDegree(){
+        GeographicPosition gp = GeographicPosition.from("2 12 45 N", "40 52 36 E");
+
+        boolean is_between_lattitude = (gp.getLatitude() > 2.1 &&  gp.getLatitude() < 2.3);
+        boolean is_between_longitude = (gp.getLongitude() > 40.7 && gp.getLongitude() < 40.9);
+
+        System.out.println(gp.getLongitude());
+        assertEquals(true,is_between_lattitude);
+        assertEquals(true,is_between_longitude);
+    }
+
+    @Test void readTwoStringDifferentFormat(){
+        GeographicPosition gp = GeographicPosition.from("2.17", "40 52 36 E");
+
+        boolean is_between_longitude = (gp.getLongitude() > 40.7 && gp.getLongitude() < 40.9);
+
+        assertEquals(2.17,gp.getLatitude());
+        assertEquals(true,is_between_longitude);
+    }
+
+    @Test void fromReadNull(){
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> GeographicPosition.from(null,"2.25")
+        );
+    }
+
+    @Test void fromWrongFormat(){
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> GeographicPosition.from("2.75 We","2.25")
+        );
+    }
+
 }
