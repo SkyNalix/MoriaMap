@@ -268,11 +268,10 @@ public final class GeographicPosition {
         return new GeographicPosition(lattitudeDouble, longitudeDouble);
     }
 
-    /**
+    /** read the Degree Minute Second and return a Decimal in the form double 
      * @param str either the latitude or the longitude in this format : 24 12 35 N
      * @return a double corresponding to the decimal format
      */
-
     public static Double read_format_complete(String str){
         String[] array = str.split(" "); 
 
