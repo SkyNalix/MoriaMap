@@ -2,6 +2,7 @@ package dev.moriamap.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +19,7 @@ class CSVParserTest {
         });
     }
 
-    @Test void parserExtractsExceptedNumberOfLines() throws InconsistentCSVLinesException {
+    @Test void parserExtractsExceptedNumberOfLines() throws InconsistentCSVLinesException, IOException {
         List<List<String>> lines = CSVParser.extractLines("/map_data.csv");
         assertEquals(1770,lines.size());
     }
