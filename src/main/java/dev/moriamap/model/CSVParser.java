@@ -67,6 +67,7 @@ public final class CSVParser {
         if (!same) {
             throw new InconsistentCSVLinesException();
         }
+        in.close();
         return content;
     }
 }
