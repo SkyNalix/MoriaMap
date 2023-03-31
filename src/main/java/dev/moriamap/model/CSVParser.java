@@ -61,6 +61,7 @@ public final class CSVParser {
         for (List<String> fields:content) {
             if (fields.size() != len) {
                 same  = false;
+                break;
             }
         }
         if (!same) {
