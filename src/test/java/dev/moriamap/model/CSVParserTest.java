@@ -2,9 +2,7 @@ package dev.moriamap.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,13 +12,13 @@ class CSVParserTest {
             CSVParser.extractLines(null);
         });
     }
-    @Test void extractedInconsistantDataThrowException() {
-        assertThrows(InconsistentCSVLineException.class,() ->{
-            CSVParser.extractLines("/InconsistantCsv.csv");
+    @Test void extractedInconsistentDataThrowsException() {
+        assertThrows(InconsistentCSVLinesException.class,() ->{
+            CSVParser.extractLines("/InconsistentCSV.csv");
         });
     }
 
-    @Test void parserExtractsExceptedNumberoFines() throws InconsistentCSVLineException {
+    @Test void parserExtractsExceptedNumberOfLines() throws InconsistentCSVLinesException {
         List<List<String>> lines = CSVParser.extractLines("/map_data.csv");
         assertEquals(1770,lines.size());
     }

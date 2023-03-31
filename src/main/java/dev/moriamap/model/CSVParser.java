@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * This class pareses data from CSV file and provides it as row string.
+ * This class parses data from CSV file and provides it as raw string.
  */
 public final class CSVParser {
 
@@ -38,19 +38,21 @@ public final class CSVParser {
 
     /**
      * Parses a CSV file.
-     * @param path to CSV file
+     * @param resourcePath to CSV file
      * @return a list of lists of strings containing raw data.
-     * @throws InconsistentCSVLineException if two lines do not have same number of fields
+     * @throws InconsistentCSVLinesException if two lines do not have same number of fields
      */
-    public static List<List<String>> extractLines(String path) throws InconsistentCSVLineException {
-        if (path == null) {
+    public static List<List<String>> extractLines(String resourcePath) throws InconsistentCSVLinesException {
+        if (resourcePath == null) {
             throw new IllegalArgumentException("Path can not be null");
         }
-        InputStream in = CSVParser.class.getResourceAsStream( path);
+        InputStream in = CSVParser.class.getResourceAsStream(resourcePath);
         List<List<String>> content = new ArrayList<>();
-        assert in != null;
+        if(in == null) {
+            throw new IllegalArgumentException("InputStream is null");
+        }
         Scanner sc = new Scanner(in);
-        while (sc.hasNext()){
+        while (sc.hasNextLine()){
             content.add(CSVParser.parseCSVLine(sc.nextLine(),";"));
 
         }
@@ -62,7 +64,7 @@ public final class CSVParser {
             }
         }
         if (!same) {
-            throw new InconsistentCSVLineException();
+            throw new InconsistentCSVLinesException();
         }
         try {
             in.close();
