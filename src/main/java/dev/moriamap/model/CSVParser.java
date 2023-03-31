@@ -42,7 +42,7 @@ public final class CSVParser {
      * @return a list of lists of strings containing raw data.
      * @throws InconsistentCSVLinesException if two lines do not have same number of fields
      */
-    public static List<List<String>> extractLines(String resourcePath) throws InconsistentCSVLinesException {
+    public static List<List<String>> extractLines(String resourcePath) throws InconsistentCSVLinesException, IOException {
         if (resourcePath == null) {
             throw new IllegalArgumentException("Path can not be null");
         }
@@ -65,12 +65,6 @@ public final class CSVParser {
         }
         if (!same) {
             throw new InconsistentCSVLinesException();
-        }
-        try {
-            in.close();
-
-        } catch (IOException e) {
-           throw new RuntimeException();
         }
         return content;
     }
