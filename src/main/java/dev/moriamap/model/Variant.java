@@ -1,4 +1,5 @@
 package dev.moriamap.model;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,44 +8,61 @@ import java.util.List;
  */
 public final class Variant {
 
-    /**
-     * The id of this variant.
-     */
-    public final String id;
+    /** The name of this variant */
+    private String name;
 
-    /**
-     * The line to which this variant belongs.
-     */
-    public final String lineName;
+    /** The line to which this variant belongs */
+    private String lineName;
 
+    /** The list of transportSegments of this variant */
     private List<TransportSegment> transportSegments;
+
+    /** The list of train departures time of this variant */
+    private List<Time> trainDepartures;
 
     /**
      * Class constructor.
      *
-     * @param id of this Variant
+     * @param name of this Variant
      * @param lineName of this Variant
      */
-    private Variant(String id, String lineName) {
-        this.id = id;
+    private Variant(String name, String lineName) {
+        this.name = name;
         this.lineName = lineName;
         this.transportSegments = new ArrayList<>();
+        this.trainDepartures = new ArrayList<>();
     }
 
     /**
      * Static factory.
      *
-     * @param id if this Variant
+     * @param name if this Variant
      * @param lineName of this Variant
      * @return a new empty Variant with the given id and lineName
      */
-    public static Variant empty(String id, String lineName) {
+    public static Variant empty(String name, String lineName) {
         
-        if (lineName == null) {
-            throw new IllegalArgumentException(" lineName can not be null");
+        if (lineName == null || name == null) {
+            throw new IllegalArgumentException("name and lineName can not be null");
         }
 
-        return new Variant(id, lineName);
+        return new Variant(name, lineName);
+    }
+
+    /**
+     * Get the start of this variant
+     * @return the first Stop of this variant
+     */
+    public Stop getStart(){
+        return ((Stop)transportSegments.get(0).getFrom());
+    }
+
+    /**
+     * Get the end of this variant
+     * @return the last Stop of this variant
+     */
+    public Stop getEnd(){
+        return ((Stop)transportSegments.get(transportSegments.size()-1).getTo());
     }
 
     /**
@@ -62,6 +80,48 @@ public final class Variant {
             return false;
         }
         return this.transportSegments.add(ts);
+    }
+
+    /**
+     * Add the given Time to our Time list.
+     * @param t Time to be added
+     * @return false if the given time was added
+     * @throws IllegalArgumentException if the time is Null
+     */
+    public boolean addTrainDeparture(Time t){
+        if (t == null) {
+            throw new IllegalArgumentException("Null TransportSegment is not allowed");
+        }
+
+        if (this.trainDepartures.contains(t)) {
+            return false;
+        }
+        return this.trainDepartures.add(t);
+    }
+
+    /**
+     * {@return the name of this variant}
+     */
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * {@return the lineName of this variant}
+     */
+    public String getLineName(){
+        return this.lineName;
+    }
+
+    /**
+     * {@return a copy of this variant's train departure time list}
+     */
+    public List<Time> getTrainDepartures(){
+        List <Time> res = new ArrayList<>(this.trainDepartures.size());
+        for (Time t : this.trainDepartures)
+            res.add(t);
+
+        return res;
     }
 
     /**
@@ -96,8 +156,12 @@ public final class Variant {
             if (!this.transportSegments.get(i).equals(other.transportSegments.get(i)))
                 return false;
         }
+        for (int i = 0; i < this.trainDepartures.size(); i++) {
+            if (!this.trainDepartures.get(i).equals(other.trainDepartures.get(i)))
+                return false;
+        }
         return other.lineName.equals(this.lineName)
-                && other.id == this.id;
+                && other.name == this.name;
     }
 
     /**
@@ -108,11 +172,10 @@ public final class Variant {
         final int prime = 13;
         int hash = 1;
         hash *= prime;
-        hash += this.id.hashCode();
+        hash += this.name.hashCode();
         hash += this.lineName.hashCode();
-        for(int i=0;i<this.transportSegments.size();i++){
-            hash += this.transportSegments.get(i).hashCode();
-        }
+        for(TransportSegment ts : this.transportSegments) hash += ts.hashCode();
+        for(Time t : this.trainDepartures) hash += t.hashCode();
         return hash;
     }
 }
