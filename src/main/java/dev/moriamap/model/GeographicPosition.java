@@ -233,22 +233,22 @@ public final class GeographicPosition {
     /** Two format : Decimal or complete
      * Decimal : 2.17 
      * Degree Minute Second : 24 12 35 N
-     * @param lattitude a String that contains the latittude in one of the two format
+     * @param latitude a String that contains the latitude in one of the two format
      * @param longitude a String that contains the longitude in one of the two format
      * @return a GeographicPosition
     */
-    public static GeographicPosition from(String lattitude,String longitude) throws IllegalArgumentException{
-        if(lattitude == null || longitude == null)
+    public static GeographicPosition from(String latitude,String longitude){
+        if(latitude == null || longitude == null)
             throw new IllegalArgumentException("one of the argument is null");
 
-        Double lattitudeDouble = 0.0;
+        Double latitudeDouble = 0.0;
         Double longitudeDouble = 0.0;
 
-        if(lattitude.contains("N") || lattitude.contains("S")){ // if contains N or S then Complete Format for lattitude
-            lattitudeDouble = read_format_complete(lattitude);
+        if(latitude.contains("N") || latitude.contains("S")){ // if contains N or S then Complete Format for lattitude
+            latitudeDouble = readCompleteFormat(latitude);
         }else{ 
             try{ 
-                lattitudeDouble = Double.parseDouble(lattitude); 
+                latitudeDouble = Double.parseDouble(latitude); 
             }catch(Exception e){
                 throw new IllegalArgumentException("Wrong format for the lattitude");
             } 
@@ -256,7 +256,7 @@ public final class GeographicPosition {
         }
         
         if(longitude.contains("E") || longitude.contains("W")){
-            longitudeDouble = read_format_complete(longitude);
+            longitudeDouble = readCompleteFormat(longitude);
         }else{ 
             try{ 
                 longitudeDouble = Double.parseDouble(longitude); 
@@ -265,25 +265,27 @@ public final class GeographicPosition {
             }
         }
 
-        return new GeographicPosition(lattitudeDouble, longitudeDouble);
+        return new GeographicPosition(latitudeDouble, longitudeDouble);
     }
 
     /** read the Degree Minute Second and return a Decimal in the form double 
      * @param str either the latitude or the longitude in this format : 24 12 35 N
      * @return a double corresponding to the decimal format
      */
-    public static Double read_format_complete(String str){
+    private static Double readCompleteFormat(String str){
         String[] array = str.split(" "); 
+        
+        if(str.matches("^([0-9]+ ){3}[NESW]$")){
+            Double decimal = Double.parseDouble(array[0]);
+            Double minute = Double.parseDouble(array[1]) / 60;
+            Double second = Double.parseDouble(array[2]) / 3600;
+            int orientation = 1;
+            if(array[3].equals("S") || array[3].equals("W"))
+                orientation = -1;
 
-        if(array.length != 4 || array[3].length() > 1 ){ throw new IllegalArgumentException("Wrong format of string for the lattitude/longitude"); }
+            return (decimal + minute + second) * orientation;
+        }else{ throw new IllegalArgumentException("Wrong format of string for the lattitude/longitude"); }
 
-        Double decimal = Double.parseDouble(array[0]);
-        Double minute = Double.parseDouble(array[1]) / 60;
-        Double second = Double.parseDouble(array[2]) / 3600;
-        int orientation = 1;
-        if(array[3].equals("S") || array[3].equals("W"))
-            orientation = -1;
-
-        return (decimal + minute + second) * orientation;
+        
     }
 }
