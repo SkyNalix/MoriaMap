@@ -53,7 +53,7 @@ public final class Variant {
     /**
      * Get the first Stop in the traversal of this Variant. 
      * The first Stop is such that there is no transportSegment that includes it as a destination in this variant.
-     * The variant must have only one first stop and be in the shape of a line.
+     * The variant must have only one first stop and be in the shape of a line (not a circular shape or a fork).
      * @return the first Stop of this variant
      */
     public Stop getStart(){
@@ -188,7 +188,7 @@ public final class Variant {
                 return false;
         }
         return other.lineName.equals(this.lineName)
-                && other.name == this.name;
+                && other.name.equals(this.name);
     }
 
     /**
