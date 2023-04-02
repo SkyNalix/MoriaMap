@@ -182,19 +182,19 @@ class GeographicPositionTest {
     @Test void readTwoStringSameFormatDegree(){
         GeographicPosition gp = GeographicPosition.from("2 12 45 N", "40 52 36 E");
 
-        boolean isBetweenLattitude = (gp.getLatitude() > 2.1 &&  gp.getLatitude() < 2.3);
+        boolean isBetweenLatitude = (gp.getLatitude() > 2.1 &&  gp.getLatitude() < 2.3);
         boolean isBetweenLongitude = (gp.getLongitude() > 40.7 && gp.getLongitude() < 40.9);
 
-        assertTrue(isBetweenLattitude && isBetweenLongitude);
+        assertTrue(isBetweenLatitude && isBetweenLongitude);
     }
 
     @Test void readTwoStringDifferentFormat(){
         GeographicPosition gp = GeographicPosition.from("2.17", "40 52 36 E");
 
-        boolean is_between_longitude = (gp.getLongitude() > 40.7 && gp.getLongitude() < 40.9);
+        boolean isBetweenLongitude = (gp.getLongitude() > 40.7 && gp.getLongitude() < 40.9);
 
 
-        assertTrue(gp.getLatitude() == 2.17 && is_between_longitude);
+        assertTrue(gp.getLatitude() == 2.17 && isBetweenLongitude);
     }
 
     @Test void fromReadNull(){
