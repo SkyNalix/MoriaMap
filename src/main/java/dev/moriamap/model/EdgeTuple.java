@@ -63,7 +63,7 @@ public record EdgeTuple(String fromName,
 
     /**
      * Transforms lines of a CSV file into a list of EdgeTuples.
-     * @param lines list represnsentiong lines of s CSV file
+     * @param lines list representing the lines of a CSV file
      * @return a list of EdgeTuples
      */
     public static List<EdgeTuple> fromCSVLines(List<List<String>> lines) {
