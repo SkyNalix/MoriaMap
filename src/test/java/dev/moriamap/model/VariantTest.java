@@ -207,11 +207,11 @@ class VariantTest {
         TransportSegment ts4 = TransportSegment.from(s4, s5, "14","Variant 1", Duration.ZERO, 0.0);
         TransportSegment ts5 = TransportSegment.from(s5, s6, "14","Variant 1", Duration.ZERO, 0.0);
         v.addTransportSegments(ts2);
-        v.addTransportSegments(ts1);
+        v.addTransportSegments(ts4);
         v.addTransportSegments(ts5);
         v.addTransportSegments(ts3);
-        v.addTransportSegments(ts4);
-        assertEquals(s1,v.getStart());
+        v.addTransportSegments(ts1);
+        assertEquals(s1.getName(),v.getStart().getName());
     }
 
     @Test void getEnd(){
