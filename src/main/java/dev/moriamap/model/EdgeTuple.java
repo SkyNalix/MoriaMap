@@ -66,7 +66,7 @@ public record EdgeTuple(String fromName,
      * @param lines list representing the lines of a CSV file
      * @return a list of EdgeTuples
      */
-    public static List<EdgeTuple> fromCSVLines(List<List<String>> lines) {
+    public static List<EdgeTuple> fromTuples(List<List<String>> lines) {
         ArrayList<EdgeTuple> res = new ArrayList<>();
         for ( List<String> line: lines) {
             res.add(fromCSVLine(line));
