@@ -34,7 +34,7 @@ public final class Variant {
     }
 
     /**
-     * Static factory building a new empty variant
+     * Static factory method returning a new empty variant
      *
      * @param name if this Variant
      * @param lineName of this Variant
@@ -51,37 +51,45 @@ public final class Variant {
     }
 
     /**
-     * Get the first Stop of this variant
+     * Get the first Stop in the traversal of this Variant. 
+     * The first Stop is such that there is no transportSegment that includes it as a destination in this variant.
+     * The variant must have only one first stop and be in the shape of a line.
      * @return the first Stop of this variant
      */
     public Stop getStart(){
-        List<Stop> stops = new ArrayList<Stop>();
+        List<Stop> stops = new ArrayList<>();
+        List<Stop> prevTo = new ArrayList<>();
         for(TransportSegment ts : transportSegments){
             Stop from = (Stop)ts.getFrom();
             Stop to = (Stop)ts.getTo();
-            if(stops.contains(to)) 
+            prevTo.add(to);
+            if(stops.contains(to))
                 stops.remove(to);
-            if(!stops.contains(from))
+            if(!prevTo.contains(from))
                 stops.add(from);
         }
-        return stops.get(0); 
+        return stops.get(0);
     }
 
     /**
-     * Get the last Stop of this variant
+     * Get the last Stop in the traversal of this Variant.
+     * The last Stop is such that there is no transportSegment that includes it as a departure in this variant.
+     * The variant must have only one first stop and be in the shape of a line.
      * @return the last Stop of this variant
      */
     public Stop getEnd(){
-        List<Stop> stops = new ArrayList<Stop>();
+        List<Stop> stops = new ArrayList<>();
+        List<Stop> prevFrom = new ArrayList<>();
         for(TransportSegment ts : transportSegments){
             Stop from = (Stop)ts.getFrom();
             Stop to = (Stop)ts.getTo();
-            if(stops.contains(from)) 
+            prevFrom.add(from);
+            if(stops.contains(from))
                 stops.remove(from);
-            if(!stops.contains(to))
+            if(!prevFrom.contains(to))
                 stops.add(to);
         }
-        return stops.get(0); 
+        return stops.get(0);
     }
 
     /**
