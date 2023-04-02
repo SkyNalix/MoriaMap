@@ -34,7 +34,7 @@ public record EdgeTuple(String fromName,
      *     The format of fields is assumed to be correct.
      * </p>
      * @param fields the field of the given line
-     * @return a list of EdgeTuple
+     * @return an EdgeTuple represented by fields parameter
      */
     private static EdgeTuple fromCSVLine(List<String> fields) {
         String [] longitudeAndLatitude = fields.get(1).split(", ");
@@ -47,6 +47,7 @@ public record EdgeTuple(String fromName,
         String variantName = fields.get(4).split(" variant ")[1];
         String [] time = fields.get(5).split(":");
         Duration d = Duration.ofSeconds(Integer.parseInt(time[0].trim()) * 60L + Integer.parseInt(time[1].trim()));
+
         return new EdgeTuple(fields.get(0),
                 lon1,
                 lat1,
@@ -57,6 +58,7 @@ public record EdgeTuple(String fromName,
                 variantName,
                 d,
                 Double.parseDouble(fields.get(6)));
+
     }
 
     /**
