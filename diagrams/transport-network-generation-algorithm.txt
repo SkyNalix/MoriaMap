@@ -8,6 +8,7 @@ procedure(List<String> tuples):
     List<Stop> STOPS = empty()
     List<Variant> VARIANTS = empty()
     List<Line> LINES = empty()
+    
     Pour t dans tuples:
         Stop S1 = null;
         Stop S2 = null;
@@ -16,11 +17,13 @@ procedure(List<String> tuples):
         Sinon
             S1 = new Stop(t.nom1, t.lat1, t.lon1)
             ajouter S1 à la liste des STOPS
+
         S'il existe un STOP (t.nom2, t.lat2, t.lon2) dans STOPS:
             S2 = le stop dans STOPS
         Sinon
             S2 = new Stop(t.nom2, t.lat2, t.lon2)
             ajouter S2 à la liste des STOPS
+            
         Line L = null;
         S'il existe une LINE (t.line_name) dans LINES:
             L = la line dans LINES
