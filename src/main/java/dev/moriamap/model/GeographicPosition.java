@@ -241,16 +241,16 @@ public final class GeographicPosition {
         if(latitude == null || longitude == null)
             throw new IllegalArgumentException("one of the argument is null");
 
-        Double latitudeDouble = 0.0;
-        Double longitudeDouble = 0.0;
+        Double latitudeDouble ;
+        Double longitudeDouble ;
 
-        if(latitude.contains("N") || latitude.contains("S")){ // if contains N or S then Complete Format for lattitude
+        if(latitude.contains("N") || latitude.contains("S")){ // if contains N or S then Complete Format for latitude
             latitudeDouble = readCompleteFormat(latitude);
         }else{ 
             try{ 
                 latitudeDouble = Double.parseDouble(latitude); 
             }catch(Exception e){
-                throw new IllegalArgumentException("Wrong format for the lattitude");
+                throw new IllegalArgumentException("Wrong format for the latitude");
             } 
     
         }
@@ -261,7 +261,7 @@ public final class GeographicPosition {
             try{ 
                 longitudeDouble = Double.parseDouble(longitude); 
             }catch(Exception e){
-                throw new IllegalArgumentException("Wrong format for the lattitude");
+                throw new IllegalArgumentException("Wrong format for the latitude");
             }
         }
 
@@ -275,7 +275,7 @@ public final class GeographicPosition {
     private static Double readCompleteFormat(String str){
         String[] array = str.split(" "); 
         
-        if(str.matches("^([0-9]+ ){3}[NESW]$")){
+        if(str.matches("^([\\d]+ ){3}[NESW]$")){
             Double decimal = Double.parseDouble(array[0]);
             Double minute = Double.parseDouble(array[1]) / 60;
             Double second = Double.parseDouble(array[2]) / 3600;
@@ -284,7 +284,7 @@ public final class GeographicPosition {
                 orientation = -1;
 
             return (decimal + minute + second) * orientation;
-        }else{ throw new IllegalArgumentException("Wrong format of string for the lattitude/longitude"); }
+        }else{ throw new IllegalArgumentException("Wrong format of string for the latitude/longitude"); }
 
         
     }
