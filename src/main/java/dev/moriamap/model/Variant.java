@@ -34,10 +34,11 @@ public final class Variant {
     }
 
     /**
-     * Static factory.
+     * Static factory building a new empty variant
      *
      * @param name if this Variant
      * @param lineName of this Variant
+     * @throws IllegalArgumentException if an argument is null
      * @return a new empty Variant with the given id and lineName
      */
     public static Variant empty(String name, String lineName) {
@@ -50,19 +51,37 @@ public final class Variant {
     }
 
     /**
-     * Get the start of this variant
+     * Get the first Stop of this variant
      * @return the first Stop of this variant
      */
     public Stop getStart(){
-        return ((Stop)transportSegments.get(0).getFrom());
+        List<Stop> stops = new ArrayList<Stop>();
+        for(TransportSegment ts : transportSegments){
+            Stop from = (Stop)ts.getFrom();
+            Stop to = (Stop)ts.getTo();
+            if(stops.contains(to)) 
+                stops.remove(to);
+            if(!stops.contains(from))
+                stops.add(from);
+        }
+        return stops.get(0); 
     }
 
     /**
-     * Get the end of this variant
+     * Get the last Stop of this variant
      * @return the last Stop of this variant
      */
     public Stop getEnd(){
-        return ((Stop)transportSegments.get(transportSegments.size()-1).getTo());
+        List<Stop> stops = new ArrayList<Stop>();
+        for(TransportSegment ts : transportSegments){
+            Stop from = (Stop)ts.getFrom();
+            Stop to = (Stop)ts.getTo();
+            if(stops.contains(from)) 
+                stops.remove(from);
+            if(!stops.contains(to))
+                stops.add(to);
+        }
+        return stops.get(0); 
     }
 
     /**

@@ -198,11 +198,20 @@ class VariantTest {
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         Stop s3 = Stop.from("s3",GeographicPosition.SOUTH_POLE);
+        Stop s4 = Stop.from("s4",GeographicPosition.SOUTH_POLE);
+        Stop s5 = Stop.from("s5",GeographicPosition.SOUTH_POLE);
+        Stop s6 = Stop.from("s6",GeographicPosition.SOUTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         TransportSegment ts2 = TransportSegment.from(s2, s3, "14","Variant 1", Duration.ZERO, 0.0);
-        v.addTransportSegments(ts1);
+        TransportSegment ts3 = TransportSegment.from(s3, s4, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts4 = TransportSegment.from(s4, s5, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts5 = TransportSegment.from(s5, s6, "14","Variant 1", Duration.ZERO, 0.0);
         v.addTransportSegments(ts2);
-        assertEquals(s1, v.getStart());
+        v.addTransportSegments(ts1);
+        v.addTransportSegments(ts5);
+        v.addTransportSegments(ts3);
+        v.addTransportSegments(ts4);
+        assertEquals(s1,v.getStart());
     }
 
     @Test void getEnd(){
@@ -210,11 +219,20 @@ class VariantTest {
         Stop s1 = Stop.from("s1",GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2",GeographicPosition.NORTH_POLE);
         Stop s3 = Stop.from("s3",GeographicPosition.SOUTH_POLE);
+        Stop s4 = Stop.from("s4",GeographicPosition.SOUTH_POLE);
+        Stop s5 = Stop.from("s5",GeographicPosition.SOUTH_POLE);
+        Stop s6 = Stop.from("s6",GeographicPosition.SOUTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "14","Variant 1", Duration.ZERO, 0.0);
         TransportSegment ts2 = TransportSegment.from(s2, s3, "14","Variant 1", Duration.ZERO, 0.0);
-        v.addTransportSegments(ts1);
+        TransportSegment ts3 = TransportSegment.from(s3, s4, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts4 = TransportSegment.from(s4, s5, "14","Variant 1", Duration.ZERO, 0.0);
+        TransportSegment ts5 = TransportSegment.from(s5, s6, "14","Variant 1", Duration.ZERO, 0.0);
         v.addTransportSegments(ts2);
-        assertEquals(s3, v.getEnd());
+        v.addTransportSegments(ts1);
+        v.addTransportSegments(ts5);
+        v.addTransportSegments(ts3);
+        v.addTransportSegments(ts4);
+        assertEquals(s6.getName(),v.getEnd().getName());
     }
 
 
