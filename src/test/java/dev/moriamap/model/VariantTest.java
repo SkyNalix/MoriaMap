@@ -16,12 +16,12 @@ class VariantTest {
         assertEquals("1", v.getName());
     }
 
-    @Test void EmptyVariantWithNullLineThrowsException() {
+    @Test void emptyVariantWithNullLineThrowsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> Variant.empty("1", null));
     }
 
-    @Test void EmptyVariantWithNullNameThrowsException() {
+    @Test void emptyVariantWithNullNameThrowsException() {
         assertThrows(IllegalArgumentException.class,
                 () -> Variant.empty(null, "14"));
     }
@@ -114,7 +114,7 @@ class VariantTest {
         assertNotEquals(v,v1);
     }
 
-    @Test void VariantOfSameIdInDifferentLinesAreNotEqual() {
+    @Test void variantOfSameIdInDifferentLinesAreNotEqual() {
         Variant v = Variant.empty("2", "2");
         Variant v1 = Variant.empty("2", "3");
         assertNotEquals(v,v1);
