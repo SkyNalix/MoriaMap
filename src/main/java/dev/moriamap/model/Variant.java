@@ -98,7 +98,7 @@ public final class Variant {
      * @return false if the given transport segment was added
      * @throws IllegalArgumentException if the TransportSegment is Null
      */
-    public boolean addTransportSegments(TransportSegment ts){
+    public boolean addTransportSegment(TransportSegment ts){
         if (ts == null) {
             throw new IllegalArgumentException("Null TransportSegment is not allowed");
         }
@@ -144,22 +144,14 @@ public final class Variant {
      * {@return a copy of this variant's train departure time list}
      */
     public List<Time> getTrainDepartures(){
-        List <Time> res = new ArrayList<>(this.trainDepartures.size());
-        for (Time t : this.trainDepartures)
-            res.add(t);
-
-        return res;
+        return new ArrayList<>(this.trainDepartures);
     }
 
     /**
      * {@return a copy of this variant's transportSegments list}
      */
     public List<TransportSegment> getTransportSegments(){
-        List <TransportSegment> res = new ArrayList<>(this.transportSegments.size());
-        for (TransportSegment ts : this.transportSegments)
-            res.add(ts);
-
-        return res;
+        return new ArrayList<>(this.transportSegments);
     }
 
     /**
@@ -183,6 +175,8 @@ public final class Variant {
             if (!this.transportSegments.get(i).equals(other.transportSegments.get(i)))
                 return false;
         }
+        if(other.trainDepartures.size() != this.trainDepartures.size())
+            return false;
         for (int i = 0; i < this.trainDepartures.size(); i++) {
             if (!this.trainDepartures.get(i).equals(other.trainDepartures.get(i)))
                 return false;
