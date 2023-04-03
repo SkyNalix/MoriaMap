@@ -59,7 +59,7 @@ public class TransportNetworkParser {
         }
     }
 
-    public static List<Stop> stringToStop(String str){
+    private static List<Stop> stringToStop(String str){
         String[] array = str.split(";"); // s1
         String[] lattitude_longitudeS1 = array[1].split(",");
         String[] lattitude_longitudeS2 = array[2].split(",");
@@ -73,12 +73,12 @@ public class TransportNetworkParser {
         return null;
     }
 
-    public static Line stringToLine(String str){
+    private static Line stringToLine(String str){
         String line_variant = str.split(";")[4];
         return Line.of((line_variant.split(" "))[0]);
     }
 
-    public static Variant stringToVariant(String str){
+    private static Variant stringToVariant(String str){
         String line_variant = str.split(";")[4];
 
         Line line = Line.of((line_variant.split(" "))[0]);
