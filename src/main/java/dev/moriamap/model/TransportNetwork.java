@@ -114,23 +114,17 @@ public final class TransportNetwork extends Graph {
 
     /**
      * Add a Stop to this TransportNetwork
-     * @param vertex the Vertex to add
+     * @param stop the Stop to add
      */
-    @Override
-    public void addVertex(Vertex vertex) {
-        if (vertex == null || vertex.getClass() != Stop.class)
-            throw new IllegalArgumentException();
-        super.addVertex(vertex);
+    public void addStop(Stop stop) {
+        this.addVertex(stop);
     }
 
     /**
      * Add a TransportSegment to this TransportNetwork
-     * @param edge the Edge to add
+     * @param transportSegment the TransportSegment to add
      */
-    @Override
-    public void addEdge(Edge edge) {
-        if (edge == null || edge.getClass() != TransportSegment.class)
-            throw new IllegalArgumentException();
-        super.addEdge(edge);
+    public void addTransportSegment(TransportSegment transportSegment) {
+        this.addEdge(transportSegment);
     }
 }
