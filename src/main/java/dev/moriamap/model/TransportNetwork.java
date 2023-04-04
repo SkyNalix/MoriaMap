@@ -113,7 +113,8 @@ public final class TransportNetwork extends Graph {
     }
 
     /**
-     * Add a Stop to this TransportNetwork
+     * Add a Stop to this TransportNetwork. This will actually add a Vertex
+     * to the Graph.
      * @param stop the Stop to add
      */
     public void addStop(Stop stop) {
@@ -121,7 +122,8 @@ public final class TransportNetwork extends Graph {
     }
 
     /**
-     * Add a TransportSegment to this TransportNetwork
+     * Add a TransportSegment to this TransportNetwork. This will actually
+     * add an Edge to the Graph.
      * @param transportSegment the TransportSegment to add
      */
     public void addTransportSegment(TransportSegment transportSegment) {
