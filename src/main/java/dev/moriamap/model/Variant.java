@@ -3,6 +3,7 @@ package dev.moriamap.model;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Represents a Line variant, a unidirectional traversal of a Line such that the
@@ -225,6 +226,26 @@ public final class Variant {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * {@return the outgoing TransportSegment of the specified Stop in this
+     * Variant}
+     * @param stop Some stop
+     * @throws IllegalArgumentException if stop is null
+     * @throws NoSuchElementException if the given stop has no outgoing segment
+     *                                in this Variant
+     * @throws IllegalStateException if the given stop has an outgoing segment
+     *                               in this Variant but was not found
+     */
+    public TransportSegment getOutgoingSegment(Stop stop) {
+        if (!hasOutgoingSegment(stop))
+            throw new NoSuchElementException("No such segment for given stop");
+        for (TransportSegment ts: this.transportSegments) {
+            if (ts.getFrom().equals(stop))
+                return ts;
+        }
+        throw new IllegalStateException("Segment in variant not found");
     }
 }
 

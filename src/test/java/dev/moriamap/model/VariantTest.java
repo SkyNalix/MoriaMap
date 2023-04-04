@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 class VariantTest {
 
@@ -301,5 +302,38 @@ class VariantTest {
         Variant sut = newVariantHelper();
         Stop stop = Stop.from("s5", GeographicPosition.SOUTH_POLE);
         assertTrue(sut.hasOutgoingSegment(stop));
+    }
+
+    @Test void getOutgoingSegmentThrowsExceptionWhenStopIsNull() {
+        Variant sut = newVariantHelper();
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> sut.getOutgoingSegment(null)
+        );
+    }
+
+    @Test void getOutgoingSegmentThrowsExceptionWhenStopHasNoOutgoingEdge() {
+        Variant sut = newVariantHelper();
+        Stop dummy = Stop.from("Null Island", GeographicPosition.NULL_ISLAND);
+        assertThrows(
+            NoSuchElementException.class,
+            () -> sut.getOutgoingSegment(dummy)
+        );
+    }
+
+    @Test void getOutgoingSegmentReturnsOutgoingSegment() {
+        Variant sut = newVariantHelper();
+        Stop s1 = Stop.from("South Pole", GeographicPosition.SOUTH_POLE);
+        Stop s2 = Stop.from("North Pole", GeographicPosition.NORTH_POLE);
+        TransportSegment ts = TransportSegment.from(
+            s1,
+            s2,
+            "14",
+            "variant 1",
+            Duration.ZERO,
+            0.0
+        );
+        sut.addTransportSegment(ts);
+        assertEquals(ts, sut.getOutgoingSegment(s1));
     }
 }
