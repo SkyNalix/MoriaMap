@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.time.Duration;
 
 /**
  * Represents a Line variant, a unidirectional traversal of a Line such that the
@@ -201,7 +202,7 @@ public final class Variant {
      */
     public boolean hasStop(Stop stop) {
         if (stop == null)
-            throw new IllegalArgumentException("Stop can not be null");
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
         for (TransportSegment ts: this.transportSegments) {
             if (ts.getFrom().equals(stop) || ts.getTo().equals(stop))
                 return true;
@@ -217,7 +218,7 @@ public final class Variant {
      */
     public boolean hasOutgoingSegment(Stop stop) {
         if (stop == null)
-            throw new IllegalArgumentException("Stop can not be null");
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
         for (TransportSegment ts: this.transportSegments) {
             if (ts.getFrom().equals(stop))
                 return true;
@@ -243,6 +244,31 @@ public final class Variant {
                 return ts;
         }
         throw new IllegalStateException("Segment in variant not found");
+    }
+
+    /**
+     * {@return the travel time from this Variant's first Stop to the given
+     * stop}
+     * @param to the destination Stop
+     * @throws IllegalArgumentException if to is null
+     * @throws NoSuchElementException if during the traversal one of the stops
+     *                                encountered is not the destination and it
+     *                                has no outgoing segment.
+     * @throws IllegalStateException if the given stop has an outgoing segment
+     *                               in this Variant but was not found
+     */
+    public Duration getTravelTimeTo(Stop to) {
+        if (to == null)
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
+        Duration res = Duration.ZERO;
+        TransportSegment ts = null;
+        Stop cur = getStart();
+        while (!cur.equals(to)) {
+            ts = getOutgoingSegment(cur);
+            res = res.plus(ts.getTravelDuration());
+            cur = (Stop)ts.getTo();
+        }
+        return res;
     }
 }
 
