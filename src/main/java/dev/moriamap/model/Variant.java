@@ -196,6 +196,7 @@ public final class Variant {
     /**
      * {@return true if the specified Stop is present in this Variant}
      * @param stop The stop whose presence is to verify
+     * @throws IllegalArgumentException if stop is null
      */
     public boolean hasStop(Stop stop) {
         if (stop == null)
@@ -206,4 +207,21 @@ public final class Variant {
         }
         return false;
     }
+
+    /**
+     * {@return true if a transport segment of this variant is an outgoing edge
+     * of the specified stop}
+     * @param stop Some stop
+     * @throws IllegalArgumentException if stop is null
+     */
+    public boolean hasOutgoingSegment(Stop stop) {
+        if (stop == null)
+            throw new IllegalArgumentException("Stop can not be null");
+        for (TransportSegment ts: this.transportSegments) {
+            if (ts.getFrom().equals(stop))
+                return true;
+        }
+        return false;
+    }
 }
+

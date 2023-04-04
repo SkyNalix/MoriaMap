@@ -264,4 +264,24 @@ class VariantTest {
         sut.addTransportSegment(ts);
         assertTrue(sut.hasStop(s2));
     }
+
+    @Test void hasOutgoingSegmentThrowsExceptionWhenStopIsNull() {
+        Variant sut = Variant.empty("Asus", "Acer");
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> sut.hasOutgoingSegment(null)
+        );
+    }
+
+    @Test void hasOutgoingSegmentReturnsFalseWhenStopIsAbsent() {
+        Variant sut = Variant.empty("Apple", "Microsoft");
+        Stop stop = Stop.from("arrêt", GeographicPosition.NULL_ISLAND);
+        assertFalse(sut.hasOutgoingSegment(stop));
+    }
+
+    @Test void hasOutgoingSegmentReturnsTrueWhenStopHasOutgoingSegment() {
+        Variant sut = newVariantHelper();
+        Stop stop = Stop.from("s5", GeographicPosition.SOUTH_POLE);
+        assertTrue(sut.hasOutgoingSegment(stop));
+    }
 }
