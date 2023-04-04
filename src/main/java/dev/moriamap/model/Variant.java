@@ -199,4 +199,18 @@ public final class Variant {
         for(Time t : this.trainDepartures) hash += t.hashCode();
         return hash;
     }
+
+    /**
+     * {@return true if the specified Stop is present in this Variant}
+     * @param stop The stop whose presence is to verify
+     */
+    public boolean hasStop(Stop stop) {
+        if (stop == null)
+            throw new IllegalArgumentException("Stop can not be null");
+        for (TransportSegment ts: this.transportSegments) {
+            if (ts.getFrom().equals(stop) || ts.getTo().equals(stop))
+                return true;
+        }
+        return false;
+    }
 }
