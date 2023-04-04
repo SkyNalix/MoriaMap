@@ -336,4 +336,85 @@ class VariantTest {
         sut.addTransportSegment(ts);
         assertEquals(ts, sut.getOutgoingSegment(s1));
     }
+
+    @Test void travelTimeWithNullArgumentThrowsException() {
+        Variant sut = Variant.empty("v", "l");
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> sut.getTravelTimeTo(null)
+        );
+    }
+
+    @Test void travelTimeWithoutOutgoingSegmentThrowsException() {
+        Variant sut = Variant.empty("variant", "ligne");
+        Stop start = Stop.from("stop1", GeographicPosition.at(32, 42));
+        Stop s1 = Stop.from("stop2", GeographicPosition.at(45, 23));
+        Stop s2 = Stop.from("stop3", GeographicPosition.at(59, 16));
+        Stop end = Stop.from("stop4", GeographicPosition.at(25, 20));
+        TransportSegment ts1 = TransportSegment.from(
+            start,
+            s1,
+            "ligne",
+            "variant",
+            Duration.ofMinutes(42),
+            42.0
+        );
+        TransportSegment ts2 = TransportSegment.from(
+            s2,
+            end,
+            "ligne",
+            "variant",
+            Duration.ofMinutes(42),
+            41.99
+        );
+        sut.addTransportSegment(ts1);
+        sut.addTransportSegment(ts2);
+        assertThrows(
+            NoSuchElementException.class,
+            () -> sut.getTravelTimeTo(end)
+        );
+    }
+
+    @Test void travelTimeOfVariantWithOneSegmentEqualsDurationOfSegment() {
+        Variant sut = Variant.empty("variant", "ligne");
+        Stop from = Stop.from("from", GeographicPosition.at(32, 42));
+        Stop to = Stop.from("to", GeographicPosition.at(45, 23));
+        TransportSegment ts = TransportSegment.from(
+            from,
+            to,
+            "ligne",
+            "variant",
+            Duration.ofMinutes(42),
+            42.0
+        );
+        sut.addTransportSegment(ts);
+        assertEquals(ts.getTravelDuration(), sut.getTravelTimeTo(to));
+    }
+
+    @Test void travelTimeOfVariantFromStartToEndEqualsSumOfSegmentDurations() {
+        Variant sut = Variant.empty("v", "l");
+        Stop s1 = Stop.from("d", GeographicPosition.at(32, 42));
+        Stop s2 = Stop.from("i", GeographicPosition.at(65, 123));
+        Stop s3 = Stop.from("j", GeographicPosition.at(20, 54));
+        Stop s4 = Stop.from("k", GeographicPosition.at(19, 77));
+        Stop s5 = Stop.from("s", GeographicPosition.at(32, 45));
+        Stop s6 = Stop.from("t", GeographicPosition.at(14, 15));
+        Stop s7 = Stop.from("r", GeographicPosition.at(45, 26));
+        Stop s8 = Stop.from("a", GeographicPosition.at(44, 63));
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "l", "v", Duration.ofMinutes(1), 42.0);
+        TransportSegment ts2 = TransportSegment.from(s2, s3, "l", "v", Duration.ofMinutes(2), 42.0);
+        TransportSegment ts3 = TransportSegment.from(s3, s4, "l", "v", Duration.ofMinutes(3), 42.0);
+        TransportSegment ts4 = TransportSegment.from(s4, s5, "l", "v", Duration.ofMinutes(4), 42.0);
+        TransportSegment ts5 = TransportSegment.from(s5, s6, "l", "v", Duration.ofMinutes(5), 42.0);
+        TransportSegment ts6 = TransportSegment.from(s6, s7, "l", "v", Duration.ofMinutes(6), 42.0);
+        TransportSegment ts7 = TransportSegment.from(s7, s8, "l", "v", Duration.ofMinutes(7), 42.0);
+        sut.addTransportSegment(ts1);
+        sut.addTransportSegment(ts2);
+        sut.addTransportSegment(ts3);
+        sut.addTransportSegment(ts4);
+        sut.addTransportSegment(ts5);
+        sut.addTransportSegment(ts6);
+        sut.addTransportSegment(ts7);
+        assertEquals(Duration.ofMinutes(28), sut.getTravelTimeTo(s8));
+    }
 }
