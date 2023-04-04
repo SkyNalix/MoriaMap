@@ -117,7 +117,7 @@ public final class Variant {
 
     /**
      * Adds the given departure to this Variant.
-     * @param t the departure to be add
+     * @param departure the departure to be add
      * @return true if the given departure was added
      * @throws IllegalArgumentException if departure is null
      */
