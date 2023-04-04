@@ -253,5 +253,33 @@ class VariantTest {
         assertEquals("s6",v.getEnd().getName());
     }
 
+    @Test void hasStopThrowsExceptionWithNullArgument() {
+        Variant sut = newVariantHelper();
+        assertThrows(
+          IllegalArgumentException.class,
+          () -> sut.hasStop(null)
+        );
+    }
 
+    @Test void hasStopReturnsFalseWhenStopIsAbsent() {
+        Variant sut = newVariantHelper();
+        Stop stop = Stop.from("Saint-Lazare", GeographicPosition.NULL_ISLAND);
+        assertFalse(sut.hasStop(stop));
+    }
+
+    @Test void hasStopReturnsTrueWhenStopIsPresent() {
+        Variant sut = Variant.empty("A4", "Papier 80g");
+        Stop s1 = Stop.from("Clairefontaine", GeographicPosition.NULL_ISLAND);
+        Stop s2 = Stop.from("Otail", GeographicPosition.NORTH_POLE);
+        TransportSegment ts = TransportSegment.from(
+          s1,
+          s2,
+          "un nom différent qui devrait trigger une erreur",
+          "même pas le bon variant",
+          Duration.ZERO,
+          45.0 // FTL
+        );
+        sut.addTransportSegment(ts);
+        assertTrue(sut.hasStop(s2));
+    }
 }
