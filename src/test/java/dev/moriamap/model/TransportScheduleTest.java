@@ -14,10 +14,6 @@ public class TransportScheduleTest {
 	Stop terminus = Stop.from( "stop2", GeographicPosition.at( 34, 11 ) );
 	Variant variant = Variant.empty( "Variant 2", "14" );
 
-	@Test void constructorNoNullTest() {
-		new TransportSchedule( time, stop, terminus, variant );
-	}
-
 	@Test void constructorPassingNullTimeTest() {
 		assertThrows(
 				  NullPointerException.class,
