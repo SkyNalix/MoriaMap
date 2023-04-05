@@ -7,7 +7,7 @@ import org.junit.jupiter.api.TestInstance;
 import java.time.LocalTime;
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
-public class TransportScheduleTest {
+class TransportScheduleTest {
 
 	LocalTime time = LocalTime.of( 4,20,4);
 	Stop stop = Stop.from( "stop1", GeographicPosition.at( 12, 21 ) );

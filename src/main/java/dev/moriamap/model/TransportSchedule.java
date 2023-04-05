@@ -7,7 +7,7 @@ import java.time.LocalTime;
  * Record keeping time when a train from a variant
  * get to a stop, for a specific terminus
  */
-record TransportSchedule(
+public record TransportSchedule(
 		  LocalTime time,
 		  Stop stop,
 		  Stop terminus,
