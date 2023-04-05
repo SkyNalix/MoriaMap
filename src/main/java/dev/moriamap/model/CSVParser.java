@@ -47,7 +47,6 @@ public final class CSVParser {
         if (resource == null) {
             throw new IllegalArgumentException("Path can not be null");
         }
-        //InputStream in = CSVParser.class.getResourceAsStream(resourcePath);
         List<List<String>> content = new ArrayList<>();
         Scanner sc = new Scanner(resource);
         while (sc.hasNextLine()){
