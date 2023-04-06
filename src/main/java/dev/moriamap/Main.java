@@ -5,12 +5,14 @@ import java.time.Duration;
 import dev.moriamap.model.GeographicPosition;
 import dev.moriamap.model.Line;
 import dev.moriamap.model.Stop;
+import dev.moriamap.model.TransportNetwork;
 import dev.moriamap.model.TransportSegment;
 import dev.moriamap.model.Variant;
 
 class Main {
 
     private static TransportNetwork createTransportNetwork(){
+        TransportNetwork res = TransportNetwork.empty();
         Line l1 = Line.of("Ligne 1");
         Line l2 = Line.of("Ligne 2");
         Line l3 = Line.of("Ligne 3");
@@ -110,20 +112,33 @@ class Main {
         //Add variants to lines
         l1.addVariant(v1l1);
         l1.addVariant(v1l2);
-
         l2.addVariant(v1l2);
         l2.addVariant(v2l2);
-
         l3.addVariant(v1l3);
         l3.addVariant(v2l3);
-
         l4.addVariant(v1l4);
         l4.addVariant(v2l4);
 
-        //TODO Create TransportSchedules and the TransportNetwork when we have it
-        return null;
+        //Add lines and stops to the TransportNetwork 
+        res.addLine(l1);
+        res.addLine(l2);
+        res.addLine(l3);
+        res.addLine(l4);
 
+        res.addStop(s1);
+        res.addStop(s2);
+        res.addStop(s3);
+        res.addStop(s4);
+        res.addStop(s5);
+        res.addStop(s6);
+        res.addStop(s7);
+        res.addStop(s8);
+        res.addStop(s9);
+        res.addStop(s10);
+
+        return res;
     }
+
 	public static void main(String[] args) {
         throw new UnsupportedOperationException("Can not run");
     }
