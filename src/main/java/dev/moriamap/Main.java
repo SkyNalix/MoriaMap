@@ -43,25 +43,29 @@ class Main {
         TransportSegment s2Tos1 = TransportSegment.from(s2, s1, "Ligne 1", "Variant 1", Duration.ofMinutes(4), 10);
         TransportSegment s1Tos4 = TransportSegment.from(s1, s4, "Ligne 1", "Variant 1", Duration.ofMinutes(1), 3);
         //Line 1 Variant 2
-        TransportSegment s4Tos1 = TransportSegment.from(s4, s1, "Ligne 1", "Variant 1", Duration.ofMinutes(1), 3);
-        TransportSegment s1Tos2 = TransportSegment.from(s1, s2, "Ligne 1", "Variant 1", Duration.ofMinutes(4), 10);
-        TransportSegment s2Tos10 = TransportSegment.from(s2, s10, "Ligne 1", "Variant 1", Duration.ofMinutes(2), 5);
+        TransportSegment s4Tos1 = TransportSegment.from(s4, s1, "Ligne 1", "Variant 2", Duration.ofMinutes(1), 3);
+        TransportSegment s1Tos2 = TransportSegment.from(s1, s2, "Ligne 1", "Variant 2", Duration.ofMinutes(4), 10);
+        TransportSegment s2Tos10 = TransportSegment.from(s2, s10, "Ligne 1", "Variant 2", Duration.ofMinutes(2), 5);
 
         //Line 2 Variant 1
         TransportSegment s5Tos3 = TransportSegment.from(s5, s3, "Ligne 2", "Variant 1", Duration.ofMinutes(2), 5);
+        TransportSegment s3Tos6l2 = TransportSegment.from(s3, s6, "Ligne 2", "Variant 1", Duration.ofMinutes(1), 3);
         TransportSegment s6Tos4 = TransportSegment.from(s6, s4, "Ligne 2", "Variant 1", Duration.ofMinutes(3), 8);
         //Line 2 Variant 2
         TransportSegment s4Tos6 = TransportSegment.from(s4, s6, "Ligne 2", "Variant 2", Duration.ofMinutes(3), 8);
+        TransportSegment s6Tos3l2 = TransportSegment.from(s6, s3, "Ligne 2", "Variant 2", Duration.ofMinutes(1), 3);
         TransportSegment s3Tos5 = TransportSegment.from(s3, s5, "Ligne 2", "Variant 2", Duration.ofMinutes(2), 5);
 
         //Line 3 Variant 1
         TransportSegment s1Tos3 = TransportSegment.from(s1, s3, "Ligne 3", "Variant 1", Duration.ofMinutes(1), 3);
+        TransportSegment s3Tos6l3 = TransportSegment.from(s3, s6, "Ligne 3", "Variant 1", Duration.ofMinutes(1), 3);
         TransportSegment s6Tos7 = TransportSegment.from(s6, s7, "Ligne 3", "Variant 1", Duration.ofMinutes(3), 8);
         TransportSegment s7Tos8 = TransportSegment.from(s7, s8, "Ligne 3", "Variant 1", Duration.ofMinutes(2), 5);
 
         //Line 3 Variant 2
         TransportSegment s8Tos7 = TransportSegment.from(s8, s7, "Ligne 3", "Variant 2", Duration.ofMinutes(2), 5);
         TransportSegment s7Tos6 = TransportSegment.from(s7, s6, "Ligne 3", "Variant 2", Duration.ofMinutes(3), 8);
+        TransportSegment s6Tos3l3 = TransportSegment.from(s6,s3,"Ligne 3","Variant 2",Duration.ofMinutes(1),3);
         TransportSegment s3Tos1 = TransportSegment.from(s3, s1, "Ligne 3", "Variant 2", Duration.ofMinutes(1), 3);
 
         //Line 4 Variant 1
@@ -71,10 +75,6 @@ class Main {
         //Line 4 Variant 2
         TransportSegment s8Tos9 = TransportSegment.from(s8, s9, "Ligne 4", "Variant 2", Duration.ofMinutes(1), 3);
         TransportSegment s9Tos5 = TransportSegment.from(s9, s5, "Ligne 4", "Variant 2", Duration.ofMinutes(3), 8);
-
-        //TransportSegment shared between line 2 and line 3
-        TransportSegment s6Tos3 = TransportSegment.from(s6, s3, "Ligne 2", "Variant 2", Duration.ofMinutes(1), 3);
-        TransportSegment s3Tos6 = TransportSegment.from(s3, s6, "Ligne 2", "Variant 1", Duration.ofMinutes(1), 3);
 
         //Add the Transport Segments to the variants.
         v1l1.addTransportSegment(s10Tos2);
@@ -86,21 +86,21 @@ class Main {
         v2l1.addTransportSegment(s2Tos10);
 
         v1l2.addTransportSegment(s5Tos3);
-        v1l2.addTransportSegment(s3Tos6);
+        v1l2.addTransportSegment(s3Tos6l2);
         v1l2.addTransportSegment(s6Tos4);
 
         v2l2.addTransportSegment(s4Tos6);
-        v2l2.addTransportSegment(s6Tos3);
+        v2l2.addTransportSegment(s6Tos3l2);
         v2l2.addTransportSegment(s3Tos5);
 
         v1l3.addTransportSegment(s1Tos3);
-        v1l3.addTransportSegment(s3Tos6);
+        v1l3.addTransportSegment(s3Tos6l3);
         v1l3.addTransportSegment(s6Tos7);
         v1l3.addTransportSegment(s7Tos8);
 
         v2l3.addTransportSegment(s8Tos7);
         v2l3.addTransportSegment(s7Tos6);
-        v2l3.addTransportSegment(s6Tos3);
+        v2l3.addTransportSegment(s6Tos3l3);
         v2l3.addTransportSegment(s3Tos1);
 
         v1l4.addTransportSegment(s5Tos9);
@@ -144,18 +144,18 @@ class Main {
         res.addTransportSegment(s1Tos2);
         res.addTransportSegment(s2Tos10);
         res.addTransportSegment(s5Tos3);
-        res.addTransportSegment(s3Tos6);
+        res.addTransportSegment(s3Tos6l2);
         res.addTransportSegment(s6Tos4);
         res.addTransportSegment(s4Tos6);
-        res.addTransportSegment(s6Tos3);
+        res.addTransportSegment(s6Tos3l2);
         res.addTransportSegment(s3Tos5);
         res.addTransportSegment(s1Tos3);
-        res.addTransportSegment(s3Tos6);
+        res.addTransportSegment(s3Tos6l3);
         res.addTransportSegment(s6Tos7);
         res.addTransportSegment(s7Tos8);
         res.addTransportSegment(s8Tos7);
         res.addTransportSegment(s7Tos6);
-        res.addTransportSegment(s6Tos3);
+        res.addTransportSegment(s6Tos3l3);
         res.addTransportSegment(s3Tos1);
         res.addTransportSegment(s5Tos9);
         res.addTransportSegment(s9Tos8);
@@ -166,6 +166,6 @@ class Main {
     }
 
 	public static void main(String[] args) {
-        TransportNetwork tn = Main.createTransportNetwork();
+        throw new UnsupportedOperationException("Can not run");
     }
 }
