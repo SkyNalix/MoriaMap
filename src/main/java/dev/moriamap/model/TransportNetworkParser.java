@@ -3,6 +3,9 @@ package dev.moriamap.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A TransportNetworkParser is a parser that read a List<EdgeTuple> to create a TransportNetwork
+ */
 public class TransportNetworkParser {
 
     private TransportNetworkParser(){
