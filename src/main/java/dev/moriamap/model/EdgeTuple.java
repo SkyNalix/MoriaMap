@@ -41,9 +41,9 @@ public record EdgeTuple(String fromName,
      * @param duration the duration form startStop to destinationStop
      * @param distance distance between the two stops of this edge tuple
      */
-    public EdgeTuple{
+    public EdgeTuple {
         if( fromName == null || toName == null || lineName == null || variantName == null || duration == null )
-            throw new IllegalArgumentException( "No non primitive TransportSchedule values can be null" );
+            throw new IllegalArgumentException("No non-primitive EdgeTuple values can be null");
     }
 
     /**
