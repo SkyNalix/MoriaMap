@@ -1,35 +1,92 @@
 package dev.moriamap.model;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
-
 import org.junit.jupiter.api.*;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransportNetworkParserTest {
     
+    @Test void testFindLineTrue(){
+        Duration time = Duration.ofMinutes(3);
+        EdgeTuple et1 = new EdgeTuple("A", 1.0, 1.0, 
+        "B", 2.0, 2.0, "Ligne Z", "1", time , 7.0);
 
-    @Test
-    void errorParsingFile(){ //src\test\java\dev\moriamap\ressources\testdata.csv
-        assertThrows(
-            IllegalArgumentException.class,
-            () ->  TransportNetworkParser.load("src/test/java/dev/moriamap/ressources/does_not_exist.csv")         //GeographicPosition.at(180.0, 42.0)
-          );
+        List<EdgeTuple> list = new ArrayList<>();
+        list.add(et1);
+        Line l = Line.of("Ligne Z");
+        Variant v = Variant.empty("1",  "Ligne Z");
+        l.addVariant(v);
+
+
+
+        Stop s1 = Stop.from("A", GeographicPosition.from("1.0", "1.0"));
+        Stop s2 = Stop.from("B", GeographicPosition.from("2.0", "2.0"));
+
+        TransportSegment seg = TransportSegment.from(s1, s2,"Ligne Z","1", time, 7.0);
+        v.addTransportSegment(seg);
+
+        TransportNetwork TN = TransportNetworkParser.procedure(list);
+        assertTrue(TN.findLine("Ligne Z").equals(l) );
     }
 
-    @Test 
-    void correct_number_of_lines(){
-        List<Line> transport_network = TransportNetworkParser.load("src/test/java/dev/moriamap/ressources/testdata.csv");
-        assertEquals(2, transport_network.size());
+    @Test void testFindLineFalse(){
+
+        Duration time = Duration.ofMinutes(3);
+        EdgeTuple et1 = new EdgeTuple("A", 1.0, 1.0, 
+        "B", 2.0, 2.0, "Ligne Z", "1", time , 7.0);
+
+        List<EdgeTuple> list = new ArrayList<>();
+        list.add(et1);
+        Line l = Line.of("Ligne Z");
+        TransportNetwork TN = TransportNetworkParser.procedure(list);
+
+        assertFalse(TN.findLine("Ligne Z").equals(l) );
+        
     }
 
-    @Test 
-    void correct_number_of_variants(){
-        List<Line> transport_network = TransportNetworkParser.load("src/test/java/dev/moriamap/ressources/testdata.csv");
-        int[] variant_array = {2,1};
-        for(int i =0; i <transport_network.size();i++){
-            assertEquals( variant_array[i] , transport_network.get(i).getVariants().size());
-        }
+    @Test void FindStopTrue(){
+        Duration time = Duration.ofMinutes(3);
+        EdgeTuple et1 = new EdgeTuple("A", 1.0, 1.0, 
+        "B", 2.0, 2.0, "Ligne Z", "1", time , 7.0);
+
+        List<EdgeTuple> list = new ArrayList<>();
+        list.add(et1);
+        Line l = Line.of("Ligne Z");
+        Variant v = Variant.empty("1",  "Ligne Z");
+        l.addVariant(v);
+
+
+
+        Stop s1 = Stop.from("A", GeographicPosition.from("1.0", "1.0"));
+        Stop s2 = Stop.from("B", GeographicPosition.from("2.0", "2.0"));
+
+        TransportSegment seg = TransportSegment.from(s1, s2,"Ligne Z","1", time, 7.0);
+        v.addTransportSegment(seg);
+
+        TransportNetwork TN = TransportNetworkParser.procedure(list);
+        assertTrue(TN.getStopByName("A").equals(s1) && TN.getStopByName("B").equals(s2));
     }
+
+    @Test void FindStopFalse(){
+        Duration time = Duration.ofMinutes(3);
+        EdgeTuple et1 = new EdgeTuple("A", 1.0, 1.0, 
+        "B", 2.0, 2.0, "Ligne Z", "1", time , 7.0);
+
+        List<EdgeTuple> list = new ArrayList<>();
+        list.add(et1);
+        TransportNetwork TN = TransportNetworkParser.procedure(list);
+
+        Stop s1 = Stop.from("A", GeographicPosition.from("14.0", "1.0"));
+        Stop s2 = Stop.from("B", GeographicPosition.from("23.0", "2.0"));
+
+
+        assertFalse(TN.getStopByName("A").equals(s1) && TN.getStopByName("B").equals(s2) );
+
+    }
+
+
 
 }
