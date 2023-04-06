@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TransportNetworkTest {
+class TransportNetworkTest {
     @Test
     void getStopFromPositionThrowsException() {
         TransportNetwork tn = TransportNetwork.empty();
@@ -81,7 +81,7 @@ public class TransportNetworkTest {
         return tn;
     }
     @Test
-    void getStopFromPosition() {
+    void getStopFromPositionSucceeds() {
         TransportNetwork tn = newTransportNetworkHelper();
         Stop s = tn.getStopFromPosition(GeographicPosition.SOUTH_POLE);
 
@@ -91,13 +91,27 @@ public class TransportNetworkTest {
     }
 
     @Test
-    void getStopByName() {
+    void getStopByNameSucceeds() {
         TransportNetwork tn = newTransportNetworkHelper();
         Stop s = tn.getStopByName("s1");
 
         Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
 
         assertEquals(s1, s);
+    }
+
+    @Test
+    void getStopFromPositionFails() {
+        TransportNetwork tn = newTransportNetworkHelper();
+        Stop s = tn.getStopFromPosition(GeographicPosition.NULL_ISLAND);
+        assertNull(s);
+    }
+
+    @Test
+    void getStopByNameFails() {
+        TransportNetwork tn = newTransportNetworkHelper();
+        Stop s = tn.getStopByName("Dijkstra");
+        assertNull(s);
     }
 
     @Test
@@ -184,5 +198,26 @@ public class TransportNetworkTest {
         TransportNetwork tn = newTransportNetworkHelper();
         Line l = tn.findLine("3");
         assertNull(l);
+    }
+
+    @Test
+    void addStop() {
+        TransportNetwork tn = TransportNetwork.empty();
+        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+        tn.addStop(s1);
+        assertTrue(tn.getStops().contains(s1));
+    }
+
+    @Test
+    void addTransportSegment() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+        Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "7B", "1",
+                Duration.ZERO, 4);
+
+        tn.addTransportSegment(ts1);
+        assertTrue(tn.getTransportSegments().contains(ts1));
     }
 }
