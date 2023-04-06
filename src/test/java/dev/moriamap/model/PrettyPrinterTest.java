@@ -9,7 +9,6 @@ import java.util.List;
 class PrettyPrinterTest {
 
 	static class DummyEdge extends Edge {
-		public DummyEdge() { super( new GraphTest.DummyVertex(), new GraphTest.DummyVertex() ); }
 		public DummyEdge(Vertex from, Vertex to) { super(from, to); }
 		public double getWeight() { return 0; }
 	}
