@@ -1,87 +1,170 @@
 package dev.moriamap.model;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a Line variant.
+ * Represents a Line variant, a unidirectional traversal of a Line such that the
+ * first Stop has no incoming transport segments and the last Stop has no
+ * outgoing transport segments, without loops between them.
  */
 public final class Variant {
+    private static final String NULL_ARG_ERR_MSG = "Argument can not be null";
 
     /**
-     * The id of this variant.
+     * The name of this Variant.
      */
-    public final String id;
+    private String name;
 
     /**
-     * The line to which this variant belongs.
+     * The name of the owner Line.
      */
-    public final String lineName;
+    private String lineName;
 
+    /**
+     * The TransportSegments in this Variant.
+     */
     private List<TransportSegment> transportSegments;
 
     /**
-     * Class constructor.
-     *
-     * @param id of this Variant
-     * @param lineName of this Variant
+     * The departures of transports from this Variant first Stop.
      */
-    private Variant(String id, String lineName) {
-        this.id = id;
+    private List<LocalTime> departures;
+
+    /**
+     * Class constructor specifying variant name and owner line name
+     * @param name the name of this Variant
+     * @param lineName the name of the owner Line of this Variant
+     */
+    private Variant(String name, String lineName) {
+        this.name = name;
         this.lineName = lineName;
         this.transportSegments = new ArrayList<>();
+        this.departures = new ArrayList<>();
     }
 
     /**
-     * Static factory.
-     *
-     * @param id if this Variant
-     * @param lineName of this Variant
-     * @return a new empty Variant with the given id and lineName
+     * {@return a new empty Variant with the given id and owner line name}
+     * @param name the name of this Variant
+     * @param lineName the owner Line name of this Variant
+     * @throws IllegalArgumentException if an argument is null
      */
-    public static Variant empty(String id, String lineName) {
-        
-        if (lineName == null) {
-            throw new IllegalArgumentException(" lineName can not be null");
+    public static Variant empty(String name, String lineName) {
+        if (lineName == null || name == null) {
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
         }
-
-        return new Variant(id, lineName);
+        return new Variant(name, lineName);
     }
 
     /**
-     * Add the given TransportSegment to our TransportSegments list.
-     * @param ts TransportSegment to be added
-     * @return false if the given transport segment was added
-     * @throws IllegalArgumentException if the TransportSegment is Null
+     * Returns the first Stop in the traversal of this Variant. 
+     * The first Stop is such that there is no transportSegment that includes it
+     * as a destination in this variant. The variant must have only one first
+     * stop and be in the shape of a line (not a circular shape or a fork).
+     * @return the first Stop of this Variant
      */
-    public boolean addTransportSegments(TransportSegment ts){
-        if (ts == null) {
-            throw new IllegalArgumentException("Null TransportSegment is not allowed");
+    public Stop getStart(){
+        List<Stop> stops = new ArrayList<>();
+        List<Stop> prevTo = new ArrayList<>();
+        for(TransportSegment ts : transportSegments){
+            Stop from = (Stop)ts.getFrom();
+            Stop to = (Stop)ts.getTo();
+            prevTo.add(to);
+            if(stops.contains(to))
+                stops.remove(to);
+            if(!prevTo.contains(from))
+                stops.add(from);
         }
+        return stops.get(0);
+    }
 
-        if (this.transportSegments.contains(ts)) {
+    /**
+     * Get the last Stop in the traversal of this Variant.
+     * The last Stop is such that there is no transportSegment that includes it
+     * as a departure in this variant.
+     * The variant must have only one first stop and be in the shape of a line.
+     * @return the last Stop of this Variant
+     */
+    public Stop getEnd(){
+        List<Stop> stops = new ArrayList<>();
+        List<Stop> prevFrom = new ArrayList<>();
+        for(TransportSegment ts : transportSegments){
+            Stop from = (Stop)ts.getFrom();
+            Stop to = (Stop)ts.getTo();
+            prevFrom.add(from);
+            if(stops.contains(from))
+                stops.remove(from);
+            if(!prevFrom.contains(to))
+                stops.add(to);
+        }
+        return stops.get(0);
+    }
+
+    /**
+     * Adds the given TransportSegment to this Variant.
+     * @param ts the TransportSegment to add
+     * @return true if the given TransportSegment was added
+     * @throws IllegalArgumentException if ts is null
+     */
+    public boolean addTransportSegment(TransportSegment ts){
+        if (ts == null)
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
+        if (this.transportSegments.contains(ts))
             return false;
-        }
         return this.transportSegments.add(ts);
     }
 
     /**
-     * {@return a copy of this variant's transportSegments list}
+     * Adds the given departure to this Variant.
+     * @param departure the departure to be add
+     * @return true if the given departure was added
+     * @throws IllegalArgumentException if departure is null
+     */
+    public boolean addDeparture(LocalTime departure){
+        if (departure == null)
+            throw new IllegalArgumentException(NULL_ARG_ERR_MSG);
+        if (this.departures.contains(departure))
+            return false;
+        return this.departures.add(departure);
+    }
+
+    /**
+     * {@return the name of this Variant}
+     */
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * {@return the lineName of this Variant}
+     */
+    public String getLineName(){
+        return this.lineName;
+    }
+
+    /**
+     * {@return a copy of this Variant's transport departures list}
+     */
+    public List<LocalTime> getDepartures(){
+        return new ArrayList<>(this.departures);
+    }
+
+    /**
+     * {@return a copy of this Variant's transport segments}
      */
     public List<TransportSegment> getTransportSegments(){
-        List <TransportSegment> res = new ArrayList<>(this.transportSegments.size());
-        for (TransportSegment ts : this.transportSegments)
-            res.add(ts);
-
-        return res;
+        return new ArrayList<>(this.transportSegments);
     }
 
     /**
      * Check if this variant is equal to the given line.
      * <p>
      *     Two variants are equal if they have the same lineName, the same id 
-     *     and the same (by a call to equals) transportSegments in the same order.
+     *     and the same (by a call to equals) transportSegments in the same
+     *     order.
      * </p>
-     * @param object to be compared to
+     * @param object the Object to compare
      * @return true if this is equal to object
      */
     @Override public boolean equals(Object object) {
@@ -90,29 +173,23 @@ public final class Variant {
         if (object == null || object.getClass() != this.getClass())
             return false;
         Variant other = (Variant) object;
-        if (other.transportSegments.size() != this.transportSegments.size())
-            return false;
-        for (int i = 0; i < this.transportSegments.size(); i++) {
-            if (!this.transportSegments.get(i).equals(other.transportSegments.get(i)))
-                return false;
-        }
         return other.lineName.equals(this.lineName)
-                && other.id == this.id;
+            && other.name.equals(this.name)
+            && other.departures.equals(this.departures)
+            && other.transportSegments.equals(this.transportSegments);
     }
 
     /**
-     * Gets the hash code of this variant
-     * @return the hash code of this variant
+     * {@return the hash code of this Variant}
      */
     @Override public int hashCode(){
         final int prime = 13;
         int hash = 1;
         hash *= prime;
-        hash += this.id.hashCode();
+        hash += this.name.hashCode();
         hash += this.lineName.hashCode();
-        for(int i=0;i<this.transportSegments.size();i++){
-            hash += this.transportSegments.get(i).hashCode();
-        }
+        for(TransportSegment ts : this.transportSegments) hash += ts.hashCode();
+        for(LocalTime t : this.departures) hash += t.hashCode();
         return hash;
     }
 }
