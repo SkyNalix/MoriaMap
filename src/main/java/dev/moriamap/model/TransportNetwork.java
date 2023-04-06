@@ -3,8 +3,6 @@ package dev.moriamap.model;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: tests, SonarQube
-
 public final class TransportNetwork extends Graph {
     private final List<Line> lines;
 
