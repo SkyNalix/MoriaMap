@@ -5,13 +5,17 @@ import java.util.List;
 
 public class TransportNetworkParser {
 
+    private TransportNetworkParser(){
+
+    }
+
     /**
      * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
      * @param tuples a List of EdgeTuple 
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork procedure(List<EdgeTuple> tuples){
-        TransportNetwork TN = TransportNetwork.empty();
+    public static TransportNetwork generate(List<EdgeTuple> tuples){
+        TransportNetwork tn = TransportNetwork.empty();
         List<Variant> VARIANTS = new ArrayList<>();
 
         for(int i=0;i<tuples.size();i++){
@@ -22,9 +26,9 @@ public class TransportNetworkParser {
             String tLongitude = String.valueOf(t.fromLongitude());
             
             Stop s1 = Stop.from(tName, GeographicPosition.from(tLatitude ,tLongitude));
-            Stop realS1 = TN.findStop(s1);
+            Stop realS1 = tn.findStop(s1);
             if(realS1 == null){
-                TN.addStop(s1);
+                tn.addStop(s1);
             }else{
                 s1 = realS1;
             }
@@ -33,18 +37,18 @@ public class TransportNetworkParser {
             String tLatitude2 = String.valueOf(t.toLatitude());
             String tLongitude2 = String.valueOf(t.toLongitude());
             Stop s2 = Stop.from(tName2, GeographicPosition.from(tLatitude2 ,tLongitude2));
-            Stop realS2 = TN.findStop(s2);
+            Stop realS2 = tn.findStop(s2);
             if(realS2 == null){
-                TN.addStop(s2);
+                tn.addStop(s2);
             }else{
                 s2 = realS2;
             }
 
 
-            Line l = TN.findLine(t.lineName());
+            Line l = tn.findLine(t.lineName());
             if(l == null){
                 l = Line.of(t.lineName());
-                TN.addLine(l);
+                tn.addLine(l);
             }else{
                 l = Line.of(t.lineName());
             }
@@ -61,12 +65,12 @@ public class TransportNetworkParser {
 
 
             TransportSegment segment = TransportSegment.from(s1, s2, t.lineName(), t.variantName(), t.duration(),t.distance());
-            TN.addEdge(segment);
+            tn.addEdge(segment);
             v.addTransportSegment(segment);
 
         }
 
-        return TN;
+        return tn;
     }
 
 }
