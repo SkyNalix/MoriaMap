@@ -25,7 +25,7 @@ class Main {
         Variant v1l3 = Variant.empty("Variant 1", "Ligne 3");
         Variant v2l3 = Variant.empty("Variant 2", "Ligne 3");
         Variant v1l4 = Variant.empty("Variant 1", "Ligne 4");
-        Variant v2l4 = Variant.empty("Variant 2", "Ligne 5");
+        Variant v2l4 = Variant.empty("Variant 2", "Ligne 4");
 
         Stop s1 = Stop.from("s1", GeographicPosition.at(0.0, -1.0));
         Stop s2 = Stop.from("s2", GeographicPosition.at(1.0, -1.0));
@@ -119,7 +119,7 @@ class Main {
         l4.addVariant(v1l4);
         l4.addVariant(v2l4);
 
-        //Add lines and stops to the TransportNetwork 
+        //Add lines, stops and transport segments  to the TransportNetwork 
         res.addLine(l1);
         res.addLine(l2);
         res.addLine(l3);
@@ -136,10 +136,36 @@ class Main {
         res.addStop(s9);
         res.addStop(s10);
 
+
+        res.addTransportSegment(s10Tos2);
+        res.addTransportSegment(s2Tos1);
+        res.addTransportSegment(s1Tos4);
+        res.addTransportSegment(s4Tos1);
+        res.addTransportSegment(s1Tos2);
+        res.addTransportSegment(s2Tos10);
+        res.addTransportSegment(s5Tos3);
+        res.addTransportSegment(s3Tos6);
+        res.addTransportSegment(s6Tos4);
+        res.addTransportSegment(s4Tos6);
+        res.addTransportSegment(s6Tos3);
+        res.addTransportSegment(s3Tos5);
+        res.addTransportSegment(s1Tos3);
+        res.addTransportSegment(s3Tos6);
+        res.addTransportSegment(s6Tos7);
+        res.addTransportSegment(s7Tos8);
+        res.addTransportSegment(s8Tos7);
+        res.addTransportSegment(s7Tos6);
+        res.addTransportSegment(s6Tos3);
+        res.addTransportSegment(s3Tos1);
+        res.addTransportSegment(s5Tos9);
+        res.addTransportSegment(s9Tos8);
+        res.addTransportSegment(s8Tos9);
+        res.addTransportSegment(s9Tos5);
+
         return res;
     }
 
 	public static void main(String[] args) {
-        throw new UnsupportedOperationException("Can not run");
+        TransportNetwork tn = Main.createTransportNetwork();
     }
 }
