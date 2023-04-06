@@ -8,6 +8,8 @@ import java.util.List;
 public final class TransportNetwork extends Graph {
     private final List<Line> lines;
 
+    private static final String ERR_NULL_ARG_MESSAGE = "Argument cannot be null";
+
     private TransportNetwork() {
         super();
         this.lines = new ArrayList<>();
@@ -27,7 +29,7 @@ public final class TransportNetwork extends Graph {
      * @throws IllegalArgumentException if gp is null
      */
     public Stop getStopFromPosition(GeographicPosition gp) {
-        if (gp == null) throw new IllegalArgumentException();
+        if (gp == null) throw new IllegalArgumentException(ERR_NULL_ARG_MESSAGE);
         for (Stop s : this.getStops()) {
             if (s.getGeographicPosition().equals(gp))
                 return s;
@@ -42,7 +44,7 @@ public final class TransportNetwork extends Graph {
      * @throws IllegalArgumentException if name is null
      */
     public Stop getStopByName(String name) {
-        if (name == null) throw new IllegalArgumentException();
+        if (name == null) throw new IllegalArgumentException(ERR_NULL_ARG_MESSAGE);
         for (Stop s : this.getStops()) {
             if (s.getName().equals(name))
                 return s;
@@ -72,26 +74,43 @@ public final class TransportNetwork extends Graph {
     public List<Stop> getStops() {
         List<Vertex> vertices = this.getVertices();
         List<Stop> stops = new ArrayList<>();
-        for (Vertex v : vertices) stops.add((Stop)v);
+        for (Vertex v : vertices)
+            if (v.getClass() == Stop.class)
+                stops.add((Stop)v);
         return stops;
+    }
+
+    /**
+     * {@return all the transport segments of this TransportNetwork}
+     */
+    public List<TransportSegment> getTransportSegments() {
+        List<Edge> edges = this.getEdges();
+        List<TransportSegment> transportSegments = new ArrayList<>();
+        for (Edge e : edges)
+            if (e.getClass() == TransportSegment.class)
+                transportSegments.add((TransportSegment)e);
+        return transportSegments;
     }
 
     /**
      * Add a line to the TransportNetwork.
      * {@return true if added, false if already present}
-     * @param l the Line to add
+     * @param line the Line to add
+     * @throws IllegalArgumentException if line is null
      */
-    public boolean addLine(Line l) {
-        if (lines.contains(l)) return false;
-        return lines.add(l);
+    public boolean addLine(Line line) {
+        if (line == null) throw new IllegalArgumentException(ERR_NULL_ARG_MESSAGE);
+        if (lines.contains(line)) return false;
+        return lines.add(line);
     }
 
     /**
      * {@return the Stop in the TransportNetwork equal to stop or null if not found}
      * @param stop the stop to find by equals(Object)
+     * @throws IllegalArgumentException if stop is null
      */
     public Stop findStop(Stop stop) {
-        if (stop == null) throw new IllegalArgumentException();
+        if (stop == null) throw new IllegalArgumentException(ERR_NULL_ARG_MESSAGE);
         for (Stop s : this.getStops())
             if (s.equals(stop))
                 return s;
@@ -101,9 +120,10 @@ public final class TransportNetwork extends Graph {
     /**
      * {@return the Line whose name is name or null if not found}
      * @param name the name of the Line
+     * @throws IllegalArgumentException if name is null
      */
     public Line findLine(String name) {
-        if (name == null) throw new IllegalArgumentException();
+        if (name == null) throw new IllegalArgumentException(ERR_NULL_ARG_MESSAGE);
         for (Line l : this.getLines())
             if (l.getName().equals(name))
                 return l;
