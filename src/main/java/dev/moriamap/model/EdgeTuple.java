@@ -28,6 +28,11 @@ public record EdgeTuple(String fromName,
                         Duration duration,
                         double distance) {
 
+    public EdgeTuple{
+        if( fromName == null || toName == null || lineName == null || variantName == null || duration == null )
+            throw new IllegalArgumentException( "No non primitive TransportSchedule values can be null" );
+    }
+
     /**
      * Transforms a list of strings representing a CSV file line to an EdgeTuple.
      * <p>
