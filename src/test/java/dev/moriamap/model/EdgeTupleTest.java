@@ -54,7 +54,7 @@ class EdgeTupleTest {
                             50.6,
                             "12",
                             "1",
-                            Duration.ofSeconds(23),
+                            Duration.ZERO,
                             23.4);
         });
     }
@@ -71,7 +71,7 @@ class EdgeTupleTest {
                             50.6,
                             "12",
                             "1",
-                            Duration.ofSeconds(23),
+                            Duration.ZERO,
                             23.4);
                 });
     }
@@ -88,7 +88,7 @@ class EdgeTupleTest {
                             50.6,
                             null,
                             "1",
-                            Duration.ofSeconds(23),
+                            Duration.ZERO,
                             23.4);
                 });
     }
@@ -105,14 +105,14 @@ class EdgeTupleTest {
                             50.6,
                             "14",
                             null,
-                            Duration.ofSeconds(23),
+                            Duration.ZERO,
                             23.4);
                 });
     }
 
     @Test void constructorParsingNullDuration() {
         assertThrows( IllegalArgumentException.class,
-                () ->{
+                () ->
                     new EdgeTuple(
                             "Olympiades",
                             40.5,
@@ -123,8 +123,7 @@ class EdgeTupleTest {
                             "14",
                             "1",
                             null,
-                            23.4);
-                });
+                            23.4));
     }
 
     @Test void fromNameGetter() {
