@@ -6,9 +6,9 @@ import java.util.List;
 public class TransportNetworkParser {
 
     /**
-     * 
-     * @param tuples
-     * @return a TransportNetwork
+     * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
+     * @param tuples a List of EdgeTuple 
+     * @return a TransportNetwork corrsponding to the network given in argument
      */
     public static TransportNetwork procedure(List<EdgeTuple> tuples){
         TransportNetwork TN = TransportNetwork.empty();
@@ -29,7 +29,6 @@ public class TransportNetworkParser {
                 s1 = realS1;
             }
 
-
             String tName2 = t.toName();
             String tLatitude2 = String.valueOf(t.toLatitude());
             String tLongitude2 = String.valueOf(t.toLongitude());
@@ -41,6 +40,7 @@ public class TransportNetworkParser {
                 s2 = realS2;
             }
 
+
             Line l = TN.findLine(t.lineName());
             if(l == null){
                 l = Line.of(t.lineName());
@@ -48,6 +48,7 @@ public class TransportNetworkParser {
             }else{
                 l = Line.of(t.lineName());
             }
+
 
             Variant v = null;
             if(VARIANTS.contains( Variant.empty(t.variantName(), t.lineName()) )){
