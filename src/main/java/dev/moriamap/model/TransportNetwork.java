@@ -1,9 +1,7 @@
 package dev.moriamap.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 // TODO: tests, SonarQube
 
@@ -79,7 +77,7 @@ public final class TransportNetwork extends Graph {
     }
 
     /**
-     * Add a line to the TransportNetwork
+     * Add a line to the TransportNetwork.
      * {@return true if added, false if already present}
      * @param l the Line to add
      */
