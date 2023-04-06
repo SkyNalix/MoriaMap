@@ -66,4 +66,9 @@ class StopTest {
         Stop w = Stop.from("Stop", GeographicPosition.at(18.59,18.42));
         assertEquals(v,w);
     }
+
+    @Test void toStringTest() {
+        Stop s = Stop.from("Stop", GeographicPosition.at(15.59,18.43));
+        assertEquals("Stop",s.toString());
+    }
 }
