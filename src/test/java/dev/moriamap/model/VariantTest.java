@@ -275,8 +275,8 @@ class VariantTest {
         TransportSegment ts = TransportSegment.from(
           s1,
           s2,
-          "un nom différent qui devrait trigger une erreur",
-          "même pas le bon variant",
+          "Papier 80g",
+          "A4",
           Duration.ZERO,
           45.0 // FTL
         );
@@ -329,7 +329,7 @@ class VariantTest {
             s1,
             s2,
             "14",
-            "variant 1",
+            "Variant 1",
             Duration.ZERO,
             0.0
         );
