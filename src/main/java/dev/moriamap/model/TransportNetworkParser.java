@@ -2,7 +2,6 @@ package dev.moriamap.model;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,6 @@ public class TransportNetworkParser {
 
         List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
         TransportNetwork tn = TransportNetwork.empty();
-        List<Variant> VARIANTS = new ArrayList<>();
 
         for(EdgeTuple t : tuples){
             Stop s1 = Stop.from(t.fromName(),GeographicPosition.at(t.fromLatitude(), t.fromLongitude()) ); 
@@ -59,7 +57,6 @@ public class TransportNetworkParser {
             if(v == null){
                 v = Variant.empty(t.variantName(),t.lineName());
                 l.addVariant(v);
-                VARIANTS.add(v);
             }
 
 
