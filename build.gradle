@@ -57,8 +57,6 @@ sonar {
     }
 }
 
-// -q --console plain
-
 run {
     standardInput = System.in
 }
