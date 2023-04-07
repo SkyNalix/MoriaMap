@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TransportNetworkParserTest {
     
-    @Test void testNumberOfLine() throws InconsistentCSVLinesException,IOException{
+    @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/map_data.csv");
         TransportNetwork tn = TransportNetworkParser.generate(resource);
         assertEquals(16,tn.getLines().size());
