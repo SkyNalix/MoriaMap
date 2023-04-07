@@ -1,5 +1,7 @@
 package dev.moriamap.model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +19,14 @@ public class TransportNetworkParser {
      * @param tuples a List of EdgeTuple 
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generate(List<EdgeTuple> tuples){
+    public static TransportNetwork generate(InputStream ressource) throws InconsistentCSVLinesException, IOException{
+
+        List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(ressource));
         TransportNetwork tn = TransportNetwork.empty();
         List<Variant> VARIANTS = new ArrayList<>();
 
-        for(int i=0;i<tuples.size();i++){
-            EdgeTuple t = tuples.get(i);
-
-            String tName = t.fromName();
-            String tLatitude = String.valueOf(t.fromLatitude());
-            String tLongitude = String.valueOf(t.fromLongitude());
-            
-            Stop s1 = Stop.from(tName, GeographicPosition.from(tLatitude ,tLongitude));
+        for(EdgeTuple t : tuples){
+            Stop s1 = Stop.from(t.fromName(),GeographicPosition.at(t.fromLatitude(), t.fromLongitude()) ); 
             Stop realS1 = tn.findStop(s1);
             if(realS1 == null){
                 tn.addStop(s1);
@@ -36,10 +34,7 @@ public class TransportNetworkParser {
                 s1 = realS1;
             }
 
-            String tName2 = t.toName();
-            String tLatitude2 = String.valueOf(t.toLatitude());
-            String tLongitude2 = String.valueOf(t.toLongitude());
-            Stop s2 = Stop.from(tName2, GeographicPosition.from(tLatitude2 ,tLongitude2));
+            Stop s2 = Stop.from(t.toName(),GeographicPosition.at(t.toLatitude(), t.toLongitude()) );
             Stop realS2 = tn.findStop(s2);
             if(realS2 == null){
                 tn.addStop(s2);
@@ -52,28 +47,31 @@ public class TransportNetworkParser {
             if(l == null){
                 l = Line.of(t.lineName());
                 tn.addLine(l);
-            }else{
-                l = Line.of(t.lineName());
             }
 
 
             Variant v = null;
-            if(VARIANTS.contains( Variant.empty(t.variantName(), t.lineName()) )){
-                v = Variant.empty(t.variantName(), t.lineName());
-            }else{
-                v = Variant.empty(t.variantName(), t.lineName());
-                VARIANTS.add(v);
+
+            for(Variant lv : l.getVariants()){
+                if (lv.getName().equals(t.variantName()) && lv.getLineName().equals(t.lineName()))
+                    v = lv;
+            }
+            if(v == null){
+                v = Variant.empty(t.variantName(),t.lineName());
                 l.addVariant(v);
+                VARIANTS.add(v);
             }
 
 
             TransportSegment segment = TransportSegment.from(s1, s2, t.lineName(), t.variantName(), t.duration(),t.distance());
-            tn.addEdge(segment);
+            tn.addTransportSegment(segment);
             v.addTransportSegment(segment);
 
         }
 
         return tn;
     }
+
+
 
 }
