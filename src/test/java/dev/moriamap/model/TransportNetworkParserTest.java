@@ -8,26 +8,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-class TransportNetworkParserTest {
-    
+class TransportNetworkParserTest {    
     @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
-        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
-        TransportNetwork tn = TransportNetworkParser.generate(resource);
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
+        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
         assertEquals(2,tn.getLines().size());
     }
 
     @Test void testNumberOfVariant() throws InconsistentCSVLinesException,IOException{
-        /*
-         * 
-         * 8 : 3
-         * 4 : 3
-         * 
-         */
         List<Integer> transportNetworkVariantSizeList = new ArrayList<>();
         List<Integer> variantSizeList = List.of(3,3);
 
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
-        TransportNetwork tn = TransportNetworkParser.generate(resource);
+        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
 
         for(int i =0; i < tn.getLines().size();i++){
             Line l = tn.getLines().get(i);
@@ -36,6 +29,34 @@ class TransportNetworkParserTest {
 
         assertEquals(variantSizeList,transportNetworkVariantSizeList);
 
+    }
+
+    @Test void findLineNameEqualTrue() throws IOException,InconsistentCSVLinesException{
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
+
+        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+
+        assertEquals(tn.findLine("8").getName(),"8" );
+    }
+
+    @Test void findLineObjectEqualFalse()throws IOException,InconsistentCSVLinesException{
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
+
+        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+        Line l = Line.of("8");
+        assertNotEquals(tn.findLine("8"),l);
+    }
+
+    @Test void findStopObjectEqualFalse() throws IOException,InconsistentCSVLinesException {
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
+        List<List<String>> resourceList = CSVParser.extractLines(resource);
+        List<EdgeTuple> edgeTupleList =  EdgeTuple.fromTuples(resourceList);
+
+        TransportNetwork tn = TransportNetworkParser.generateFromEdgeTuple(edgeTupleList);
+
+        Stop stop = Stop.from("Faidherbe - Chaligny", GeographicPosition.at(2.384028566383108, 48.85011054413369));
+       
+       assertNotEquals(tn.getStopByName("Faidherbe - Chaligny"),stop) ;
     }
 
 
