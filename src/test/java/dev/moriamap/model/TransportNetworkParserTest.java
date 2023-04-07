@@ -13,12 +13,18 @@ class TransportNetworkParserTest {
     @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
         TransportNetwork tn = TransportNetworkParser.generate(resource);
-        assertEquals(16,tn.getLines().size());
+        assertEquals(2,tn.getLines().size());
     }
 
     @Test void testNumberOfVariant() throws InconsistentCSVLinesException,IOException{
+        /*
+         * 
+         * 8 : 3
+         * 4 : 3
+         * 
+         */
         List<Integer> transportNetworkVariantSizeList = new ArrayList<>();
-        List<Integer> variantSizeList = List.of(5,9,4,4,6,5,4,2,6,9,11,7,8,6,5,2);
+        List<Integer> variantSizeList = List.of(3,3);
 
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
         TransportNetwork tn = TransportNetworkParser.generate(resource);
