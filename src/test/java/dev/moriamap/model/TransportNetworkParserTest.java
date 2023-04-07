@@ -19,7 +19,7 @@ class TransportNetworkParserTest {
         List<Integer> transportNetworkVariantSizeList = new ArrayList<>();
         List<Integer> variantSizeList = List.of(3,3);
 
-        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
         TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
 
         for(int i =0; i < tn.getLines().size();i++){
