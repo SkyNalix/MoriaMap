@@ -24,7 +24,8 @@ public class TransportNetworkParser {
         TransportNetwork tn = TransportNetwork.empty();
 
         for(EdgeTuple t : tuples){
-            Stop s1 = Stop.from(t.fromName(),GeographicPosition.at(t.fromLatitude(), t.fromLongitude()) ); 
+            //Stop s1 = Stop.from(t.fromName(),GeographicPosition.at(t.fromLatitude(), t.fromLongitude()) ); 
+            Stop s1 = createStop(t.fromName(), t.fromLatitude(), t.fromLongitude());
             Stop realS1 = tn.findStop(s1);
             if(realS1 == null){
                 tn.addStop(s1);
@@ -32,7 +33,8 @@ public class TransportNetworkParser {
                 s1 = realS1;
             }
 
-            Stop s2 = Stop.from(t.toName(),GeographicPosition.at(t.toLatitude(), t.toLongitude()) );
+            //Stop s2 = Stop.from(t.toName(),GeographicPosition.at(t.toLatitude(), t.toLongitude()) );
+            Stop s2 = createStop(t.toName(),t.toLatitude(),t.toLongitude());
             Stop realS2 = tn.findStop(s2);
             if(realS2 == null){
                 tn.addStop(s2);
@@ -67,6 +69,17 @@ public class TransportNetworkParser {
         }
 
         return tn;
+    }
+
+    /**
+     * 
+     * @param name name of the Stop
+     * @param latitude latitude of the Stop
+     * @param longitude longitude of the Stop
+     * @return a new Stop with the name and position given
+     */
+    private static Stop createStop(String name,Double latitude,Double longitude){
+        return Stop.from(name, GeographicPosition.at(latitude, longitude));
     }
 
 
