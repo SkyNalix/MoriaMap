@@ -8,10 +8,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransportNetworkParserTest {
+class TransportNetworkParserTest {
     
     @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
-        InputStream resource = CSVParserTest.class.getResourceAsStream("/map_data.csv");
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
         TransportNetwork tn = TransportNetworkParser.generate(resource);
         assertEquals(16,tn.getLines().size());
     }
@@ -20,7 +20,7 @@ public class TransportNetworkParserTest {
         List<Integer> transportNetworkVariantSizeList = new ArrayList<>();
         List<Integer> variantSizeList = List.of(5,9,4,4,6,5,4,2,6,9,11,7,8,6,5,2);
 
-        InputStream resource = CSVParserTest.class.getResourceAsStream("/map_data.csv");
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data.csv");
         TransportNetwork tn = TransportNetworkParser.generate(resource);
 
         for(int i =0; i < tn.getLines().size();i++){
