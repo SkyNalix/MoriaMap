@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * A TransportNetworkParser is a parser that read a List of EdgeTuple to create a TransportNetwork
+ * A TransportNetworkParser is a parser that read a InputStream of a csv file to create a TransportNetwork
  */
 public class TransportNetworkParser {
 
@@ -15,7 +15,7 @@ public class TransportNetworkParser {
 
     /**
      * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
-     * @param tuples a List of EdgeTuple 
+     * @param transportNetworkFileContent the stream to the data csv file 
      * @return a TransportNetwork corrsponding to the network given in argument
      */
     public static TransportNetwork generate(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
