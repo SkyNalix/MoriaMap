@@ -182,20 +182,21 @@ class Main {
             if(targetStopName.isBlank()) break;
 
             Stop start = tn.getStopByName( startStopName );
-            Stop end = tn.getStopByName( targetStopName );
-            if(start == null || end == null) {
-                System.out.println( "One of the stops was not found, restart" );
+            Stop target = tn.getStopByName( targetStopName );
+            if(start == null || target == null) {
+                System.out.println( "One of the stops was not found, please check your inputs and repeat" );
             } else {
-                Map<Vertex, Edge> dfs = tn.depthFirstSearch( start );
-                if( dfs == null ) {
-                    System.out.println( "Error DFS is null" );
-                } else {
-                    List<Edge> path = Graph.getRouteFromTraversal( dfs, start, end );
+                try {
+                    Map<Vertex, Edge> dfs = tn.depthFirstSearch( start );
+                    List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
                     PrettyPrinter.printEdgePath( path );
+                } catch(Exception e) {
+                    System.out.println( "An issue occured during the path finding, please check your inputs and repeat" );
                 }
             }
             System.out.println();
         }
+        inputScanner.close();
     }
 
 }
