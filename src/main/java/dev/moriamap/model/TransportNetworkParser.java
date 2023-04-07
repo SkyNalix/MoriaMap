@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A TransportNetworkParser is a parser that read a List<EdgeTuple> to create a TransportNetwork
+ * A TransportNetworkParser is a parser that read a List of EdgeTuple to create a TransportNetwork
  */
 public class TransportNetworkParser {
 
@@ -19,9 +19,9 @@ public class TransportNetworkParser {
      * @param tuples a List of EdgeTuple 
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generate(InputStream ressource) throws InconsistentCSVLinesException, IOException{
+    public static TransportNetwork generate(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
 
-        List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(ressource));
+        List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
         TransportNetwork tn = TransportNetwork.empty();
         List<Variant> VARIANTS = new ArrayList<>();
 
