@@ -9,57 +9,26 @@ import java.util.List;
  */
 public class TransportNetworkParser {
 
-    private TransportNetworkParser(){
-
-    }
+    private TransportNetworkParser(){}
 
     /**
      * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
-     * @param transportNetworkFileContent the stream to the data csv file 
+     * @param tuples a List of EdgeTuple
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generate(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
-
-        List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
+    public static TransportNetwork generateFromEdgeTuple(List<EdgeTuple> tuples ){
         TransportNetwork tn = TransportNetwork.empty();
 
         for(EdgeTuple t : tuples){
-            //Stop s1 = Stop.from(t.fromName(),GeographicPosition.at(t.fromLatitude(), t.fromLongitude()) ); 
             Stop s1 = createStop(t.fromName(), t.fromLatitude(), t.fromLongitude());
-            Stop realS1 = tn.findStop(s1);
-            if(realS1 == null){
-                tn.addStop(s1);
-            }else{
-                s1 = realS1;
-            }
-
-            //Stop s2 = Stop.from(t.toName(),GeographicPosition.at(t.toLatitude(), t.toLongitude()) );
             Stop s2 = createStop(t.toName(),t.toLatitude(),t.toLongitude());
-            Stop realS2 = tn.findStop(s2);
-            if(realS2 == null){
-                tn.addStop(s2);
-            }else{
-                s2 = realS2;
-            }
 
+            s1 = generateStop(s1,tn);
+            s2 = generateStop(s2,tn);
 
-            Line l = tn.findLine(t.lineName());
-            if(l == null){
-                l = Line.of(t.lineName());
-                tn.addLine(l);
-            }
+            Line l = generateLine(t,tn);
 
-
-            Variant v = null;
-
-            for(Variant lv : l.getVariants()){
-                if (lv.getName().equals(t.variantName()) && lv.getLineName().equals(t.lineName()))
-                    v = lv;
-            }
-            if(v == null){
-                v = Variant.empty(t.variantName(),t.lineName());
-                l.addVariant(v);
-            }
+            Variant v = generateVariant(l, t);
 
 
             TransportSegment segment = TransportSegment.from(s1, s2, t.lineName(), t.variantName(), t.duration(),t.distance());
@@ -72,6 +41,18 @@ public class TransportNetworkParser {
     }
 
     /**
+     * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
+     * @param transportNetworkFileContent the stream to the data csv file 
+     * @throws InconsistentCSVLinesException
+     * @throws IOException
+     * @return a TransportNetwork corrsponding to the network given in argument
+     */
+    public static TransportNetwork generateFromInputStream(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
+        List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
+        return generateFromEdgeTuple(tuples);
+    }
+
+    /**
      * 
      * @param name name of the Stop
      * @param latitude latitude of the Stop
@@ -80,6 +61,57 @@ public class TransportNetworkParser {
      */
     private static Stop createStop(String name,Double latitude,Double longitude){
         return Stop.from(name, GeographicPosition.at(latitude, longitude));
+    }
+
+    /**
+     * @param l the Line that contains the Variant
+     * @param t the actual EdgeTuple that we are browsing
+     * @return the Variant needed for the transportSegment contained in the Line or a new Variant
+     */
+    private static Variant generateVariant(Line l,EdgeTuple t){
+        Variant v = null;
+        for(Variant lv : l.getVariants()){
+            if (lv.getName().equals(t.variantName()) && lv.getLineName().equals(t.lineName()))
+                v = lv;
+        }
+        if(v == null){
+            v = Variant.empty(t.variantName(),t.lineName());
+            l.addVariant(v);
+        }
+
+        return v;
+    }
+
+
+    /**
+     * @param t the actual EdgeTuple that we are browsing
+     * @param tn the TransportNetwork
+     * @return the Line contained in the TransportNetwork or if null a new Line 
+     */
+    private static Line generateLine(EdgeTuple t,TransportNetwork tn){
+        Line l = tn.findLine(t.lineName());
+        if(l == null){
+            l = Line.of(t.lineName());
+            tn.addLine(l);
+        }
+
+        return l;
+    }
+
+    /**
+     * 
+     * @param stop the Stop that we just created 
+     * @param tn the TransportNetwork
+     * @return a Stop needed for the TransportSegment
+     */
+    private static Stop generateStop(Stop stop, TransportNetwork tn){
+        Stop realS2 = tn.findStop(stop);
+        if(realS2 == null){
+            tn.addStop(stop);
+            return stop;
+        }else{
+            return realS2;
+        }
     }
 
 
