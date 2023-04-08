@@ -35,7 +35,7 @@ class TransportNetworkParserTest {
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
 
-        assertEquals(tn.findLine("8").getName(),"8" );
+        assertEquals("8",tn.findLine("8").getName() );
     }
 
     @Test void findLineObjectEqualFalse()throws InconsistentCSVException{
@@ -43,20 +43,15 @@ class TransportNetworkParserTest {
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         Line l = Line.of("8");
-        assertNotEquals(tn.findLine("8"),l);
+        assertNotEquals(l,tn.findLine("8"));
     }
 
-    @Test void findStopObjectEqualFalse() throws InconsistentCSVException {
+    @Test void findStopObjectEqualtrue() throws InconsistentCSVException {
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
-        List<List<String>> resourceList = CSVParser.extractLines(resource);
-        List<EdgeTuple> edgeTupleList =  EdgeTuple.fromTuples(resourceList);
-
-        TransportNetwork tn = TransportNetworkParser.generateFromEdgeTuple(edgeTupleList);
-
-        Stop stop = Stop.from("Faidherbe - Chaligny", GeographicPosition.at(48.384028566383108, 2.384028566383108));
+        TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
+        Stop stop = Stop.from("Faidherbe - Chaligny", GeographicPosition.at(48.85011054413369, 2.384028566383108));
        
-       assertNotEquals(tn.getStopByName("Faidherbe - Chaligny"),stop) ;
+       assertEquals(tn.getStopByName("Faidherbe - Chaligny"),stop) ;
     }
-
 
 }
