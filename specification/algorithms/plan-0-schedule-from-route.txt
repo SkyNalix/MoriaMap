@@ -6,24 +6,23 @@
     le Variant spécifié par son nom. S'il n'y a pas de passage après le
     LocalTime donné, considérer le jour suivant => retourner le premier passage.
     
+    L'algorithme présenté ne donne pas l'horaire d'arrivée, qui devra être
+    calculer en récupérant le dernier élément de ROUTE et additionner le
+    TRAVEL_TIME du TSeg correspondant -> à faire dans l'algo ou non.
 -IN-
     ROUTE := List<TransportSegment> // obtenue par DFS, le premier Stop est dst,
                                     // le dernier est src.
 -OUT-
-    List<TransportSchedule> // liste d'horaires de passage par chaque Stop du
+    List<TransportSchedule> // liste d'horaires de depart par chaque from du
                             // trajet, dans l'ordre d'apparition.
 -PROC-
-
     LocalTime CUR := récupérer le temps courant
     Passages P := null
-    TransportSchedule SCH := null
-    List<TransportSchedule> RES := liste vide // contiendra le résultat
-    Pour TS dans ROUTE:
-        P := récupérer les horaires de passages par TS.FROM
-        SCH := récupérer prochain passage après (CUR, TS.VARIANT_NAME)
-        ajouter SCH à RES
-        CUR := CUR + TS.TRAVEL_TIME
-        P := récupérer les horaires de passages par TS.TO
-        SCH := récupérer prochain passage après (CUR, TS.VARIANT_NAME)
-        ajouter SCH à RES
-        
+    List<TSch> RES := liste vide
+    Pour TSEG dans ROUTE:
+        P := récupérer les départs de transport à TSEG.FROM
+        TSch NEXT := P.getNext(CUR, TSEG.VARIANT_NAME)
+        ajouter NEXT à RES
+        CUR = CUR + TSEG.TRAVEL_TIME
+    retourner RES
+
