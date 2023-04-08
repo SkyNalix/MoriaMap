@@ -11,7 +11,7 @@ import java.util.List;
 class TransportNetworkParserTest {    
     @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
-        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+        TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         assertEquals(2,tn.getLines().size());
     }
 
@@ -20,7 +20,7 @@ class TransportNetworkParserTest {
         List<Integer> variantSizeList = List.of(3,3);
 
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
-        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+        TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
 
         for(int i =0; i < tn.getLines().size();i++){
             Line l = tn.getLines().get(i);
@@ -34,7 +34,7 @@ class TransportNetworkParserTest {
     @Test void findLineNameEqualTrue() throws IOException,InconsistentCSVLinesException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
 
-        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+        TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
 
         assertEquals(tn.findLine("8").getName(),"8" );
     }
@@ -42,7 +42,7 @@ class TransportNetworkParserTest {
     @Test void findLineObjectEqualFalse()throws IOException,InconsistentCSVLinesException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
 
-        TransportNetwork tn = TransportNetworkParser.generateFromInputStream(resource);
+        TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         Line l = Line.of("8");
         assertNotEquals(tn.findLine("8"),l);
     }
@@ -54,7 +54,7 @@ class TransportNetworkParserTest {
 
         TransportNetwork tn = TransportNetworkParser.generateFromEdgeTuple(edgeTupleList);
 
-        Stop stop = Stop.from("Faidherbe - Chaligny", GeographicPosition.at(2.384028566383108, 48.85011054413369));
+        Stop stop = Stop.from("Faidherbe - Chaligny", GeographicPosition.at(48.384028566383108, 2.384028566383108));
        
        assertNotEquals(tn.getStopByName("Faidherbe - Chaligny"),stop) ;
     }
