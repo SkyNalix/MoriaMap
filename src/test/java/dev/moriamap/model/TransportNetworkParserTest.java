@@ -3,19 +3,18 @@ package dev.moriamap.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 class TransportNetworkParserTest {    
-    @Test void testNumberOfTransportLine() throws InconsistentCSVLinesException,IOException{
+    @Test void testNumberOfTransportLine() throws InconsistentCSVException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         assertEquals(2,tn.getLines().size());
     }
 
-    @Test void testNumberOfVariant() throws InconsistentCSVLinesException,IOException{
+    @Test void testNumberOfVariant() throws InconsistentCSVException{
         List<Integer> transportNetworkVariantSizeList = new ArrayList<>();
         List<Integer> variantSizeList = List.of(3,3);
 
@@ -31,7 +30,7 @@ class TransportNetworkParserTest {
 
     }
 
-    @Test void findLineNameEqualTrue() throws IOException,InconsistentCSVLinesException{
+    @Test void findLineNameEqualTrue() throws InconsistentCSVException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
@@ -39,7 +38,7 @@ class TransportNetworkParserTest {
         assertEquals(tn.findLine("8").getName(),"8" );
     }
 
-    @Test void findLineObjectEqualFalse()throws IOException,InconsistentCSVLinesException{
+    @Test void findLineObjectEqualFalse()throws InconsistentCSVException{
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
@@ -47,7 +46,7 @@ class TransportNetworkParserTest {
         assertNotEquals(tn.findLine("8"),l);
     }
 
-    @Test void findStopObjectEqualFalse() throws IOException,InconsistentCSVLinesException {
+    @Test void findStopObjectEqualFalse() throws InconsistentCSVException {
         InputStream resource = CSVParserTest.class.getResourceAsStream("/test_data_transportNetwork.csv");
         List<List<String>> resourceList = CSVParser.extractLines(resource);
         List<EdgeTuple> edgeTupleList =  EdgeTuple.fromTuples(resourceList);
