@@ -20,11 +20,9 @@ public class TransportNetworkParser {
         TransportNetwork tn = TransportNetwork.empty();
 
         for(EdgeTuple t : tuples){
-            Stop s1 = createStop(t.fromName(), t.fromLatitude(), t.fromLongitude());
-            Stop s2 = createStop(t.toName(),t.toLatitude(),t.toLongitude());
-
-            s1 = generateStop(s1,tn);
-            s2 = generateStop(s2,tn);
+            
+            Stop s1 = generateStop(tn,t.fromName(), t.fromLatitude(), t.fromLongitude());
+            Stop s2 = generateStop(tn,t.toName(), t.toLatitude(), t.toLongitude());
 
             Line l = generateLine(t,tn);
 
@@ -47,22 +45,10 @@ public class TransportNetworkParser {
      * @throws IOException
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generateFromInputStream(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
+    public static TransportNetwork generateFrom(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
         List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
         return generateFromEdgeTuple(tuples);
     }
-
-    /**
-     * 
-     * @param name name of the Stop
-     * @param latitude latitude of the Stop
-     * @param longitude longitude of the Stop
-     * @return a new Stop with the name and position given
-     */
-    private static Stop createStop(String name,Double latitude,Double longitude){
-        return Stop.from(name, GeographicPosition.at(latitude, longitude));
-    }
-
     /**
      * @param l the Line that contains the Variant
      * @param t the actual EdgeTuple that we are browsing
@@ -104,13 +90,14 @@ public class TransportNetworkParser {
      * @param tn the TransportNetwork
      * @return a Stop needed for the TransportSegment
      */
-    private static Stop generateStop(Stop stop, TransportNetwork tn){
-        Stop realS2 = tn.findStop(stop);
-        if(realS2 == null){
+    private static Stop generateStop(TransportNetwork tn,String name,double latitude,double longitude){
+        Stop stop = Stop.from(name, GeographicPosition.at(latitude, longitude));
+        Stop realStop = tn.findStop(stop);
+        if(realStop == null){
             tn.addStop(stop);
             return stop;
         }else{
-            return realS2;
+            return realStop;
         }
     }
 
