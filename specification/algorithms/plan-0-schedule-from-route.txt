@@ -1,17 +1,18 @@
 -NOTES-
     Passages est un wrapper de List<TransportSchedule>, correspondant aux
     horaires de passage par un Stop donné. La classe fournit une méthode
-    getNext(LocalTime, String) retournant le plus petit horaire de passage tel
-    que l'horaire de passage est plus grand que le LocalTime en argument et dans
-    le Variant spécifié par son nom. S'il n'y a pas de passage après le
-    LocalTime donné, considérer le jour suivant => retourner le premier passage.
+    getNext(LocalTime, String, String) retournant le plus petit horaire de
+    passage tel que l'horaire de passage est plus grand que le LocalTime en
+    argument et dans le Variant spécifié par son nom, de la Line spécifiée par
+    son nom. S'il n'y a pas de passage après le LocalTime donné, considérer le
+    jour suivant => retourner le premier passage.
     
     L'algorithme présenté ne donne pas l'horaire d'arrivée, qui devra être
     calculer en récupérant le dernier élément de ROUTE et additionner le
     TRAVEL_TIME du TSeg correspondant -> à faire dans l'algo ou non.
 -IN-
-    ROUTE := List<TransportSegment> // obtenue par DFS, le premier Stop est dst,
-                                    // le dernier est src.
+    ROUTE := List<TransportSegment> // obtenue par DFS, le premier Stop est src,
+                                    // le dernier est dst.
 -OUT-
     List<TransportSchedule> // liste d'horaires de depart par chaque from du
                             // trajet, dans l'ordre d'apparition.
