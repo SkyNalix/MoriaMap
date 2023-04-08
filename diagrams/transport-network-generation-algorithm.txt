@@ -1,0 +1,64 @@
+Algorithme de génération de réseau de transport arbitraire à partir du fichier de données
+
+input : List<EdgeTuple> = liste de tuples (record) (nom1, lat1, lon1, nom2,
+lat2, lon2, line_name, variant_name, durée, distance)
+output : TransportNetwork
+
+// On suppose les données sans doublons
+procedure(List<EdgeTuple> tuples) :
+    TransportNetwork TN = new TransportNetwork()
+    // List<Stop> STOPS = new ArrayList<>() // Remplacé par TN.getVertices()
+
+    // Peut être remplacé par TN.getVariants() mais l'implémentation de TN.getVariants()
+    // n'est pas efficace donc on les stocke quand même ici
+    List<Variant> VARIANTS = new ArrayList<>()
+
+    // List<Line> LINES = new ArrayList<>() // Remplacé par TN.getLines()
+
+    Pour t dans List<EdgeTuple> :
+
+        /*Stop S1 = null
+        S'il existe un STOP (t.nom1, t.lat1, t.lon1) dans TN.getVertices() :
+            S1 = le stop dans TN.getVertices()
+        Sinon
+            S1 = new Stop(t.nom1, t.lat1, t.lon1)
+            TN.addVertex(S1)*/
+        // Remplacé par :
+        Stop S1 = new Stop(t.nom1, t.lat1, t.lon1)
+        Stop realS1 = TN.findStop(S1)
+        if (realS1 == null) TN.addStop(S1)
+        else S1 = realS1
+
+        Stop S2 = new Stop(t.nom2, t.lat2, t.lon2)
+        Stop realS2 = TN.findStop(S2)
+        if (realS2 == null) TN.addStop(S2)
+        else S2 = realS2
+
+        /*Line L = null
+        S'il existe une LINE (t.line_name) dans TN.getLines() :
+            L = la line dans TN.getLines()
+        Sinon
+            L = new Line(t.line_name)
+            TN.addLine(L)*/
+        // Remplacé par :
+        Line L = TN.findLine(t.line_name)
+        if (L == null) {
+            L = new Line(t.line_name)
+            TN.addLine(L)
+        }
+
+        Variant V = null
+        S'il existe un VARIANT (t.line_name, t.variant_name) dans VARIANTS :
+            V = le variant dans VARIANTS
+        Sinon
+            V = new Variant(t.line_name, t.variant_name)
+            ajouter V à la liste des VARIANTS
+            ajouter V à la liste des VARIANTS de la ligne L
+
+        TransportSegment SEGMENT = new TransportSegment(
+            S1, S2, t.durée, t.distance, t.line_name, t.variant_name
+        )
+        TN.addTransportSegment(SEGMENT)
+        V.addTransportSegment(SEGMENT)
+
+    return TN
