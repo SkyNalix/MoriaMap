@@ -1,6 +1,5 @@
 package dev.moriamap.model;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -41,11 +40,10 @@ public class TransportNetworkParser {
     /**
      * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
      * @param transportNetworkFileContent the stream to the data csv file 
-     * @throws InconsistentCSVLinesException
-     * @throws IOException
+     * @throws InconsistentCSVException
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generateFrom(InputStream transportNetworkFileContent) throws InconsistentCSVLinesException, IOException{
+    public static TransportNetwork generateFrom(InputStream transportNetworkFileContent) throws InconsistentCSVException{
         List<EdgeTuple> tuples = EdgeTuple.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
         return generateFromEdgeTuple(tuples);
     }
