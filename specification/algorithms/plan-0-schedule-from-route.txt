@@ -8,8 +8,9 @@
     jour suivant => retourner le premier passage.
     
     L'algorithme présenté ne donne pas l'horaire d'arrivée, qui devra être
-    calculer en récupérant le dernier élément de ROUTE et additionner le
-    TRAVEL_TIME du TSeg correspondant -> à faire dans l'algo ou non.
+    calculer en récupérant le dernier élément de ROUTE et de RES pour
+    additionner le TRAVEL_TIME du dernier TSeg à l'horaire de départ du dernier
+    TSch-> à faire dans l'algo ou non.
 -IN-
     ROUTE := List<TransportSegment> // obtenue par DFS, le premier Stop est src,
                                     // le dernier est dst.
@@ -18,12 +19,11 @@
                             // trajet, dans l'ordre d'apparition.
 -PROC-
     LocalTime CUR := récupérer le temps courant
-    Passages P := null
     List<TSch> RES := liste vide
     Pour TSEG dans ROUTE:
-        P := récupérer les départs de transport à TSEG.FROM
-        TSch NEXT := P.getNext(CUR, TSEG.VARIANT_NAME)
+        Passages P := récupérer les départs de transport à TSEG.FROM
+        TSch NEXT := P.getNext(CUR, TSEG.VARIANT_NAME, TSEG.LINE_NAME)
         ajouter NEXT à RES
-        CUR = CUR + TSEG.TRAVEL_TIME
+        CUR = NEXT.time() + TSEG.TRAVEL_TIME
     retourner RES
 
