@@ -149,10 +149,12 @@ public final class Variant {
     }
 
     /**
-     * {@return a copy of this Variant's transport departures list}
+     * {@return an ascending sorted copy of this Variant's transport departures list}
      */
     public List<LocalTime> getDepartures(){
-        return new ArrayList<>(this.departures);
+        ArrayList<LocalTime> res = new ArrayList<>(this.departures);
+        res.sort( LocalTime::compareTo );
+        return res;
     }
 
     /**
