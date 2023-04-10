@@ -154,7 +154,7 @@ public final class Line {
      * @throws NoSuchElementException if there is no Variant in this Line with
      *                                the given name
      * @throws IllegalStateException if a Variant of given name is considered
-     *                               present but could not be recoved
+     *                               present but could not be recovered
      */
     public Variant getVariantNamed(String name) {
         if (!this.containsVariantNamed(name)) {
