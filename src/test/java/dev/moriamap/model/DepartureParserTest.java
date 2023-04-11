@@ -27,7 +27,7 @@ public class DepartureParserTest {
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resourceMap);
         
-        assertDoesNotThrow(() -> { DepartureParser.addDeparturesTo(tn, resource);}, "HEY");
+        assertDoesNotThrow(() -> { DepartureParser.addDeparturesTo(tn, resource);}, "DepartureParser has trow an error it shouldn't have");
 
        
 
