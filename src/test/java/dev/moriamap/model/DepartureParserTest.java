@@ -15,7 +15,7 @@ public class DepartureParserTest {
     }
 
     @Test void createDepartureRecordBadFile(){ 
-        assertThrows(NullPointerException.class,() ->{
+        assertThrows(IllegalArgumentException.class,() ->{
             InputStream resource = CSVParserTest.class.getResourceAsStream("/test_timetables.csv");
             DepartureParser.addDeparturesTo(null, resource);
         });
