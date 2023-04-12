@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Represents an arbitrary transport network. A TransportNetwork contains
  * Lines. It also contains Stops and TransportSegments which are used for
