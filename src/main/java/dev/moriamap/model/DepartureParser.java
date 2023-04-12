@@ -55,13 +55,4 @@ public class DepartureParser {
         }
 
     }
-
-    public static void main(String[] args) throws InconsistentCSVException{
-        InputStream resource = DepartureParser.class.getResourceAsStream("/timetables.csv");
-        InputStream resourceMap = DepartureParser.class.getResourceAsStream("/map_data.csv");
-
-        TransportNetwork tn = TransportNetworkParser.generateFrom(resourceMap);
-        DepartureParser.addDeparturesTo(tn, resource);
-    }
-    
 }
