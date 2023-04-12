@@ -1,3 +1,5 @@
+# MoriaMap
+
 ## Setup SonarQube
 
 - Install Java 17 if it is not installed and make sure `java --version` returns 17.

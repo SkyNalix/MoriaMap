@@ -9,13 +9,10 @@ The transport network is based off Paris transport network so the stops are name
 ## Instructions
 
 ### Running
-You can directly run the project with `./gradlew run`.
-Or you can build the project into a single JAR file with the
-command `./gradlew build`, the JAR file will be built
-in the directory `build/libs` and can be run with `java -jar build/libs/MoriaMap-<PROJECT_VERSION>.jar`
+Extract zip then run MoriaMap.sh script or java -jar MoriaMap.jar
 
 ### Using
-After the project is started, you will be asked to enter :
+After the project is started, you will be asked to enter:
 
     - 1 if you want to display the path between two stops (PLAN_0).
       Then you will be asked to enter the names of the starting stop and the target stop.
