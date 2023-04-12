@@ -62,7 +62,7 @@ class PassagesTest {
     @Test
     void passageIsNotEqualToNull() {
         Passages p = Passages.of(newListTransportScheduleHelper());
-        assertNotEquals(p,null);
+        assertNotEquals(null,p);
     }
 
     @Test

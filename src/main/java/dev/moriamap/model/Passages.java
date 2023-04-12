@@ -68,9 +68,7 @@ public final class Passages {
     }
 
     /**
-     * Returns true if this.geographicPosition == ((GeographicVertex)object).geographicPosition.
-     *
-     * @return this.geographicPosition == ((GeographicVertex)object).geographicPosition
+     * @return this.transportSchedules == ((Passages)object).transportSchedules
      */
     @Override public boolean equals(Object object) {
         if (this == object)
@@ -82,9 +80,7 @@ public final class Passages {
     }
 
     /**
-     * Returns the hash code of this GeographicVertex.
-     *
-     * @return the hash code of this GeographicVertex.
+     * @return the hash code of this Passages object.
      */
     @Override public int hashCode() {
         final int prime = 17;
