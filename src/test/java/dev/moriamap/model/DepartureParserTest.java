@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DepartureParserTest {
+class DepartureParserTest {
         
     @Test void createDepartureRecordArgumentIsNull(){
         assertThrows(IllegalArgumentException.class,() ->{
@@ -15,8 +15,8 @@ public class DepartureParserTest {
     }
 
     @Test void createDepartureRecordBadFile(){ 
+        InputStream resource = CSVParserTest.class.getResourceAsStream("/test_timetables.csv");
         assertThrows(IllegalArgumentException.class,() ->{
-            InputStream resource = CSVParserTest.class.getResourceAsStream("/test_timetables.csv");
             DepartureParser.addDeparturesTo(null, resource);
         });
     }
