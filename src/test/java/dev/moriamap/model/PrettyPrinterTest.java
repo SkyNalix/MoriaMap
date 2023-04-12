@@ -11,11 +11,6 @@ import java.util.Map;
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
 class PrettyPrinterTest {
 
-	static class DummyEdge extends Edge {
-		public DummyEdge(Vertex from, Vertex to) { super(from, to); }
-		public double getWeight() { return 0; }
-	}
-
 	TransportNetwork tn;
 	{
 		try {
