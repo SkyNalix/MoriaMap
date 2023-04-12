@@ -10,8 +10,10 @@ public class DepartureParser {
      * @param tn the TransportNetwork to wich we add the departures
      * @param departures a Stream to the departures file
      * @throws InconsistentCSVException if there is an error in the departure file
+     * @throws IllegalArgumentException if the TransportNetwork is null
      */
-    public static void addDeparturesTo(TransportNetwork tn, InputStream departures) throws InconsistentCSVException{
+    public static void addDeparturesTo(TransportNetwork tn, InputStream departures) throws InconsistentCSVException,IllegalArgumentException{
+        if(tn == null) throw new IllegalArgumentException("TransportNetwork is null");
         List<DepartureRecord> records = DepartureRecord.fromTuples(CSVParser.extractLines(departures));
         
         for(DepartureRecord t : records){
