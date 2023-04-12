@@ -59,7 +59,7 @@ public class Stop extends GeographicVertex {
      */
     @Override public int hashCode() {
         final int prime = 13;
-        int hash = super.hashCode();
+        int hash = 1;
         hash *= prime;
         hash += this.name.hashCode();
 
