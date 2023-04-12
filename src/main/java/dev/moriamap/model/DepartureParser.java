@@ -2,11 +2,18 @@ package dev.moriamap.model;
 
 import java.io.InputStream;
 import java.util.List;
-
+/**
+ * This class read a departure file and add the departure to a TransportNetwork
+ */
 public class DepartureParser {
 
+    private DepartureParser(){
+
+    }
+
     /**
-     * 
+     * Take a TransportNetwork and a departure file and add 
+     * the departures read from it to the TransportNetwork
      * @param tn the TransportNetwork to wich we add the departures
      * @param departures a Stream to the departures file
      * @throws InconsistentCSVException if there is an error in the departure file
