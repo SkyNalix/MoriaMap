@@ -120,3 +120,11 @@
   - Variant.getDepartures() : retourner la liste triée
   - enlever TransportSchedule.terminus car c'est juste
     ts.variant().getEnd()
+
+* Réunion <2023-04-12 Wed>
+  Un Stop peut avoir plusieurs coordonnées géographiques, chacune correspondant
+  à l'endroit où l'on prend la ligne (ex: Chatelet) => Un Stop est égal à un 
+  autre si et seulement s'ils ont le même nom.
+  Ajouter Strategy Pattern pour les parcours de graphe
+  (Graph ---- ITraversalStrategy).
+  PLAN_0 n'a pas besoin d'afficher les horaires, juste Stop + Variants.
