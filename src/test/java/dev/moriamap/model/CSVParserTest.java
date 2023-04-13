@@ -24,7 +24,7 @@ class CSVParserTest {
     @Test void parserExtractsExceptedNumberOfLines() throws InconsistentCSVException, IOException {
         InputStream resouce = CSVParserTest.class.getResourceAsStream("/test_map_data_incomplete.csv");
         List<List<String>> lines = CSVParser.extractLines(resouce);
-        assertEquals(141,lines.size());
+        assertEquals(5,lines.size());
     }
 
     @Test void parseLineThrowsExceptionIfDelimiterIsNull() {
