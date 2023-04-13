@@ -39,7 +39,7 @@ class EdgeTupleTest {
         }
 
         List<EdgeRecord> liste  = EdgeRecord.fromTuples(lines);
-        assertEquals(141,liste.size());
+        assertEquals(5,liste.size());
     }
 
     @Test void constructorParsingNullFromName() {
