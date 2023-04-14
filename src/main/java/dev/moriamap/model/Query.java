@@ -1,4 +1,4 @@
-package energy.model;
+package dev.moriamap.model;
 
 /**
  * A Query represents a request for route computation or schedule information
