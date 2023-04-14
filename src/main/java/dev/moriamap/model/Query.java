@@ -1,7 +1,7 @@
 package energy.model;
 
 /**
- * A Query represents a request for route computation or shedule information
+ * A Query represents a request for route computation or schedule information
  * fetching.
  */
 public interface Query {
