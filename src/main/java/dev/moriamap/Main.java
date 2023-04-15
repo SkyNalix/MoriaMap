@@ -7,19 +7,31 @@ import java.util.Scanner;
 
 class Main {
 
-    private static boolean getStopSchedules(TransportNetwork tn, Scanner inputScanner) {
-        System.out.print( "Name of the stop: " );
-        String stopName = inputScanner.nextLine();
-        if(stopName.isBlank()) return true;
-        Stop stop = tn.getStopByName(stopName);
-        if( stop == null ) {
-            System.out.println( "Stop was not found" );
+    private static boolean routeFromTwoStops(TransportNetwork tn, Scanner inputScanner) {
+        System.out.print( "Name of the starting stop: " );
+        String startStopName = inputScanner.nextLine();
+        if(startStopName.isBlank()) return true;
+
+        System.out.print( "Name of the target stop: " );
+        String targetStopName = inputScanner.nextLine();
+        if(targetStopName.isBlank()) return true;
+
+        Stop start = tn.getStopByName( startStopName );
+        Stop target = tn.getStopByName( targetStopName );
+        if(start == null || target == null) {
+            System.out.println( "One of the stops was not found, please check your inputs and repeat" );
+        } else {
+            try {
+                Map<Vertex, Edge> dfs = tn.depthFirstSearch( start );
+                List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
+                PrettyPrinter.printEdgePath(tn, path );
+            } catch(Exception e) {
+                System.out.println( "An issue occurred during the path finding, please check your inputs and repeat" );
+            }
         }
-        Passages passages = tn.getPassages(stop);
-        System.out.println( passages.getFullDescription() );
         return false;
     }
-
+    
     public static void main(String[] args) {
         TransportNetwork tn = null;
         try {
@@ -50,20 +62,15 @@ class Main {
             System.out.print("Option: ");
             String option = inputScanner.nextLine();
             if (
-                    option.isBlank() || option.equals( "3" )
-                || (option.equals( "2" ) && getStopSchedules(tn, inputScanner))
+                    option.isBlank()
+                || (option.equals("1") && routeFromTwoStops(tn, inputScanner))
             )
                 break;
-            if(option.equals("1")) {
-                System.out.print( "Name of the starting stop: " );
-                String startStopName = inputScanner.nextLine();
-                if(startStopName.isBlank()) break;
-
-                System.out.print( "Name of the target stop: " );
-                String targetStopName = inputScanner.nextLine();
-                if(targetStopName.isBlank()) break;
-                PLAN0Query query = new PLAN0Query(startStopName, targetStopName);
-                query.execute( tn );
+            if(option.equals( "2" )) {
+                System.out.print( "Name of the stop: " );
+                String stopName =  inputScanner.nextLine();
+                LECTTIMEQuery timeQuery = LECTTIMEQuery.fromString(stopName);
+                timeQuery.execute(tn);
             }
             System.out.println();
         }
