@@ -45,11 +45,12 @@ class Main {
                     What do you want to do?
                       1 - Get a path from one stop to an another
                       2 - Get the trains schedules of a stop
+                      3 - Exit
                     """);
             System.out.print("Option: ");
             String option = inputScanner.nextLine();
             if (
-                    option.isBlank()
+                    option.isBlank() || option.equals( "3" )
                 || (option.equals( "2" ) && getStopSchedules(tn, inputScanner))
             )
                 break;
@@ -61,7 +62,7 @@ class Main {
                 System.out.print( "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
                 if(targetStopName.isBlank()) break;
-                Plan0Query query = Plan0Query.from(startStopName, targetStopName);
+                Plan0Query query = new Plan0Query(startStopName, targetStopName);
                 query.execute( tn );
             }
             System.out.println();
