@@ -15,13 +15,11 @@ public record Plan0Query(
 	String run( TransportNetwork network ) throws QueryFailureException {
 		Stop start = network.getStopByName( startStopName );
 		Stop target = network.getStopByName( targetStopName );
-		if(start == null || target == null) {
+		if(start == null || target == null)
 			throw new QueryFailureException();
-		}
 		Map<Vertex, Edge> dfs = network.depthFirstSearch( start );
 		List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
-		PrettyPrinter.printEdgePath(network, path );
-		return "";
+		return PrettyPrinter.printTransportSegmentPath(network, path );
 	}
 
 	@Override
@@ -34,7 +32,7 @@ public record Plan0Query(
 		} catch( Exception e ) {
 			result = e.getMessage();
 		}
-		System.out.println( result );
+		System.out.println( "Error:" + result );
 	}
 
 }
