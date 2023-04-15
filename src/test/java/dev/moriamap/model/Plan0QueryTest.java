@@ -18,21 +18,21 @@ class Plan0QueryTest {
 
 	@Test void startingStopNotFoundTest() {
 		assertDoesNotThrow( () -> {
-			Plan0Query query = Plan0Query.from( "Java", "Hoche" );
+			Plan0Query query = new Plan0Query( "Java", "Hoche" );
 			query.execute( tn );
 		});
 	}
 
 	@Test void targetStopNotFoundTest() {
 		assertDoesNotThrow( () -> {
-			Plan0Query query = Plan0Query.from( "Lourmel", "Ocaml" );
+			Plan0Query query = new Plan0Query( "Lourmel", "Ocaml" );
 			query.execute( tn );
 		});
 	}
 
 	@Test void noProblemsFoundTest() {
 		assertDoesNotThrow( () -> {
-			Plan0Query query = Plan0Query.from( "Lourmel", "Hoche" );
+			Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
 			query.execute( tn );
 		});
 	}
