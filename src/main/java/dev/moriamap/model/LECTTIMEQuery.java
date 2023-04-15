@@ -1,35 +1,44 @@
 package dev.moriamap.model;
 
+import javax.sound.midi.Soundbank;
+
 /**
  * A LECTTIMEQuery represents a request for schedule information fetching.
  */
-public class LECTTIMEQuery implements Query{
+public record LECTTIMEQuery(
+        String stopName)  implements Query {
     
-    // The name of the stop  to which transports pass.
-    private final String stopName;
-
-    private LECTTIMEQuery(String stopName) {
-        this.stopName = stopName;
+    /**
+     * Constructor of PLAN0Query
+     * @param stopName the name of the stop
+     */
+    public LECTTIMEQuery {
+        if (stopName == null)
+            throw new IllegalArgumentException("Stop name can't be null");
     }
 
     /**
-     * Static factory.
-     * Creates a LECTTIMEQUERY for the given stop.
-     * @param stopName name of the stop
-     * @return the created query
+     * Auxiliary method that run the LECTTIMEQuery
+     * @param network The TransportNetwork the query is run on
+     * @return the result of the query to print
+     * @throws QueryFailureException if stop was not found
      */
-    public static LECTTIMEQuery fromString(String stopName) {
-        return new LECTTIMEQuery(stopName);
+    String run(TransportNetwork network) throws QueryFailureException {
+        Stop stop = network.getStopByName(stopName);
+        if( stop == null ) {
+            throw new QueryFailureException("Stop was not found");
+        }
+        Passages passages = network.getPassages(stop);
+        return passages.getFullDescription();
     }
-    
     @Override
     public void execute(TransportNetwork network) {
-            Stop stop = network.getStopByName(stopName);
-            if( stop == null ) {
-                System.out.println( "Stop was not found" );
-                return;
-            }
-            Passages passages = network.getPassages(stop);
-            System.out.println( passages.getFullDescription());
+        String result;
+        try {
+            result = run(network);
+        } catch (Exception e) {
+            result = "Error : " + e.getMessage();
         }
+        System.out.println(result);
+    }
 }
