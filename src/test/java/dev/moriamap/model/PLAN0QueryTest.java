@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
-class Plan0QueryTest {
+class PLAN0QueryTest {
 
 	TransportNetwork tn;
 	{
@@ -17,7 +17,7 @@ class Plan0QueryTest {
 	}
 
 	@Test void startingStopNotFoundTest() {
-		Plan0Query query = new Plan0Query( "Java", "Hoche" );
+		PLAN0Query query = new PLAN0Query( "Java", "Hoche" );
 		assertDoesNotThrow(
 				  () -> query.execute( tn )
 						  );
@@ -26,7 +26,7 @@ class Plan0QueryTest {
 	}
 
 	@Test void targetStopNotFoundTest() {
-		Plan0Query query = new Plan0Query( "Lourmel", "Ocaml" );
+		PLAN0Query query = new PLAN0Query( "Lourmel", "Ocaml" );
 		assertDoesNotThrow(
 				  () -> query.execute( tn )
 						  );
@@ -35,7 +35,7 @@ class Plan0QueryTest {
 	}
 
 	@Test void noProblemsFoundTest() {
-		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		PLAN0Query query = new PLAN0Query( "Lourmel", "Hoche" );
 		assertDoesNotThrow(
 				  () -> query.execute( tn )
 						  );
@@ -45,12 +45,12 @@ class Plan0QueryTest {
 	}
 
 	@Test void startStopNameGetterTest() {
-		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		PLAN0Query query = new PLAN0Query( "Lourmel", "Hoche" );
 		assertEquals( "Lourmel", query.startStopName() );
 	}
 
 	@Test void targetStopNameGetterTest() {
-		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		PLAN0Query query = new PLAN0Query( "Lourmel", "Hoche" );
 		assertEquals( "Hoche", query.targetStopName() );
 	}
 

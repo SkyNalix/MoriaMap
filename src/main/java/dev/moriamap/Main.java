@@ -62,7 +62,7 @@ class Main {
                 System.out.print( "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
                 if(targetStopName.isBlank()) break;
-                Plan0Query query = new Plan0Query(startStopName, targetStopName);
+                PLAN0Query query = new PLAN0Query(startStopName, targetStopName);
                 query.execute( tn );
             }
             System.out.println();
