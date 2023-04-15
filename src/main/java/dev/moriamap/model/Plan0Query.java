@@ -12,21 +12,29 @@ public record Plan0Query(
 		  String startStopName,
 		  String targetStopName) implements Query {
 
-	@Override
-	public void execute( TransportNetwork network ) {
+	String run( TransportNetwork network ) throws QueryFailureException {
 		Stop start = network.getStopByName( startStopName );
 		Stop target = network.getStopByName( targetStopName );
 		if(start == null || target == null) {
-			System.out.println( "One of the stops was not found" );
-			return;
+			throw new QueryFailureException();
 		}
+		Map<Vertex, Edge> dfs = network.depthFirstSearch( start );
+		List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
+		PrettyPrinter.printEdgePath(network, path );
+		return "";
+	}
+
+	@Override
+	public void execute( TransportNetwork network ) {
+		String result;
 		try {
-			Map<Vertex, Edge> dfs = network.depthFirstSearch( start );
-			List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
-			PrettyPrinter.printEdgePath(network, path );
-		} catch(Exception e) {
-			System.out.println( "An issue occurred during the path finding" );
+			result = run( network );
+		} catch( QueryFailureException e ) {
+			result = "An issue was found on the inputs";
+		} catch( Exception e ) {
+			result = e.getMessage();
 		}
+		System.out.println( result );
 	}
 
 }

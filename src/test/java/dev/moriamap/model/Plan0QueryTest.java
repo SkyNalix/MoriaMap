@@ -1,7 +1,6 @@
 package dev.moriamap.model;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -18,23 +17,30 @@ class Plan0QueryTest {
 	}
 
 	@Test void startingStopNotFoundTest() {
-		assertDoesNotThrow( () -> {
-			Plan0Query query = new Plan0Query( "Java", "Hoche" );
-			query.execute( tn );
-		});
+		Plan0Query query = new Plan0Query( "Java", "Hoche" );
+		assertDoesNotThrow(
+				  () -> query.execute( tn )
+						  );
+		assertThrows( QueryFailureException.class,
+					  () -> query.run(tn));
 	}
 
 	@Test void targetStopNotFoundTest() {
-		assertDoesNotThrow( () -> {
-			Plan0Query query = new Plan0Query( "Lourmel", "Ocaml" );
-			query.execute( tn );
-		});
+		Plan0Query query = new Plan0Query( "Lourmel", "Ocaml" );
+		assertDoesNotThrow(
+				  () -> query.execute( tn )
+						  );
+		assertThrows( QueryFailureException.class,
+					  () -> query.run(tn));
 	}
 
 	@Test void noProblemsFoundTest() {
+		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		assertDoesNotThrow(
+				  () -> query.execute( tn )
+						  );
 		assertDoesNotThrow( () -> {
-			Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
-			query.execute( tn );
+			query.run( tn );
 		});
 	}
 
