@@ -33,20 +33,7 @@ class Main {
         }
         return false;
     }
-
-    private static boolean getStopSchedules(TransportNetwork tn, Scanner inputScanner) {
-        System.out.print( "Name of the stop: " );
-        String stopName = inputScanner.nextLine();
-        if(stopName.isBlank()) return true;
-        Stop stop = tn.getStopByName(stopName);
-        if( stop == null ) {
-            System.out.println( "Stop was not found" );
-        }
-        Passages passages = tn.getPassages(stop);
-        System.out.println( passages.getFullDescription() );
-        return false;
-    }
-
+    
     public static void main(String[] args) {
         TransportNetwork tn = null;
         try {
@@ -78,9 +65,14 @@ class Main {
             if (
                     option.isBlank()
                 || (option.equals("1") && routeFromTwoStops(tn, inputScanner))
-                || (option.equals( "2" ) && getStopSchedules(tn, inputScanner))
             )
                 break;
+            if(option.equals( "2" )) {
+                System.out.print( "Name of the stop: " );
+                String stopName =  inputScanner.nextLine();
+                LECTTIMEQuery timeQuery = LECTTIMEQuery.fromString(stopName);
+                timeQuery.execute(tn);
+            }
             System.out.println();
         }
         inputScanner.close();
