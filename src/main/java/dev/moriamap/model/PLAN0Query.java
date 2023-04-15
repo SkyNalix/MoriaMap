@@ -8,7 +8,7 @@ import java.util.Map;
  * @param startStopName the name of the starting stop
  * @param targetStopName the name of the target stop
  */
-public record Plan0Query(
+public record PLAN0Query(
 		  String startStopName,
 		  String targetStopName) implements Query {
 
@@ -16,7 +16,7 @@ public record Plan0Query(
 		Stop start = network.getStopByName( startStopName );
 		Stop target = network.getStopByName( targetStopName );
 		if(start == null || target == null)
-			throw new QueryFailureException();
+			throw new QueryFailureException("One of the stops was not found");
 		Map<Vertex, Edge> dfs = network.depthFirstSearch( start );
 		List<Edge> path = Graph.getRouteFromTraversal( dfs, start, target );
 		return PrettyPrinter.printTransportSegmentPath(network, path );
@@ -27,8 +27,6 @@ public record Plan0Query(
 		String result;
 		try {
 			result = run( network );
-		} catch( QueryFailureException e ) {
-			result = "An issue was found on the inputs";
 		} catch( Exception e ) {
 			result = e.getMessage();
 		}
