@@ -16,6 +16,20 @@ class PLAN0QueryTest {
 		}
 	}
 
+	@Test void startingStopNullTest() {
+		assertThrows(
+				  IllegalArgumentException.class,
+				  () -> new PLAN0Query( null, "Hoche" )
+					);
+	}
+
+	@Test void targetStopNullTest() {
+		assertThrows(
+				  IllegalArgumentException.class,
+				  () -> new PLAN0Query( "Lourmet", null )
+					);
+	}
+
 	@Test void startingStopNotFoundTest() {
 		PLAN0Query query = new PLAN0Query( "Java", "Hoche" );
 		assertDoesNotThrow(
