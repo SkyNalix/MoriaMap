@@ -5,12 +5,21 @@ import java.util.Map;
 
 /**
  * A Plan0Query represent a request for a path from a starting stop to the target stop
- * @param startStopName the name of the starting stop
- * @param targetStopName the name of the target stop
+
  */
 public record PLAN0Query(
 		  String startStopName,
 		  String targetStopName) implements Query {
+
+	/**
+	 * Constructor of PLAN0Query
+	 * @param startStopName the name of the starting stop
+	 * @param targetStopName the name of the target stop
+	 */
+	public PLAN0Query {
+		if( startStopName == null || targetStopName == null )
+			throw new IllegalArgumentException("Stops names can't be null");
+	}
 
 	/**
 	 * Auxiliary method that run the PLAN0query
@@ -34,9 +43,9 @@ public record PLAN0Query(
 		try {
 			result = run( network );
 		} catch( Exception e ) {
-			result = e.getMessage();
+			result =  "Error:" + e.getMessage();
 		}
-		System.out.println( "Error:" + result );
+		System.out.println( result );
 	}
 
 }
