@@ -12,6 +12,12 @@ public record PLAN0Query(
 		  String startStopName,
 		  String targetStopName) implements Query {
 
+	/**
+	 * Auxiliary method that run the PLAN0query
+	 * @param network The TransportNetwork the query is run on
+	 * @return the result of the query to print
+	 * @throws QueryFailureException if start or target stops were not found
+	 */
 	String run( TransportNetwork network ) throws QueryFailureException {
 		Stop start = network.getStopByName( startStopName );
 		Stop target = network.getStopByName( targetStopName );
