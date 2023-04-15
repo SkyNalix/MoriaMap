@@ -2,6 +2,7 @@ package dev.moriamap.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
 
 class DijkstraTraversalStrategyTest {
     static class DummyVertex implements Vertex {}
@@ -28,8 +29,9 @@ class DijkstraTraversalStrategyTest {
         var sut = new DijkstraTraversalStrategy();
         var src = new DummyVertex();
         var graph = new DummyGraph();
+        var weights = new HashMap<Edge, Double>();
         try {
-            sut.traversal(src, null, null, false, graph);
+            sut.traversal(src, null, weights, false, graph);
         } catch (NullPointerException npe) {
             fail("Thrown NullPointerException");
         } catch (Throwable t) {}
@@ -46,17 +48,13 @@ class DijkstraTraversalStrategyTest {
     }
 
     @Test void traversalWithNullWeightThrowsException() {
-        var sut = new DijsktraTraversalStrategy();
+        var sut = new DijkstraTraversalStrategy();
         var src = new DummyVertex();
         var dst = new DummyVertex();
         var graph = new DummyGraph();
         assertThrows(
           NullPointerException.class,
-          () -> sut.traversal(src, null, null, false, graph);
-        )
-    }
-
-    @Test void fails() {
-        fail();
+          () -> sut.traversal(src, null, null, false, graph)
+        );
     }
 }

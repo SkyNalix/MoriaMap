@@ -36,6 +36,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
         Objects.requireNonNull(src);
         if (singleDestination)
             Objects.requireNonNull(dst);
+        Objects.requireNonNull(weights);
         Objects.requireNonNull(graph);
         throw new UnsupportedOperationException("Not implemented yet");
     }
