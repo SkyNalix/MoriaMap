@@ -1,6 +1,7 @@
 package dev.moriamap.model;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -35,6 +36,16 @@ class Plan0QueryTest {
 			Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
 			query.execute( tn );
 		});
+	}
+
+	@Test void startStopNameGetterTest() {
+		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		assertEquals( "Lourmel", query.startStopName() );
+	}
+
+	@Test void targetStopNameGetterTest() {
+		Plan0Query query = new Plan0Query( "Lourmel", "Hoche" );
+		assertEquals( "Hoche", query.targetStopName() );
 	}
 
 }
