@@ -18,7 +18,7 @@ public interface TraversalStrategy {
      * @param dst the Vertex at which the traversal stops if stopAtDestination
      *            is true
      * @param weights an association of Edges to their weight
-     * @param stopAtDestination a flag that indicates wheter to stop when
+     * @param stopAtDestination a flag that indicates whether to stop when
      *                          destination Vertex is found
      * @param graph the graph to explore
      * @return a map that associates to each visited Vertex its incoming Edge

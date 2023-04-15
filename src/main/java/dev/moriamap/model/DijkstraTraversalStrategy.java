@@ -17,9 +17,9 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
      * given Graph if singleDestination is false. If singleDestination is true,
      * the map returned corresponds to the shortest path from src to dst.
      * @param src the starting Vertex of the traversal
-     * @param dst the destination Vertex is singleDestination is true
+     * @param dst the destination Vertex if singleDestination is true
      * @param weights if not empty, the weight associated to each Edge
-     * @param singleDestination a flag that indicates wheter to stop when
+     * @param singleDestination a flag that indicates whether to stop when
      *                          destination Vertex is found
      * @param graph the graph to explore
      * @return the shortest path tree from src to dst if singleDestination is
