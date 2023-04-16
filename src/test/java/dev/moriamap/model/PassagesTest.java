@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PassagesTest {
     private List<TransportSchedule> newListTransportScheduleHelper() {
@@ -20,7 +20,8 @@ class PassagesTest {
         v.addTransportSegment(tseg);
         LocalTime lt = LocalTime.MIN;
         TransportSchedule tsch = new TransportSchedule(lt, s1, v);
-        return List.of(tsch);
+        TransportSchedule tsch1 = new TransportSchedule(LocalTime.of(14,37),s1,v);
+        return List.of(tsch1,tsch);
     }
 
     @Test
@@ -34,7 +35,8 @@ class PassagesTest {
     void getFullDescription() {
         List<TransportSchedule> ltsch = this.newListTransportScheduleHelper();
         Passages p = Passages.of(ltsch);
-        assertEquals("At Lourmel: line 8 direction Boucicaut (variant 1): 00:00\n",
+        assertEquals("At Lourmel: line 8 direction Boucicaut (variant 1): 14:37\n"+
+                        "At Lourmel: line 8 direction Boucicaut (variant 1): 00:00\n" ,
                 p.getFullDescription());
     }
 
@@ -70,5 +72,24 @@ class PassagesTest {
         Passages p = Passages.of(newListTransportScheduleHelper());
         Passages p1 = Passages.of(newListTransportScheduleHelper());
         assertEquals(p.hashCode(),p1.hashCode());
+    }
+    
+    @Test
+    void inexistantVariantReturnsNull() {
+        Passages p = Passages.of(newListTransportScheduleHelper());
+        assertNull(p.getNextTimeWithWrap(LocalTime.now(),"14","14"));
+                
+    }
+    
+    @Test
+    void weHaveTheCorrectLocalTimeForNextTransport() {
+        Passages p = Passages.of(newListTransportScheduleHelper());
+        assertEquals(LocalTime.MIN,p.getNextTimeWithWrap(LocalTime.MIN,"1","8"));
+    }
+    
+    @Test
+    void test() {
+        Passages p = Passages.of(newListTransportScheduleHelper());
+        assertEquals(LocalTime.MIN,p.getNextTimeWithWrap(LocalTime.of(14,40),"1", "8"));
     }
 }

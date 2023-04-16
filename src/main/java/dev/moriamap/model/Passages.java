@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * A Passages object represents every passage/departure of every transport
@@ -107,12 +108,15 @@ public final class Passages {
     }
 
     /**
-     * This method returns the time at which the next transport of (lineName, variantName) will come at the Stop this Passages is for. 
-     * It returns null if there is no time. If there are no transports left for the day, the time of the first transport of the next day is returned.
+     * This method returns the time at which the next transport of
+     * (lineName, variantName) will come at the Stop this Passages is for. 
+     * It returns null if there is no time. If there are no transports left
+     * for the day, the time of the first transport of the next day is returned.
      * @param waitStart time at which we start waiting at the stop
      * @param variantName of the transport we are waiting for
      * @param lineName of the transport we are waiting for
      * @return time at which next transport will come.
+     * If  waitStart is equal to the next transport time, it returns waitStart
      */
     public LocalTime getNextTimeWithWrap(LocalTime waitStart, String variantName, String lineName) {
         Duration min = Duration.ofHours(25);
@@ -124,7 +128,7 @@ public final class Passages {
             if (d.isNegative()) {
                 d = d.plus(Duration.ofDays(1));
             }
-            if (!d.isNegative() && d.compareTo(min) < 0) {
+            if (d.compareTo(min) < 0) {
                 target = ts.time();
                 min = d;
             }
