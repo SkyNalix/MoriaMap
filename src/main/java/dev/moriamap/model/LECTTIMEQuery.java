@@ -1,7 +1,5 @@
 package dev.moriamap.model;
 
-import javax.sound.midi.Soundbank;
-
 /**
  * A LECTTIMEQuery represents a request for schedule information fetching.
  */
