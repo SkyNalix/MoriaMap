@@ -1,5 +1,7 @@
 package dev.moriamap.model;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,5 +94,30 @@ public final class Passages {
         }
 
         return hash;
+    }
+    
+    private List<TransportSchedule> getTransportScheduleForTheGivenLineAndVariant(String lineName, String variantName) {
+        List<TransportSchedule>res = new ArrayList<>();
+        for (TransportSchedule ts:transportSchedules) {
+            if (ts.variant().getName().equals(variantName) && ts.variant().getLineName().equals(lineName)) {
+                res.add(ts);
+            }
+        }
+        return res;
+    }
+    public LocalTime getNextTimeWithWrap(LocalTime waitStart, String variantName, String lineName) {
+        LocalTime res = waitStart;
+        Duration min = Duration.ofHours(25);
+        LocalTime target = LocalTime.now();
+        List<TransportSchedule> tsByLineAndVariant = getTransportScheduleForTheGivenLineAndVariant(lineName,variantName);
+        for (TransportSchedule ts : tsByLineAndVariant) {
+            Duration d = Duration.between(res,ts.time()); 
+            if (d.isZero()) return res;
+            if (!d.isNegative() && d.compareTo(min) < 0) {
+                target = ts.time();
+                min = d;
+            }
+        }
+        return target;
     }
 }
