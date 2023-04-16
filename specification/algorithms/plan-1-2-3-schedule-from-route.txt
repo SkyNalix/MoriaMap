@@ -8,6 +8,7 @@
         if e est un TransportSegment:
             Passages p = tn.getPassages(e.getFrom())
             LocalTime next = p.getNextWithWrap(cur, e.variantName(), e.lineName())
+            if next == null: throw new IllegalStateException("Il n'y a pas de transport sur ligne + variant")
             ajouter next à lts
             cur = next + e.getTravelTime()
         else: // e est un WalkSegment
