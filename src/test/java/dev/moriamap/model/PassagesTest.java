@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,7 +87,7 @@ class PassagesTest {
     }
     
     @Test
-    void test() {
+    void timeWrapsToNextDay() {
         Passages p = Passages.of(newListTransportScheduleHelper());
         assertEquals(LocalTime.MIN,p.getNextTimeWithWrap(LocalTime.of(14,40),"1", "8"));
     }
