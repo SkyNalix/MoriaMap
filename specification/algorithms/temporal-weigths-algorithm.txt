@@ -1,6 +1,8 @@
 private void TransportNetwork.getTimeWeightsAux(Vertex v, Map<Vertex, LocalDateTime> m):
     pour chaque arête e dans this.getOutgoingEdges(v):
-        if e est un TransportSegment: tempsDattente = this.getPassages(v).getWaitTimeWithWrap(m.get(v).toLocalTime(), e.getVariantName(), e.getLineName())
+        if e est un TransportSegment:
+            tempsDattente = this.getPassages(v).getWaitTimeWithWrap(m.get(v).toLocalTime(), e.getVariantName(), e.getLineName())
+            if tempsDattente == null: throw new IllegalStateException("Il n'y a pas de transports sur ligne + variant")
         else: tempsDattente = 0
         LocalDateTime nouveauTemps = m.get(v) + tempsDattente + temps de l'arête
         if e.getTo() n'existe pas dans m.keys() ou m.get(e.getTo()) > nouveauTemps:
@@ -16,7 +18,10 @@ public Map<Edge, Double> TransportNetwork.getTimeWeights(Vertex start, LocalTime
     var res = new HashMap<Edge, Double>()
     for v in this.getVertices():
         for e in this.getOutgoingEdges(v):
-            if e est un TransportSegment: res.put(e, this.getPassages(v).getWaitTimeWithWrap(m.get(v).toLocalTime(), e.getVariantName(), e.getLineName()) + e.travelDuration())
+            if e est un TransportSegment:
+                tempsDattente = this.getPassages(v).getWaitTimeWithWrap(m.get(v).toLocalTime(), e.getVariantName(), e.getLineName())
+                if tempsDattente == null: throw new IllegalStateException("Il n'y a pas de transports sur ligne + variant")
+                res.put(e, tempsDattente + e.travelDuration())
             else: res.put(e, e.walkDuration())
 
     return res
