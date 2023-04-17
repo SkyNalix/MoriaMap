@@ -135,4 +135,21 @@ public final class Passages {
         }
         return target;
     }
+
+    /**
+     * This method returns the time one has to wait to ride the next transport
+     * of (lineName, variantName) coming to the Stop this Passages is for. If
+     * there are no transports, it returns null. If the next transport comes
+     * the next day (after midnight), that's okay.
+     * @param waitStart time at which we start waiting
+     * @param variantName of the transport we are waiting for
+     * @param lineName of the transport we are waiting for
+     * @return the amount of time we have to wait until the next transport arrives.
+     */
+    public Duration getWaitTimeWithWrap(LocalTime waitStart, String variantName, String lineName) {
+        LocalTime nextTransportTime = getNextTimeWithWrap(waitStart,variantName,lineName);
+        Duration toWait = null;
+        if (nextTransportTime != null) toWait = Duration.between(waitStart,nextTransportTime);
+        return toWait;
+    }
 }
