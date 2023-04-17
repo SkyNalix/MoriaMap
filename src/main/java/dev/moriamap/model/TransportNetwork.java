@@ -177,8 +177,7 @@ public final class TransportNetwork extends Graph {
     }
 
     /**
-     * Give distance weights to every edges
-     * @return the map which associates every edge to its distance
+     * { @return the map which associates every edge to its distance }
      */
     public Map<Edge, Double> getDistanceWeights(){
         var res = new HashMap<Edge, Double>();
