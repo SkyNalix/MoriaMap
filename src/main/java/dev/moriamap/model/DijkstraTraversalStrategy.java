@@ -38,6 +38,38 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
             Objects.requireNonNull(dst);
         Objects.requireNonNull(weights);
         Objects.requireNonNull(graph);
-        throw new UnsupportedOperationException("Not implemented yet");
+
+        List<Vertex> p = new ArrayList<>();
+        Map<Vertex,Double> d = new HashMap<>();
+        for(Vertex v : graph.getVertices()) d.put(v,Double.POSITIVE_INFINITY);
+        d.put(src, 0.0);
+
+        Map<Vertex,Edge> res = new HashMap<>();
+        List<Vertex> pComplement = graph.getVertices();
+
+        while(!pComplement.isEmpty()){
+            Vertex a = null;
+            double minD = Double.POSITIVE_INFINITY;
+            for(Vertex v : pComplement){
+                if(d.get(v) < minD){
+                    minD = d.get(v);
+                    a = v;
+                }
+            }
+            pComplement.remove(a);
+            p.add(a);
+
+            for(Edge ab : graph.getOutgoingEdgesOf(a)){
+                if( !p.contains(ab.getTo())){
+                    if(d.get(ab.getTo()) > d.get(a) + weights.get(ab)){
+                        d.put(ab.getTo(),d.get(a) + weights.get(ab));
+                        res.put(ab.getTo(), ab);
+                    }
+                }
+            }
+
+        }
+        return res;
     }
+
 }
