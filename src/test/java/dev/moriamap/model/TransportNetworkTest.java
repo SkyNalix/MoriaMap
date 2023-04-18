@@ -274,4 +274,55 @@ class TransportNetworkTest {
         res.put(ts2,ts2.getDistance());
         assertEquals(res, tn.getDistanceWeights());
     }
+
+    @Test
+    void getTimeWeightsNoExceptionsTest() {
+        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+        Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
+        Stop s3 = Stop.from("s3", GeographicPosition.NORTH_POLE);
+
+        TransportSegment ts = TransportSegment.from(s1, s2, "7B", "1",
+                                                    Duration.ZERO, 4);
+        TransportSegment ts2 = TransportSegment.from(s1, s3, "7B", "1",
+                                                     Duration.ofMinutes( 10 ), 15);
+        TransportSegment ts3 = TransportSegment.from(s2, s3, "7B", "2",
+                                                     Duration.ofMinutes( 2 ), 2);
+
+        Variant v1 = Variant.empty("1", "7B");
+        v1.addTransportSegment(ts);
+        v1.addTransportSegment(ts2);
+        Variant v2 = Variant.empty("2", "7B");
+        v2.addTransportSegment(ts3);
+
+        Line l = Line.of("7B");
+        l.addVariant(v1);
+        l.addVariant(v2);
+
+        v1.addDeparture(LocalTime.MIN);
+        v1.addDeparture(LocalTime.MAX);
+        v2.addDeparture(LocalTime.MIN);
+        v2.addDeparture(LocalTime.MAX);
+        TransportNetwork tn = TransportNetwork.empty();
+        tn.addStop(s1);
+        tn.addStop(s2);
+        tn.addStop(s3);
+        tn.addTransportSegment(ts);
+        tn.addTransportSegment(ts2);
+        tn.addTransportSegment(ts3);
+        tn.addLine(l);
+
+        var map = tn.getTimeWeights( s1, LocalTime.MIDNIGHT );
+        assertTrue( map.containsKey( ts ) );
+        assertTrue( map.containsValue( 0.0 ) );
+    }
+
+    @Test
+    void getTimeWeightsThrowIllegalStateExceptionTest() {
+        var tn = newTransportNetworkHelper();
+        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+        assertThrows(
+                  IllegalStateException.class,
+                  () -> tn.getTimeWeights( s1, LocalTime.MIDNIGHT )
+                    );
+    }
 }
