@@ -48,7 +48,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
         List<Vertex> pComplement = graph.getVertices();
 
         while(!pComplement.isEmpty()){
-            Vertex a = null;
+            Vertex a = pComplement.get(0);
             double minD = Double.POSITIVE_INFINITY;
             for(Vertex v : pComplement){
                 if(d.get(v) < minD){
