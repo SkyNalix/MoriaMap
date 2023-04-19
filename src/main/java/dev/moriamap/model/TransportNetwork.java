@@ -212,7 +212,7 @@ public final class TransportNetwork extends Graph {
                           transportSegment.getLineName() );
                 if(waitTime == null)
                     throw new IllegalStateException(
-                              "Il n'y a pas de transports sur "
+                              "There are no transports on the line "
                               + transportSegment.getLineName()
                               + " variant "
                               + transportSegment.getVariantName());
@@ -252,7 +252,11 @@ public final class TransportNetwork extends Graph {
                               transportSegment.getVariantName(),
                               transportSegment.getLineName() );
                     if( tempsDattente == null )
-                        throw new IllegalStateException( "Il n'y a pas de transports sur ligne + variant" );
+                        throw new IllegalStateException(
+                                  "There are no transports on the line "
+                                  + transportSegment.getLineName()
+                                  + " variant "
+                                  + transportSegment.getVariantName());
                     res.put( e, (double) ( tempsDattente.toSeconds() + transportSegment.getTravelDuration().toSeconds() ) );
                 } else {
                     // res.put( e, e.walkDuration() )
