@@ -26,6 +26,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
      *         true, the shortest path tree from src to all other vertices
      *         otherwise
      */
+    @Override
     public Map<Vertex, Edge> traversal(
       Vertex src,
       Vertex dst,
@@ -38,6 +39,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
             Objects.requireNonNull(dst);
         Objects.requireNonNull(weights);
         Objects.requireNonNull(graph);
+        if (src.equals(dst) && singleDestination) return new HashMap<Vertex,Edge>();
 
         List<Vertex> p = new ArrayList<>();
         Map<Vertex,Double> d = new HashMap<>();
