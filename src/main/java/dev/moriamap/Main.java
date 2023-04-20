@@ -17,7 +17,7 @@ class Main {
         }
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         InputStream in = System.in;
         OutputStream out = System.out;
 
@@ -47,23 +47,23 @@ class Main {
                       2 - Get the trains schedules of a stop
                       3 - Exit
                     """);
-            out.write( "Option: ".getBytes() );
+            print(out, "Option: ");
             String option = inputScanner.nextLine();
             if (option.isBlank()|| option.equals("3"))
                 break;
 
             Query query = null;
             if(option.equals("1")) {
-                out.write( "Name of the starting stop: ".getBytes() );
+                print(out, "Name of the starting stop: " );
                 String startStopName = inputScanner.nextLine();
                 if(startStopName.isBlank()) break;
 
-                out.write( "Name of the target stop: ".getBytes() );
+                print(out, "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
                 if(targetStopName.isBlank()) break;
                 query = new PLAN0Query(out, startStopName, targetStopName);
             } else if(option.equals( "2" )) {
-                out.write( "Name of the stop: ".getBytes() );
+                print(out, "Name of the stop: " );
                 String stopName =  inputScanner.nextLine();
                 if (stopName.isBlank()) break;
                 query = new LECTTIMEQuery(out, stopName);
@@ -71,7 +71,7 @@ class Main {
             }
             if(query == null) continue;
             query.execute( tn );
-            out.write( "\n".getBytes() );
+            print(out, "\n" );
         }
         inputScanner.close();
     }
