@@ -77,7 +77,7 @@ public final class TransportNetwork extends Graph {
             if (s.getName().equals(name))
                 return s;
         }
-        return null;
+        return Utils.getNearestStop(name, this.getStops());
     }
 
     /**
