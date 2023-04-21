@@ -190,4 +190,40 @@ public final class TransportNetwork extends Graph {
         }
         return res;
     }
+
+    /**
+     * This method compute the time when every stop of the route is arrived
+     * @param route the route containing all the stops and travel durations of each edge
+     * @param startTime the time when the first route edge is taken
+     * @return a string with the whole route to take with times at each line change
+     */
+    public String getRouteDescription(List<Edge> route, LocalTime startTime) {
+        LocalTime cur = startTime;
+        List<LocalTime> lts = new ArrayList<>();
+        for(Edge e : route) {
+            if (e instanceof TransportSegment transportSegment) {
+                Passages p = this.getPassages((Stop) e.getFrom());
+                LocalTime next = p.getNextTimeWithWrap(cur,
+                        transportSegment.getVariantName(),
+                        transportSegment.getLineName());
+                if (next == null)
+                    throw new IllegalStateException(
+                            "Il n'y a pas de transport sur "
+                            + transportSegment.getLineName()
+                            + " variant "
+                            + transportSegment.getVariantName());
+                lts.add(next);
+                cur = next.plus(transportSegment.getTravelDuration());
+            }
+            // else {
+                // e est un WalkSegment
+                // ajouter cur à lts
+                // cur = cur + e.walkTime()
+            // }
+        }
+        return PrettyPrinter.printTransportSegmentPathWithLineChangeTimes(this,route,lts);
+    }
+
+
+
 }
