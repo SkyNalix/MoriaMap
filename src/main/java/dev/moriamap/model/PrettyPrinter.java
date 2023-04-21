@@ -13,7 +13,17 @@ public class PrettyPrinter {
 
 	private PrettyPrinter(){}
 
-	private static String lineChangeToString(TransportNetwork tn, String lineName, TransportSegment segment) {
+	/**
+	 * This method return a String for when a change in line is detected
+	 * @param tn the transport network the new line belong to
+	 * @param lineName the name of the new line
+	 * @param segment the first transport segment of the route of this new line
+	 * @return "null line" if the line was not found
+	 * or a string build in the format:
+	 * ## [Line and variant names] ## [Terminus of the variant]
+	 *   [the 'from' stop of the transport segment]
+	 */
+	public static String lineChangeToString( TransportNetwork tn, String lineName, TransportSegment segment ) {
 		Line line = tn.findLine( lineName );
 		if(line == null) return "<null line>";
 		Variant variant = line.getVariantNamed( segment.getVariantName() );
@@ -66,37 +76,42 @@ public class PrettyPrinter {
 	 * @param route the route of edges to take in order
 	 * @param lts list of times for every edge
 	 * @return the built String with all the information
+	 * format:
+	 * 	'Switching line at [time]' (or for the first:'Taking line at: [starting time]')
+	 * 	[when changing line] ## [Line and variant names] ## [terminus of the variant]
+	 * 	[list of all the stops to go throught on the same line: s1 -> s2 -> s3]
 	 */
 	public static String printTransportSegmentPathWithLineChangeTimes(
 			TransportNetwork tn,
 			List<Edge> route,
 			List<LocalTime> lts) {
-		// afficher le moment quand t'arrive a une station, et le temps quand tu leave la line
-		// que quand il y changement de ligne ou variant
-		// moment quand tu leave = localtime courrant + getTravelDuration() precedant
 		if(route.isEmpty()) return "";
-		TransportSegment segment = (TransportSegment) route.get( 0 );
-		String currentLine = segment.getLineName();
+		if(route.size() != lts.size())
+			return "<route and lts have different sizes>";
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder
-				  .append("Taking line at ")
-				  .append(lts.get(0))
-				  .append( lineChangeToString(tn, currentLine, segment) );
+		String currentLine = null;
+		if(route.get( 0 ) instanceof TransportSegment firstSegment) {
+			currentLine = firstSegment.getLineName();
+			stringBuilder.append( "Taking line at " )
+					  .append( lts.get( 0 ))
+					  .append( lineChangeToString( tn, currentLine, firstSegment ) );
+		}
 		for( int i = 0; i < route.size(); i++ ) {
 			Edge edge = route.get( i );
-			segment = (TransportSegment) edge;
-			if( !segment.getLineName().equals( currentLine ) ) {
-				stringBuilder
-						  .append("\nSwitching line at ")
-						  .append(lts.get(i).plus( segment.getTravelDuration() ))
-						  .append( lineChangeToString( tn, segment.getLineName(), segment) );
+			if(edge instanceof TransportSegment segment) {
+				if( !segment.getLineName().equals( currentLine ) ) {
+					stringBuilder
+							  .append( "\nSwitching line at " )
+							  .append( lts.get( i ).plus( segment.getTravelDuration() ))
+							  .append( lineChangeToString( tn, segment.getLineName(), segment ) );
+				}
+				stringBuilder.append( " --> " );
+				currentLine = segment.getLineName();
+				if( i == route.size() - 1 )
+					stringBuilder.append( "\033[42m" ).append( segment.getTo() ).append( FORMAT_RESET );
+				else
+					stringBuilder.append( segment.getTo() );
 			}
-			stringBuilder.append( " --> " );
-			currentLine = segment.getLineName();
-			if( i == route.size()-1 )
-				stringBuilder.append( "\033[42m" ).append( segment.getTo() ).append( FORMAT_RESET );
-			else
-				stringBuilder.append( segment.getTo() );
 		}
 		return stringBuilder.toString();
 	}

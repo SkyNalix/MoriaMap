@@ -311,4 +311,33 @@ class TransportNetworkTest {
 
         assertNotEquals( "", tn.getRouteDescription(route, LocalTime.MIN) );
     }
+
+    @Test
+    void addDepartureToVariantThrowExceptionWithNullArgTest() {
+        var tn = newTransportNetworkHelper();
+        assertThrows(
+                  IllegalArgumentException.class,
+                  () -> tn.addDepartureToVariant( null, "1", LocalTime.MIN )
+                    );
+        assertThrows(
+                  IllegalArgumentException.class,
+                  () -> tn.addDepartureToVariant( "14", null, LocalTime.MIN )
+                    );
+        assertThrows(
+                  IllegalArgumentException.class,
+                  () -> tn.addDepartureToVariant( "14", "1", null )
+                    );
+    }
+
+    @Test
+    void addDepartureToVariantReturnTrueTest() {
+        var tn = newTransportNetworkHelper();
+        assertTrue(tn.addDepartureToVariant( "7B", "1", LocalTime.now()));
+    }
+    @Test
+    void addDepartureToVariantReturnFalseTest() {
+        var tn = newTransportNetworkHelper();
+        assertFalse(tn.addDepartureToVariant( "14", "1", LocalTime.now()));
+    }
+
 }
