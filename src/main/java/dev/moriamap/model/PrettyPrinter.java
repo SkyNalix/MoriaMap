@@ -22,10 +22,11 @@ public class PrettyPrinter {
 	 * or a string build in the format:
 	 * ## [Line and variant names] ## [Terminus of the variant]
 	 *   [the 'from' stop of the transport segment]
+	 * @throws IllegalArgumentException if line is null
 	 */
 	public static String lineChangeToString( TransportNetwork tn, String lineName, TransportSegment segment ) {
 		Line line = tn.findLine( lineName );
-		if(line == null) return "<null line>";
+		if(line == null) throw new IllegalArgumentException("null line");
 		Variant variant = line.getVariantNamed( segment.getVariantName() );
 		return "\n## \033[1;37mLine " + lineName + " variant " + variant.getName()
 			   + FORMAT_RESET + " ## \033[4mTerminus: " + variant.getEnd()
@@ -80,6 +81,7 @@ public class PrettyPrinter {
 	 * 	'Switching line at [time]' (or for the first:'Taking line at: [starting time]')
 	 * 	[when changing line] ## [Line and variant names] ## [terminus of the variant]
 	 * 	[list of all the stops to go throught on the same line: s1 -> s2 -> s3]
+	 * @throws IllegalArgumentException if route and lts are different sizes
 	 */
 	public static String printTransportSegmentPathWithLineChangeTimes(
 			TransportNetwork tn,
@@ -87,7 +89,7 @@ public class PrettyPrinter {
 			List<LocalTime> lts) {
 		if(route.isEmpty()) return "";
 		if(route.size() != lts.size())
-			return "<route and lts have different sizes>";
+			throw new IllegalArgumentException("route and lts have different sizes");
 		StringBuilder stringBuilder = new StringBuilder();
 		String currentLine = null;
 		if(route.get( 0 ) instanceof TransportSegment firstSegment) {

@@ -62,7 +62,8 @@ class PrettyPrinterTest {
 
 	@Test
 	void lineChangeToStringWithLineNotFound() {
-		assertEquals("<null line>", PrettyPrinter.lineChangeToString(tn, "no existing line name", null));
+		assertThrows(IllegalArgumentException.class,
+					 () -> PrettyPrinter.lineChangeToString(tn, "no existing line name", null));
 	}
 
 	@Test
@@ -99,16 +100,16 @@ class PrettyPrinterTest {
 	void printTransportSegmentPathWithLineChangeTimesDifferentLtsSizeTest() {
 		List<LocalTime> lts = List.of(
 				  LocalTime.MIN);
-		assertNotEquals("",
-						PrettyPrinter.printTransportSegmentPathWithLineChangeTimes
+		assertThrows(IllegalArgumentException.class,
+					 () -> PrettyPrinter.printTransportSegmentPathWithLineChangeTimes
 											   (tn, testRoute, lts));
 	}
 
 	@Test
 	void printTransportSegmentPathWithLineChangeTimesEmptyLtsListTest() {
 		List<LocalTime> lts = new ArrayList<>();
-		assertNotEquals("",
-						PrettyPrinter.printTransportSegmentPathWithLineChangeTimes
+		assertThrows(IllegalArgumentException.class,
+					 () -> PrettyPrinter.printTransportSegmentPathWithLineChangeTimes
 											   (tn, testRoute, lts));
 	}
 
