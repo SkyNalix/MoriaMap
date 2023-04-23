@@ -56,36 +56,9 @@ class TransportNetworkTest {
         );
     }
 
-    private TransportNetwork newTransportNetworkHelper() {
-        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
-        Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
-
-        TransportSegment ts1 = TransportSegment.from(s1, s2, "7B", "1",
-                Duration.ofMinutes( 3 ), 4);
-        TransportSegment ts2 = TransportSegment.from(s2, s1, "7B", "2",
-                Duration.ofMinutes( 4 ), 4);
-
-        Variant v1 = Variant.empty("1", "7B");
-        v1.addTransportSegment(ts1);
-        Variant v2 = Variant.empty("2", "7B");
-        v2.addTransportSegment(ts2);
-
-        Line l = Line.of("7B");
-        l.addVariant(v1);
-        l.addVariant(v2);
-
-        TransportNetwork tn = TransportNetwork.empty();
-        tn.addStop(s1);
-        tn.addStop(s2);
-        tn.addTransportSegment(ts1);
-        tn.addTransportSegment(ts2);
-        tn.addLine(l);
-
-        return tn;
-    }
     @Test
     void getStopFromPositionSucceeds() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s = tn.getStopFromPosition(GeographicPosition.SOUTH_POLE);
 
         Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
@@ -95,7 +68,7 @@ class TransportNetworkTest {
 
     @Test
     void getStopByNameSucceeds() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s = tn.getStopByName("s1");
 
         Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
@@ -105,42 +78,42 @@ class TransportNetworkTest {
 
     @Test
     void getStopFromPositionFails() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s = tn.getStopFromPosition(GeographicPosition.NULL_ISLAND);
         assertNull(s);
     }
 
     @Test
     void getStopByNameFails() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s = tn.getStopByName("Dijkstra");
         assertNull(s);
     }
 
     @Test
     void getLines() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         List<Line> l = tn.getLines();
         assertEquals(1, l.size());
     }
 
     @Test
     void getVariants() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         List<Variant> v = tn.getVariants();
         assertEquals(2, v.size());
     }
 
     @Test
     void getStops() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         List<Stop> s = tn.getStops();
         assertEquals(2, s.size());
     }
 
     @Test
     void getTransportSegments() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         List<TransportSegment> t = tn.getTransportSegments();
         assertEquals(2, t.size());
     }
@@ -161,21 +134,21 @@ class TransportNetworkTest {
         l.addVariant(v1);
         l.addVariant(v2);
 
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
 
         assertFalse(tn.addLine(l));
     }
 
     @Test
     void addLineSucceeds() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Line l = Line.of("8");
         assertTrue(tn.addLine(l));
     }
 
     @Test
     void findStopSucceeds() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
         Stop s = tn.findStop(s1);
         assertEquals(s1, s);
@@ -183,7 +156,7 @@ class TransportNetworkTest {
 
     @Test
     void findStopFails() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Stop s1 = Stop.from("Clairefontaine", GeographicPosition.NULL_ISLAND);
         Stop s = tn.findStop(s1);
         assertNull(s);
@@ -191,14 +164,14 @@ class TransportNetworkTest {
 
     @Test
     void findLineSucceeds() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Line l = tn.findLine("7B");
         assertNotNull(l);
     }
 
     @Test
     void findLineFails() {
-        TransportNetwork tn = newTransportNetworkHelper();
+        TransportNetwork tn = TransportNetwork.newTransportNetworkHelper();
         Line l = tn.findLine("3");
         assertNull(l);
     }
@@ -261,7 +234,7 @@ class TransportNetworkTest {
 
     @Test
     void getDistanceWeights(){
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
         Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
         TransportSegment ts1 = TransportSegment.from(s1, s2, "7B", "1",
@@ -277,7 +250,7 @@ class TransportNetworkTest {
 
     @Test
     void getRouteDescriptionTestThrowException() {
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         Stop s1 = tn.getStopByName( "s1" );
         Stop s2 = tn.getStopByName( "s2" );
         TransportSegment ts1 = TransportSegment.from(s1, s2, "7B", "1",
@@ -295,7 +268,7 @@ class TransportNetworkTest {
 
     @Test
     void getRouteDescriptionTest() {
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         tn.getVariants().get(0).addDeparture( LocalTime.MIN );
         tn.getVariants().get(1).addDeparture( LocalTime.of( 0,7,0 ) );
 
@@ -314,7 +287,7 @@ class TransportNetworkTest {
 
     @Test
     void addDepartureToVariantThrowExceptionWithNullArgTest() {
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         assertThrows(
                   IllegalArgumentException.class,
                   () -> tn.addDepartureToVariant( null, "1", LocalTime.MIN )
@@ -331,12 +304,12 @@ class TransportNetworkTest {
 
     @Test
     void addDepartureToVariantReturnTrueTest() {
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         assertTrue(tn.addDepartureToVariant( "7B", "1", LocalTime.now()));
     }
     @Test
     void addDepartureToVariantReturnFalseTest() {
-        var tn = newTransportNetworkHelper();
+        var tn = TransportNetwork.newTransportNetworkHelper();
         assertFalse(tn.addDepartureToVariant( "14", "1", LocalTime.now()));
     }
 

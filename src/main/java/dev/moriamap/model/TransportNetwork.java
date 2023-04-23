@@ -30,6 +30,38 @@ public final class TransportNetwork extends Graph {
     }
 
     /**
+     * 
+     * @return
+     */
+    static TransportNetwork newTransportNetworkHelper() {
+        Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+        Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
+
+        TransportSegment ts1 = TransportSegment.from(s1, s2, "7B", "1",
+                Duration.ofMinutes( 3 ), 4);
+        TransportSegment ts2 = TransportSegment.from(s2, s1, "7B", "2",
+                Duration.ofMinutes( 4 ), 4);
+
+        Variant v1 = Variant.empty("1", "7B");
+        v1.addTransportSegment(ts1);
+        Variant v2 = Variant.empty("2", "7B");
+        v2.addTransportSegment(ts2);
+
+        Line l = Line.of("7B");
+        l.addVariant(v1);
+        l.addVariant(v2);
+
+        TransportNetwork tn = TransportNetwork.empty();
+        tn.addStop(s1);
+        tn.addStop(s2);
+        tn.addTransportSegment(ts1);
+        tn.addTransportSegment(ts2);
+        tn.addLine(l);
+
+        return tn;
+    }
+
+    /**
      * {@return the Stop at position gp in the transport network,
      * or null if not found}
      * @param gp the geographic position of the wanted stop
