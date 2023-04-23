@@ -43,33 +43,43 @@ class TravelTimeAsWeightTest {
 					 () -> travelTimeAsWeight.apply( 0.0, dummyEdge ));
 	}
 
-	@Test
-	void applyTest() {
 
+	@Test
+	void applyNoPassagesFoundTest() {
 		Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
 		Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
-
 		TransportSegment ts1 = TransportSegment.from( s1, s2, "7B", "1",
 													  Duration.ofMinutes( 3 ), 4 );
-		TransportSegment ts2 = TransportSegment.from(s2, s1, "7B", "2",
-													 Duration.ofMinutes( 4 ), 4);
-
 		Variant v1 = Variant.empty("1", "7B");
 		v1.addTransportSegment(ts1);
-		Variant v2 = Variant.empty("2", "7B");
-		v2.addTransportSegment(ts2);
-
 		Line l = Line.of("7B");
 		l.addVariant(v1);
-		l.addVariant(v2);
-
 		TransportNetwork tn = TransportNetwork.empty();
 		tn.addStop(s1);
 		tn.addStop(s2);
 		tn.addTransportSegment(ts1);
-		tn.addTransportSegment(ts2);
 		tn.addLine(l);
 
+		var travelTimeAsWeight = new TravelTimeAsWeight( LocalTime.MIN, tn);
+		assertEquals(Double.POSITIVE_INFINITY, travelTimeAsWeight.apply( 0.0, ts1 ));
+	}
+
+
+	@Test
+	void applyTest() {
+		Stop s1 = Stop.from("s1", GeographicPosition.SOUTH_POLE);
+		Stop s2 = Stop.from("s2", GeographicPosition.NORTH_POLE);
+		TransportSegment ts1 = TransportSegment.from( s1, s2, "7B", "1",
+													  Duration.ofMinutes( 3 ), 4 );
+		Variant v1 = Variant.empty("1", "7B");
+		v1.addTransportSegment(ts1);
+		Line l = Line.of("7B");
+		l.addVariant(v1);
+		TransportNetwork tn = TransportNetwork.empty();
+		tn.addStop(s1);
+		tn.addStop(s2);
+		tn.addTransportSegment(ts1);
+		tn.addLine(l);
 		v1.addDeparture( LocalTime.of( 0,0,4 ) );
 
 		var travelTimeAsWeight = new TravelTimeAsWeight( LocalTime.MIN, tn);
