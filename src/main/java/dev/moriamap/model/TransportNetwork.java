@@ -88,10 +88,10 @@ public final class TransportNetwork extends Graph {
     */
     public Stop getStopByInexactName(String name){
         var stops = this.getStops();
-        var min = stopNameFinder.levenshteinDistance(name, stops.get(0).getName());
+        var min = StopNameFinder.levenshteinDistance(name, stops.get(0).getName());
         var res = stops.get(0);
         for(int i=1;i<stops.size();i++){
-            var distance = stopNameFinder.levenshteinDistance(name, stops.get(i).getName());
+            var distance = StopNameFinder.levenshteinDistance(name, stops.get(i).getName());
             if(distance< min){
                 min = distance;
                 res = stops.get(i);

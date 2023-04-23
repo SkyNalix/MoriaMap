@@ -5,9 +5,9 @@ import java.util.Arrays;
 /**
  * 
  */
-public class stopNameFinder {
+public class StopNameFinder {
     
-    private stopNameFinder(){
+    private StopNameFinder(){
         throw new AssertionError();
     }
 
