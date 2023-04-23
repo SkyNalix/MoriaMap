@@ -14,13 +14,14 @@ DistanceAsWeight, implémente Function<Edge, Double>:
 - Chemin le plus court en temps
 
 TravelTimeAsWeight, implémente BiFunction<Double, Edge, Double>:
-    Double: nombre de minutes pour arriver à Edge.from
+    Double: nombre de secondes pour arriver à Edge.from
     Edge: l'arête considérée
     Double: le poids de l'arête ( = temps d'attente ( = horaire de passage du
-    prochain transport vers la fin du variant en minutes - nombre de minutes
-    pour arriver à Edge.from) + temps de trajet de l'arête en minutes)
+    prochain transport vers la fin du variant en secondes - nombre de secondes
+    pour arriver à Edge.from) + temps de trajet de l'arête en secondes)
 
-UPDATE: TravelTimeAsWeight encapsule un LocalTime correspondant à l'horaire de
+[UPDATE]
+TravelTimeAsWeight encapsule un LocalTime correspondant à l'horaire de
 départ et un TransportNetwork afin de l'interroger sur les prochains passages de
 transport pour un Stop donné
 
