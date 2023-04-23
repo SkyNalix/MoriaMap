@@ -1,14 +1,13 @@
 package dev.moriamap.model;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 
  */
-public class Utils {
+public class stopNameFinder {
     
-    private Utils(){
+    private stopNameFinder(){
         throw new AssertionError();
     }
 
@@ -39,7 +38,7 @@ public class Utils {
     * @param y the second string
     * @return the minimum number of insertions, deletions, and substitutions needed to transform x into y
     */
-    public static int calculate(String x, String y) {
+    public static int levenshteinDistance(String x, String y) {
         int[][] dp = new int[x.length() + 1][y.length() + 1];
         for (int i = 0; i <= x.length(); i++) {
             for (int j = 0; j <= y.length(); j++) {
@@ -58,27 +57,5 @@ public class Utils {
             }
         }
         return dp[x.length()][y.length()];
-    }
-
-    /**
-    * Finds the stop in the given list of stops that has the closest name to the given stop name,
-    * as measured by the Levenshtein distance.
-    * @param stopName the name of the stop to find the closest match for
-    * @param stops the list of stops to search for a match in
-    * @return the stop in the list with the closest name to the given stop name, or null if no match was found
-    */
-    public static Stop getNearestStop(String stopName,List<Stop> stops){
-        var min = calculate(stopName, stops.get(0).getName());
-        var res = stops.get(0);
-        for(int i=1;i<stops.size();i++){
-            var distance = calculate(stopName, stops.get(i).getName());
-            if(distance< min){
-                min = distance;
-                res = stops.get(i);
-            }
-        }
-        // If the closest match is more than three edit operations away, return null
-        if(min >= 3) return null;
-        return res;
     }
 }

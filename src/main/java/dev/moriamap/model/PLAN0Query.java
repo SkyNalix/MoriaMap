@@ -28,8 +28,8 @@ public record PLAN0Query(
 	 * @throws QueryFailureException if start or target stops were not found
 	 */
 	String run( TransportNetwork network ) throws QueryFailureException {
-		Stop start = network.getStopByName( startStopName );
-		Stop target = network.getStopByName( targetStopName );
+		Stop start = network.getStopByInexactName( startStopName );
+		Stop target = network.getStopByInexactName( targetStopName );
 		if(start == null || target == null)
 			throw new QueryFailureException("One of the stops was not found");
 		Map<Vertex, Edge> dfs = network.depthFirstSearch( start );
