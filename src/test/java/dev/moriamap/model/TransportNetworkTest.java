@@ -83,6 +83,17 @@ class TransportNetworkTest {
 
         return tn;
     }
+
+    @Test
+    void getStopByAnInexactName() {
+        TransportNetwork tn = newTransportNetworkHelper();
+        Stop s = Stop.from("Lourmel",GeographicPosition.SOUTH_POLE);
+        tn.addStop(s);
+        Stop s1 = tn.getStopByName("Lourmal");
+        assertEquals(s,s1);
+
+    }
+    
     @Test
     void getStopFromPositionSucceeds() {
         TransportNetwork tn = newTransportNetworkHelper();
