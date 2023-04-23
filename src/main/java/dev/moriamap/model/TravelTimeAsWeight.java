@@ -37,6 +37,8 @@ public class TravelTimeAsWeight implements BiFunction<Double, Edge, Double> {
 			LocalTime time = startTime.plusSeconds( current.longValue() );
 			Duration nextFromSchdl = tn.getPassages( (Stop) segment.getFrom() ).getWaitTimeWithWrap
 					  ( time, segment.getVariantName(), segment.getLineName());
+			if(nextFromSchdl == null)
+				return Double.POSITIVE_INFINITY;
 			return (double) nextFromSchdl.toSeconds() + segment.getTravelDuration().toSeconds();
 		}
 		throw new UnsupportedOperationException("Only TransportSegment are implemented for now");
