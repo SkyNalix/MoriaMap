@@ -2,7 +2,7 @@
 
 ## Features
 At the current state the program is able to load the transport network described in map_data.csv (LECT_NET) and the schedule described in schedule.csv.
-It is also able to take two stops and display a non-optimized path the user need to take on the network to get from one stop to the other (PLAN_0),
+It is also able to take two stops and display a non-optimized path the user needs to take on the network to get from one stop to the other (PLAN_0),
 display the different transports passages for a given stop (LECT_TIME)
 and show an optimized in time or distance path to take from given starting and destination stop (PLAN_1),
 keep in mind that some paths are unable to be computed because of the departures CSV.
