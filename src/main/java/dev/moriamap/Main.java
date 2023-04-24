@@ -67,7 +67,6 @@ class Main {
                 String stopName =  inputScanner.nextLine();
                 if (stopName.isBlank()) break;
                 query = new LECTTIMEQuery(out, stopName);
-                query.execute(tn);
             }
             if(query == null) continue;
             query.execute( tn );
