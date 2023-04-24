@@ -27,7 +27,7 @@ class Main {
             return null;
         }
     }
-    
+
     public static void main(String[] args) {
         InputStream in = System.in;
         OutputStream out = System.out;
@@ -99,14 +99,21 @@ class Main {
                     continue;
                 }
 
-                print( out, "When do you want to start your travel?\n   Hours: ");
+                print( out, "When do you want to start your travel? (just press ENTER for right now)" +
+                            "\n   hours: ");
                 String hoursStr = inputScanner.nextLine();
+                print( out, "   minutes: ");
                 String minutesStr = inputScanner.nextLine();
-                LocalTime startTime = parseTime( hoursStr, minutesStr );
+                LocalTime startTime;
+                if( hoursStr.isBlank() || minutesStr.isBlank())
+                    startTime = LocalTime.now();
+                else
+                    startTime = parseTime( hoursStr, minutesStr );
                 if(startTime != null)
                     query = new PLAN1Query(out, startStopName, targetStopName, optimizationChoice, startTime);
             }
             if(query == null) continue;
+            print(out, "\n" );
             query.execute( tn );
             print(out, "\n" );
         }
