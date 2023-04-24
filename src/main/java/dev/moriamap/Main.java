@@ -28,6 +28,20 @@ class Main {
         }
     }
 
+    private static String getOptimizationsChoiceDescriptions() {
+        StringBuilder res = new StringBuilder("How do you want to optimize the route?\n    ");
+        int len = RouteOptimization.values().length;
+        for( int i = 0; i < len; i++ ) {
+            res.append( i+1 )
+                      .append( " for " )
+                      .append( RouteOptimization.values()[i] );
+            if(i < len-1)
+                res.append( ", " );
+        }
+        res.append("\n    Option: ");
+        return res.toString();
+    }
+
     public static void main(String[] args) {
         InputStream in = System.in;
         OutputStream out = System.out;
@@ -51,6 +65,7 @@ class Main {
 
         print(out, "At any moment waiting for an input, " +
                             "pressing ENTER without typing anything exit the program\n" );
+
         while(true) {
            print(out, """
                     What do you want to do?
@@ -66,51 +81,53 @@ class Main {
 
             Query query = null;
             if(option.equals("1")) {
-                print(out, "Name of the starting stop: " );
+                print( out, "Name of the starting stop: " );
                 String startStopName = inputScanner.nextLine();
-                if(startStopName.isBlank()) break;
-                print(out, "Name of the target stop: " );
+                if( startStopName.isBlank() ) break;
+                print( out, "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
-                if(targetStopName.isBlank()) break;
-                query = new PLAN0Query(out, startStopName, targetStopName);
-            } else if(option.equals( "2" )) {
-                print(out, "Name of the stop: " );
-                String stopName =  inputScanner.nextLine();
-                if (stopName.isBlank()) break;
-                query = new LECTTIMEQuery(out, stopName);
-                query.execute(tn);
+                if( targetStopName.isBlank() ) break;
+                query = new PLAN0Query( out, startStopName, targetStopName );
+            } else if(option.equals("2")) {
+                print( out, "Name of the stop: " );
+                String stopName = inputScanner.nextLine();
+                if( stopName.isBlank() ) break;
+                query = new LECTTIMEQuery( out, stopName );
+                query.execute( tn );
             } else if(option.equals("3")) {
-                print(out, "Name of the starting stop: " );
+                print( out, "Name of the starting stop: " );
                 String startStopName = inputScanner.nextLine();
-                if(startStopName.isBlank()) break;
-                print(out, "Name of the target stop: " );
+                if( startStopName.isBlank() ) break;
+                print( out, "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
-                if(targetStopName.isBlank()) break;
-                print( out, """
-                            How do you want to optimize the route?
-                               1 for distance, 2 for time
-                               Option:\s""" );
+                if( targetStopName.isBlank() ) break;
+
+                print( out, getOptimizationsChoiceDescriptions() );
                 RouteOptimization optimizationChoice;
                 try {
-                    optimizationChoice =
-                              RouteOptimization.values()[Integer.parseInt( inputScanner.nextLine() )-1];
-                } catch( Exception e ) {
-                    print( out, "Wrong input" );
+                    int input = Integer.parseInt( inputScanner.nextLine() );
+                    if( input < 1 || input > RouteOptimization.values().length ) {
+                        print( out, "Entered input is not in bounds" );
+                        continue;
+                    }
+                    optimizationChoice = RouteOptimization.values()[input - 1];
+                } catch( NumberFormatException e ) {
+                    print( out, "Entered input is not a valid number" );
                     continue;
                 }
 
                 print( out, "When do you want to start your travel? (just press ENTER for right now)" +
-                            "\n   hours: ");
+                            "\n   hours: " );
                 String hoursStr = inputScanner.nextLine();
-                print( out, "   minutes: ");
+                print( out, "   minutes: " );
                 String minutesStr = inputScanner.nextLine();
                 LocalTime startTime;
-                if( hoursStr.isBlank() || minutesStr.isBlank())
+                if( hoursStr.isBlank() || minutesStr.isBlank() )
                     startTime = LocalTime.now();
                 else
                     startTime = parseTime( hoursStr, minutesStr );
-                if(startTime != null)
-                    query = new PLAN1Query(out, startStopName, targetStopName, optimizationChoice, startTime);
+                if( startTime != null )
+                    query = new PLAN1Query( out, startStopName, targetStopName, optimizationChoice, startTime );
             }
             if(query == null) continue;
             print(out, "\n" );
