@@ -93,7 +93,6 @@ class Main {
                 String stopName = inputScanner.nextLine();
                 if( stopName.isBlank() ) break;
                 query = new LECTTIMEQuery( out, stopName );
-                query.execute( tn );
             } else if(option.equals("3")) {
                 print( out, "Name of the starting stop: " );
                 String startStopName = inputScanner.nextLine();
