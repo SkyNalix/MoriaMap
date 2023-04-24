@@ -67,7 +67,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
             for(Edge ab : graph.getOutgoingEdgesOf(a)){
                 if( !p.contains(ab.getTo())){
                     double distanceFromSrcToB = d.get(a) + weightFunction.apply(d.get(a), ab);
-                    if(d.get(ab.getTo()) >= distanceFromSrcToB){
+                    if(d.get(ab.getTo()) > distanceFromSrcToB){
                         d.put(ab.getTo(),distanceFromSrcToB);
                         res.put(ab.getTo(), ab);
                     }
