@@ -5,6 +5,7 @@ import dev.moriamap.model.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 class Main {
@@ -14,6 +15,16 @@ class Main {
             out.write( str.getBytes() );
         } catch( IOException ignored ) {
             Logging.getLogger().severe("Failed to write to OutputStream: \"" + str + "\"");
+        }
+    }
+
+    private static LocalTime parseTime( String hoursStr, String minutesStr ) {
+        try {
+            int hours = Integer.parseInt( hoursStr );
+            int minutes = Integer.parseInt( minutesStr );
+            return LocalTime.of( hours, minutes );
+        } catch( Exception e ) {
+            return null;
         }
     }
     
@@ -45,11 +56,12 @@ class Main {
                     What do you want to do?
                       1 - Get a path from one stop to an another
                       2 - Get the trains schedules of a stop
-                      3 - Exit
+                      3 - Get an optimized path from one stop to an another
+                      4 - Exit
                     """);
             print(out, "Option: ");
             String option = inputScanner.nextLine();
-            if (option.isBlank()|| option.equals("3"))
+            if (option.isBlank()|| option.equals("4"))
                 break;
 
             Query query = null;
@@ -57,7 +69,6 @@ class Main {
                 print(out, "Name of the starting stop: " );
                 String startStopName = inputScanner.nextLine();
                 if(startStopName.isBlank()) break;
-
                 print(out, "Name of the target stop: " );
                 String targetStopName = inputScanner.nextLine();
                 if(targetStopName.isBlank()) break;
@@ -68,6 +79,32 @@ class Main {
                 if (stopName.isBlank()) break;
                 query = new LECTTIMEQuery(out, stopName);
                 query.execute(tn);
+            } else if(option.equals("3")) {
+                print(out, "Name of the starting stop: " );
+                String startStopName = inputScanner.nextLine();
+                if(startStopName.isBlank()) break;
+                print(out, "Name of the target stop: " );
+                String targetStopName = inputScanner.nextLine();
+                if(targetStopName.isBlank()) break;
+                print( out, """
+                            How do you want to optimize the route?
+                               1 for distance, 2 for time
+                               Option:\s""" );
+                RouteOptimization optimizationChoice;
+                try {
+                    optimizationChoice =
+                              RouteOptimization.values()[Integer.parseInt( inputScanner.nextLine() )-1];
+                } catch( Exception e ) {
+                    print( out, "Wrong input" );
+                    continue;
+                }
+
+                print( out, "When do you want to start your travel?\n   Hours: ");
+                String hoursStr = inputScanner.nextLine();
+                String minutesStr = inputScanner.nextLine();
+                LocalTime startTime = parseTime( hoursStr, minutesStr );
+                if(startTime != null)
+                    query = new PLAN1Query(out, startStopName, targetStopName, optimizationChoice, startTime);
             }
             if(query == null) continue;
             query.execute( tn );
