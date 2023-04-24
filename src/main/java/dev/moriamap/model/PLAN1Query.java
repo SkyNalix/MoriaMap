@@ -48,9 +48,10 @@ public class PLAN1Query extends Query {
 		BiFunction<Double, Edge, Double> optimizationBiFun;
 		if(optimizationChoice == RouteOptimization.DISTANCE)
 			optimizationBiFun = new DistanceAsWeight(network);
-		else {
+		else if(optimizationChoice == RouteOptimization.TIME){
 			optimizationBiFun = new TravelTimeAsWeight( startTime, network );
-		}
+		} else
+			throw new UnsupportedOperationException("Optimization choice doesn't exists or is not yet supported");
 		network.setTraversalStrategy( new DijkstraTraversalStrategy() );
 
 		Stop start = network.getStopByName( startStopName );
