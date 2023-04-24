@@ -70,7 +70,7 @@ class Main {
            print(out, """
                     What do you want to do?
                       1 - Get a path from one stop to an another
-                      2 - Get the trains schedules of a stop
+                      2 - Get the transport schedules of a stop
                       3 - Get an optimized path from one stop to an another
                       4 - Exit
                     """);
