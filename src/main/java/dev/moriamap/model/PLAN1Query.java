@@ -47,7 +47,7 @@ public class PLAN1Query extends Query {
 	protected String run( TransportNetwork network ) throws QueryFailureException {
 		BiFunction<Double, Edge, Double> optimizationBiFun;
 		if(optimizationChoice == RouteOptimization.DISTANCE)
-			optimizationBiFun = new DistanceAsWeight();
+			optimizationBiFun = new DistanceAsWeight(network);
 		else {
 			optimizationBiFun = new TravelTimeAsWeight( startTime, network );
 		}
@@ -62,13 +62,8 @@ public class PLAN1Query extends Query {
 			List<Edge> path = Graph.getRouteFromTraversal( traversal, start, target );
 			return network.getRouteDescription( path, startTime );
 		} catch( NoSuchElementException | IllegalStateException e ) {
-			String msg = null;
-			if(optimizationChoice == RouteOptimization.TIME)
-				msg = "Impossible to get to destination because there are no transports going to '" + targetStopName + "'";
-			else if(optimizationChoice == RouteOptimization.DISTANCE)
-				msg = "The shortest path to the target contains portions" +
-					  " that are not traversed by any transports";
-			throw new QueryFailureException(msg);
+			throw new QueryFailureException("Impossible to get to destination because there " +
+											"are no transports going to '" + targetStopName + "'");
 		}
 	}
 
