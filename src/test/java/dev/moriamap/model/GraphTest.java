@@ -175,8 +175,9 @@ class GraphTest {
     
     @Test void removeAnInexistantVertexThrowsException() {
         Graph sut = new DummyGraph();
+        DummyVertex v = new DummyVertex();
         assertThrows(NoSuchElementException.class,() ->
-                sut.removeVertex(new DummyVertex()));
+                sut.removeVertex(v));
     }
 
     @Test void removeNullVertexThrowsNPE() {
@@ -205,8 +206,9 @@ class GraphTest {
     
     @Test void removeAnInexistantEdgeThrowsException() {
         Graph sut = new DummyGraph();
+        DummyEdge e = new DummyEdge();
         assertThrows(NoSuchElementException.class,() ->
-                sut.removeEdge(new DummyEdge()));
+                sut.removeEdge(e));
     }
 
     @Test void removeNullEdgeThrowsNPE() {
