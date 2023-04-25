@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=true
+Exec=/usr/lib/jvm/java-17-openjdk/bin/java -jar /home/skynalix/dev/Java/moriamap/build/libs/MoriaMap.jar
+Name=MoriaMap
+Icon=/path/to/icon
