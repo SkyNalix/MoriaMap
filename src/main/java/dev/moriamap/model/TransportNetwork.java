@@ -103,6 +103,13 @@ public final class TransportNetwork extends Graph {
         return res;
     }
 
+    /**
+    * Returns a list of the X nearest stops to the given name, based on their
+    * Levenshtein distance.
+    * @param name the name to compare to.
+    * @param x the number of nearest stops to return.
+    * @return a list of the X nearest stop to the given name.
+    */
     public List<Stop> getNearestStopsByInexactName(String name, int x){
         Map<Stop, Integer> distances = new HashMap<>();
         var stops = this.getStops();
