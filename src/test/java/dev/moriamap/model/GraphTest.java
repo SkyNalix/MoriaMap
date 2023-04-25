@@ -172,4 +172,47 @@ class GraphTest {
         route.add(e2);
         assertEquals(route, Graph.getRouteFromTraversal(parents, v1, v3));
     }
+    
+    @Test void removeAnInexistantVertexThrowsException() {
+        Graph sut = new DummyGraph();
+        assertThrows(NoSuchElementException.class,() ->
+                sut.removeVertex(new DummyVertex()));
+    }
+
+    @Test void removeNullVertexThrowsNPE() {
+        Graph sut = new DummyGraph();
+        assertThrows(NullPointerException.class,() ->
+                sut.removeVertex(null));
+    }
+    
+    @Test void removeVertexTest() {
+        Vertex v = new DummyVertex();
+        Graph sut = new DummyGraph();
+        sut.addVertex(v);
+        sut.removeVertex(v);
+        assertTrue(sut.getVertices().isEmpty());
+    }
+
+    @Test void removeVertexWithEdgeTest() {
+        Vertex u = new DummyVertex();
+        Vertex v = new DummyVertex();
+        Graph sut = new DummyGraph();
+        sut.addVertex(u);
+        sut.addEdge(new DummyEdge(u,v));
+        sut.removeVertex(v);
+        assertFalse(sut.contains(v));
+    }
+    
+    @Test void removeAnInexistantEdgeThrowsException() {
+        Graph sut = new DummyGraph();
+        assertThrows(NoSuchElementException.class,() ->
+                sut.removeEdge(new DummyEdge()));
+    }
+
+    @Test void removeNullEdgeThrowsNPE() {
+        Graph sut = new DummyGraph();
+        assertThrows(NullPointerException.class,() ->
+                sut.removeEdge(null));
+    }
+    
 }

@@ -201,4 +201,35 @@ public abstract class Graph {
         Objects.requireNonNull(newStrategy);
         this.traversalStrategy = newStrategy;
     }
+
+    /**
+     * Removes the given edge from the graph.
+     * @param e the edge to be removed
+     * @throws NullPointerException if e is null
+     */
+    public void removeEdge(Edge e) {
+        Objects.requireNonNull(e);
+        if (this.getEdges().contains(e)){
+            this.vertexToOutgoingEdges.get(e.getFrom()).remove(e);
+        } else {
+            throw new NoSuchElementException("Edge was not found");
+        }
+    }
+
+    /**
+     * Removes the given vertex from the graph.
+     * @param v the vertex to be removed
+     */
+    public void removeVertex(Vertex v) {
+        Objects.requireNonNull(v);
+        if (this.vertexToOutgoingEdges.containsKey(v)) {
+            for (Edge e: this.getEdges()) {
+                if (e.getTo().equals(v))
+                    removeEdge(e);
+            }
+            this.vertexToOutgoingEdges.remove(v);
+        } else {
+            throw new NoSuchElementException("Vertex was not found");
+        }
+    }
 }
