@@ -1,8 +1,6 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=1.0
+Name=Moria Map
+Exec=bash -c 'java -jar build/libs/MoriaMap.jar; $SHELL'
 Type=Application
 Terminal=true
-Exec=/usr/lib/jvm/java-17-openjdk/bin/java -jar /home/skynalix/dev/Java/moriamap/build/libs/MoriaMap.jar
-Name=MoriaMap
-Icon=/path/to/icon
+Icon=application-x-java
