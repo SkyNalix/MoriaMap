@@ -1,5 +1,7 @@
 package dev.moriamap.model;
 
+import java.time.Duration;
+
 /**
  * A WalkSegment represents the action of walking from a geographic vertex to
  * another geographic vertex.
@@ -17,7 +19,7 @@ public class WalkSegment extends Edge {
     public static final double WALK_DRUDGERY = 10.0;
 
     /**
-     * The distance between the ends of this WalkSegment.
+     * The distance between the ends of this WalkSegment in meters.
      */
     public final double distance;
 
@@ -29,8 +31,16 @@ public class WalkSegment extends Edge {
      */
     public WalkSegment(GeographicVertex from, GeographicVertex to) {
         super(from, to);
-        this.distance = GeographicPosition
-            .euclideanDistanceOnEarth(from.getGeographicPosition(),
-                                      to.getGeographicPosition());
+        this.distance = from.getGeographicPosition()
+            .distanceFrom(to.getGeographicPosition());
+    }
+
+    /**
+     * {@return the travel time in hours of this WalkSegment}
+     */
+    public Duration travelTime() {
+        return Duration.ofHours((long) (this.distance
+                                        / 1000.0
+                                        / WalkSegment.WALK_SPEED));
     }
 }
