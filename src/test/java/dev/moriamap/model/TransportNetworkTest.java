@@ -2,6 +2,9 @@ package dev.moriamap.model;
 
 import org.junit.jupiter.api.Test;
 
+import dev.moriamap.model.GraphTest.DummyVertex;
+import dev.moriamap.model.GraphTest.DummyEdge;
+
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -375,6 +378,16 @@ class TransportNetworkTest {
     }
 
     @Test
+    void addGeographicVertexNoDouble() {
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        tn.addGeographicVertex(geoVertex);
+        tn.addGeographicVertex(geoVertex);
+        assertEquals(1,tn.getVertices().size());
+        assertTrue(tn.getVertices().contains(geoVertex));
+    }
+
+    @Test
     void addGeographicVertexNull() {
         TransportNetwork tn = TransportNetwork.empty();
         assertThrows( IllegalArgumentException.class,
@@ -408,6 +421,22 @@ class TransportNetworkTest {
         () -> tn.removeGeographicVertex(geoVertex) );
     }
 
+    @Test 
+    void getGeographicVerticesNonEmpty(){
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+        GeographicVertex geoVertex3 = new GeographicVertex(GeographicPosition.NULL_ISLAND);
+        DummyVertex vertex = new DummyVertex();
+
+        tn.addVertex(vertex);
+        tn.addGeographicVertex(geoVertex1);
+        tn.addGeographicVertex(geoVertex2);
+        tn.addGeographicVertex(geoVertex3);
+
+        assertEquals(3,tn.getGeographicVertices().size());
+    }
+
 
     @Test
     void addWalkSegmentTrue() {
@@ -421,6 +450,21 @@ class TransportNetworkTest {
 
         tn.addWalkSegment(ws1);
         assertTrue(tn.getEdges().contains(ws1));
+    }
+
+    @Test
+    void addWalkSegmentNoDouble() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+
+        WalkSegment ws1 = new WalkSegment(geoVertex1,geoVertex2);
+
+
+        tn.addWalkSegment(ws1);
+        tn.addWalkSegment(ws1);
+        assertEquals(1,tn.getEdges().size());
     }
 
     @Test
@@ -464,6 +508,24 @@ class TransportNetworkTest {
 
         assertThrows( NoSuchElementException.class,
         () -> tn.removeWalkSegment(ws1) );
+    }
+
+    @Test 
+    void getWalkSegmentNonEmpty(){
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+        GeographicVertex geoVertex3 = new GeographicVertex(GeographicPosition.NULL_ISLAND);
+        
+        WalkSegment ws1 = new WalkSegment(geoVertex1, geoVertex2);
+        WalkSegment ws2 = new WalkSegment(geoVertex2, geoVertex3);
+
+        DummyEdge edge = new DummyEdge();
+
+        tn.addWalkSegment(ws1);
+        tn.addWalkSegment(ws2);
+        tn.addEdge(edge);
+        assertEquals(2,tn.getWalkSegment().size());
     }
 
 }
