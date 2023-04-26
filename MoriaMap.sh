@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar ./MoriaMap.jar
+java -jar build/libs/MoriaMap.jar
