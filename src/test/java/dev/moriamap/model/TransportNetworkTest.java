@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -363,6 +364,106 @@ class TransportNetworkTest {
     void addDepartureToVariantReturnFalseTest() {
         var tn = newTransportNetworkHelper();
         assertFalse(tn.addDepartureToVariant( "14", "1", LocalTime.now()));
+    }
+
+    @Test
+    void addGeographicVertexTrue() {
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        tn.addGeographicVertex(geoVertex);
+        assertTrue(tn.getVertices().contains(geoVertex));
+    }
+
+    @Test
+    void addGeographicVertexNull() {
+        TransportNetwork tn = TransportNetwork.empty();
+        assertThrows( IllegalArgumentException.class,
+        () -> tn.addGeographicVertex(null) );
+    }
+
+    @Test
+    void removeGeographicVertex() {
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        tn.addGeographicVertex(geoVertex);
+
+        tn.removeGeographicVertex(geoVertex);
+        assertEquals(0,tn.getVertices().size());
+    }
+
+    @Test
+    void removeGeographicVertexNull() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        assertThrows( IllegalArgumentException.class,
+        () -> tn.addGeographicVertex(null) );
+    }
+
+    @Test
+    void removeGeographicVertexNoSuchElement() {
+        TransportNetwork tn = TransportNetwork.empty();
+        GeographicVertex geoVertex = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        
+        assertThrows( NoSuchElementException.class,
+        () -> tn.removeGeographicVertex(geoVertex) );
+    }
+
+
+    @Test
+    void addWalkSegmentTrue() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+
+        WalkSegment ws1 = new WalkSegment(geoVertex1,geoVertex2);
+
+
+        tn.addWalkSegment(ws1);
+        assertTrue(tn.getEdges().contains(ws1));
+    }
+
+    @Test
+    void addWalkSegmentNull() {
+        TransportNetwork tn = TransportNetwork.empty();
+        assertThrows( IllegalArgumentException.class,
+        () -> tn.addWalkSegment(null) );
+    }
+
+    @Test
+    void removeWalkSegmentTrue() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+
+        WalkSegment ws1 = new WalkSegment(geoVertex1,geoVertex2);
+
+
+        tn.addWalkSegment(ws1);
+        tn.removeWalkSegment(ws1);
+        assertEquals(0,tn.getEdges().size());
+    }
+
+    @Test
+    void removeWalkSegmentNull() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        assertThrows( NullPointerException.class,
+        () -> tn.removeWalkSegment(null) );
+    }
+
+    @Test
+    void removeWalkSegmentNoSuchElement() {
+        TransportNetwork tn = TransportNetwork.empty();
+
+        GeographicVertex geoVertex1 = new GeographicVertex(GeographicPosition.NORTH_POLE);
+        GeographicVertex geoVertex2 = new GeographicVertex(GeographicPosition.SOUTH_POLE);
+
+        WalkSegment ws1 = new WalkSegment(geoVertex1,geoVertex2);
+
+        assertThrows( NoSuchElementException.class,
+        () -> tn.removeWalkSegment(ws1) );
     }
 
 }

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Represents an arbitrary transport network. A TransportNetwork contains
@@ -271,6 +272,57 @@ public final class TransportNetwork extends Graph {
             }
         }
         return false;
+    }
+
+    /**
+     * Adds the specified GeographicVertex to this TransportNetwork. If it is already present, does
+     * nothing.
+     * @param geoVertex the GeographicVertex to add
+     * @throws IllegalArgumentException if the given GeographicVertex is null
+     */
+    public void addGeographicVertex(GeographicVertex geoVertex) throws IllegalArgumentException{
+        if(!this.contains(geoVertex))
+            addVertex(geoVertex);
+    }
+    
+    /**
+     * Removes the given GeographicVertex from the TransportNetwork and all edges
+     * that have this GeographicVertex on either side.
+     * @param geoVertex the GeographicVertex to be removed
+     * @throws IllegalArgumentException if geoVertex is null
+     * @throws NoSuchElementException if the GeographicVertex is not found
+     */
+    public void removeGeographicVertex(GeographicVertex geoVertex)throws IllegalArgumentException,NoSuchElementException{
+        if(geoVertex == null) throw new IllegalArgumentException("GeographicVertex is null");
+        this.removeVertex(geoVertex);
+    }
+
+
+    /**
+     * Adds the specified WalkSegment to this TransportNetwork. If WalkSegment's source or destination
+     * are not already in this TransportNetwork, they are added too. If the specified WalkSegment
+     * is already present, does nothing.
+     * @param walkSegment the WalkSegment to add
+     * @throws IllegalArgumentException if the given WalkSegment is null
+     */
+    public void addWalkSegment(WalkSegment walkSegment)throws IllegalArgumentException{
+        boolean containEdge = false;
+        for(Edge e : this.getEdges()){
+            if(e.equals(walkSegment))
+                containEdge = true;
+        }
+        if(!containEdge)
+            this.addEdge(walkSegment);
+    }
+
+    /**
+     * Removes the given WalkSegment from the TransportNetwork. No vertices are removed.
+     * @param walkSegment the WalkSegment to be removed
+     * @throws NullPointerException if walkSegment is null
+     * @throws NoSuchElementException if the WalkSegment is not found
+     */
+    public void removeWalkSegment(WalkSegment walkSegment)throws NullPointerException,NoSuchElementException{
+        this.removeEdge(walkSegment);
     }
 
 
