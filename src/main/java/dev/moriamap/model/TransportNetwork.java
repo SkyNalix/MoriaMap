@@ -296,6 +296,21 @@ public final class TransportNetwork extends Graph {
         if(geoVertex == null) throw new IllegalArgumentException("GeographicVertex is null");
         this.removeVertex(geoVertex);
     }
+    
+    /**
+     * Return the List of all GeographicVertices in the TransportNetwork
+     * @return a List of GeographicVertex
+     */
+    public List<GeographicVertex> getGeographicVertices(){
+        List<GeographicVertex> result = new ArrayList<>();
+        for(Vertex v : this.getVertices()){
+            if(v instanceof GeographicVertex){
+                GeographicVertex geoVertex = (GeographicVertex) v;
+                result.add(geoVertex);
+            }
+        }
+        return result;
+    }
 
 
     /**
@@ -325,5 +340,20 @@ public final class TransportNetwork extends Graph {
         this.removeEdge(walkSegment);
     }
 
+    /**
+     * Return the List of all WalkSegment in the TransportNetwork
+     * @return a List of WalkSegment
+     */
+    public List<WalkSegment> getWalkSegment(){
+        List<WalkSegment> result = new ArrayList<>();
+        for(Edge v : this.getEdges()){
+            if(v instanceof WalkSegment){
+                WalkSegment geoVertex = (WalkSegment) v;
+                result.add(geoVertex);
+            }
+        }
+        return result;
+    }
+    
 
 }
