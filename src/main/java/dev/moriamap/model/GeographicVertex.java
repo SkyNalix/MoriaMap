@@ -1,5 +1,7 @@
 package dev.moriamap.model;
 
+import java.util.*;
+
 /**
  * A Vertex at a geographic position.
  */
@@ -75,5 +77,50 @@ public class GeographicVertex implements Vertex {
         hash *= prime;
         hash += this.geographicPosition.hashCode();
         return hash;
+    }
+
+    public static SortedMap<Double, GeographicVertex> makeDistanceSortedMap(
+            GeographicVertex center,
+            List<GeographicVertex> geographicVertices
+    ) {
+        SortedMap<Double, GeographicVertex> res = new TreeMap<>();
+
+        GeographicPosition gpOfCenter = center.getGeographicPosition();
+        for (GeographicVertex gv : geographicVertices) {
+            if (gv.equals(center)) continue;
+
+            GeographicPosition gp = gv.getGeographicPosition();
+            res.put(gpOfCenter.distanceFrom(gp), gv);
+        }
+
+        return res;
+    }
+
+    public static List<GeographicVertex> getNClosestGVsWithinRadius(
+            int n, double radius,
+            SortedMap<Double, GeographicVertex> distanceSortedMap) {
+        Object[] entries = distanceSortedMap.entrySet().toArray();
+        int maxListSize = Math.min(entries.length, n);
+        List<GeographicVertex> res = new ArrayList<>();
+        for (int i = 0; i < maxListSize; i++) {
+            Map.Entry<Double, GeographicVertex> entry =
+                    (Map.Entry<Double, GeographicVertex>)entries[i];
+            if (entry.getKey() <= radius) res.add(entry.getValue());
+            else break;
+        }
+        return res;
+    }
+
+    public static List<GeographicVertex> getNClosestGVsWithinRadiusOrLeastDistantGV(
+            int n, double radius,
+            SortedMap<Double, GeographicVertex> distanceSortedMap) {
+        List<GeographicVertex> res = getNClosestGVsWithinRadius(n, radius, distanceSortedMap);
+        if (res.isEmpty()) {
+            res = new ArrayList<>();
+            GeographicVertex[] values = distanceSortedMap.values().toArray(new GeographicVertex[0]);
+            if (values.length != 0) res.add(values[0]);
+            else throw new NoSuchElementException("Distance-sorted map is empty");
+        }
+        return res;
     }
 }

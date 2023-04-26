@@ -1,0 +1,134 @@
+package dev.moriamap.model;
+
+import java.io.OutputStream;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.function.BiFunction;
+
+/**
+ * Query that computes and prints the shortest path from a starting geographic
+ * position to a target geographic position with the selected optimization way
+ */
+public class PLAN2Query extends Query {
+	private final String startLatitude;
+	private final String startLongitude;
+	private final String targetLatitude;
+	private final String targetLongitude;
+	private final RouteOptimization optimizationChoice;
+	private final LocalTime startTime;
+
+	/**
+	 * Constructor of PLAN2Query
+	 * @param out the outputStream where the result will be written
+	 * @param startLatitude the latitude of the trip start point
+	 * @param startLongitude the longitude of the trip start point
+	 * @param targetLatitude the latitude of the destination
+	 * @param targetLongitude the longitude of the destination
+	 * @param optimizationChoice optimization method used
+	 * @param startTime starting time when the travel start
+	 */
+	public PLAN2Query(OutputStream out,
+                      String startLatitude,
+					  String startLongitude,
+                      String targetLatitude,
+					  String targetLongitude,
+                      RouteOptimization optimizationChoice,
+                      LocalTime startTime) {
+		super(out);
+		Objects.requireNonNull(startLatitude);
+		Objects.requireNonNull(startLongitude);
+		Objects.requireNonNull(targetLatitude);
+		Objects.requireNonNull(targetLongitude);
+		Objects.requireNonNull(optimizationChoice);
+		Objects.requireNonNull(startTime);
+		this.startLatitude = startLatitude;
+		this.startLongitude = startLongitude;
+		this.targetLatitude = targetLatitude;
+		this.targetLongitude = targetLongitude;
+		this.optimizationChoice = optimizationChoice;
+		this.startTime = startTime;
+	}
+
+	@Override
+	protected String run( TransportNetwork network ) throws QueryFailureException {
+		GeographicPosition startPosition, targetPosition;
+		try {
+			startPosition = GeographicPosition.from(this.startLatitude, this.startLongitude);
+			targetPosition = GeographicPosition.from(this.targetLatitude, this.targetLongitude);
+		} catch (IllegalArgumentException e) {
+			throw new QueryFailureException("Invalid start or target latitude or longitude");
+		}
+
+		GeographicVertex startGV = network.getStopFromPosition(startPosition);
+		GeographicVertex targetGV = network.getStopFromPosition(targetPosition);
+
+		if (startGV == null) {
+			startGV = GeographicVertex.at(startPosition);
+			network.addGeographicVertex(startGV);
+		}
+		if (targetGV == null) {
+			targetGV = GeographicVertex.at(targetPosition);
+			network.addGeographicVertex(targetGV);
+		}
+
+		List<WalkSegment> addedWalkSegments = new ArrayList<>();
+
+		if (!(startGV instanceof Stop)) { // We created the GeographicVertex
+			var distanceMap = GeographicVertex.makeDistanceSortedMap(
+					startGV, network.getGeographicVertices());
+			List<GeographicVertex> closestGVs =
+					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
+							5, 2000, distanceMap);
+
+			for (GeographicVertex v : closestGVs) {
+				var ws = new WalkSegment(startGV, v);
+				addedWalkSegments.add(ws);
+				network.addWalkSegment(ws);
+			}
+		}
+
+		if (!(targetGV instanceof Stop)) { // We created the GeographicVertex
+			var distanceMap = GeographicVertex.makeDistanceSortedMap(
+					targetGV, network.getGeographicVertices());
+			List<GeographicVertex> closestGVs =
+					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
+							5, 2000, distanceMap);
+
+			for (GeographicVertex v : closestGVs) {
+				var ws = new WalkSegment(v, targetGV);
+				addedWalkSegments.add(ws);
+				network.addWalkSegment(ws);
+			}
+		}
+
+
+
+		BiFunction<Double, Edge, Double> optimizationBiFun;
+		if(optimizationChoice == RouteOptimization.DISTANCE)
+			optimizationBiFun = new DistanceAsWeight(network);
+		else if(optimizationChoice == RouteOptimization.TIME){
+			optimizationBiFun = new TravelTimeAsWeight( startTime, network );
+		} else
+			throw new UnsupportedOperationException("Optimization choice doesn't exists or is not yet supported");
+
+		network.setTraversalStrategy( new DijkstraTraversalStrategy() );
+
+		Map<Vertex, Edge> traversal =  network.traversal( startGV, targetGV,
+				optimizationBiFun, true );
+		String res;
+		try {
+			List<Edge> path = Graph.getRouteFromTraversal( traversal, startGV, targetGV );
+			res = network.getRouteDescription( path, startTime );
+		} catch( NoSuchElementException | IllegalStateException e ) {
+			res = null;
+		}
+
+		for (WalkSegment ws : addedWalkSegments) network.removeWalkSegment(ws);
+		if (!(startGV instanceof Stop)) network.removeGeographicVertex(startGV);
+		if (!(targetGV instanceof Stop)) network.removeGeographicVertex(targetGV);
+
+		if (res == null) throw new QueryFailureException("Query failed");
+		else return res;
+	}
+
+}
