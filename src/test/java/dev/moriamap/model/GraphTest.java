@@ -1,12 +1,10 @@
 package dev.moriamap.model;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
-import java.util.NoSuchElementException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 class GraphTest {
     static class DummyGraph extends Graph {}
@@ -216,5 +214,15 @@ class GraphTest {
         assertThrows(NullPointerException.class,() ->
                 sut.removeEdge(null));
     }
-    
+
+    @Test
+    void neverEntersIfOfRemoveEdge() {
+        Graph g = new DummyGraph();
+        Vertex v1 = new DummyVertex();
+        Vertex v2 = new DummyVertex();
+        Edge e = new DummyEdge(v1, v2);
+        g.addEdge(e);
+        g.removeVertex(v1);
+        assertEquals(List.of(v2), g.getVertices());
+    }
 }
