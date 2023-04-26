@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Moria Map
-Exec=bash -c 'java -jar build/libs/MoriaMap.jar; $SHELL'
+Exec=bash -ic 'cd "$(dirname %k)" && java -jar build/libs/MoriaMap.jar; $SHELL'
 Type=Application
 Terminal=true
 Icon=application-x-java
