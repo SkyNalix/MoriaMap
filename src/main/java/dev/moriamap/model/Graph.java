@@ -203,11 +203,11 @@ public abstract class Graph {
     }
 
     /**
-     * Removes the given edge from the graph.
+     * Removes the given edge from the graph. No vertices are removed.
      * @param e the edge to be removed
      * @throws NullPointerException if e is null
      */
-    public void removeEdge(Edge e) {
+    protected void removeEdge(Edge e) {
         Objects.requireNonNull(e);
         if (this.getEdges().contains(e)){
             this.vertexToOutgoingEdges.get(e.getFrom()).remove(e);
@@ -217,10 +217,11 @@ public abstract class Graph {
     }
 
     /**
-     * Removes the given vertex from the graph.
+     * Removes the given vertex from the graph and all edges
+     * that have this vertex on either side.
      * @param v the vertex to be removed
      */
-    public void removeVertex(Vertex v) {
+    protected void removeVertex(Vertex v) {
         Objects.requireNonNull(v);
         if (this.vertexToOutgoingEdges.containsKey(v)) {
             for (Edge e: this.getEdges()) {
