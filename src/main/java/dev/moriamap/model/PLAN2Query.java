@@ -10,6 +10,22 @@ import java.util.function.BiFunction;
  * position to a target geographic position with the selected optimization way
  */
 public class PLAN2Query extends Query {
+	/**
+	 * The radius of the circle inside which we are looking for geographic
+	 * vertices that are close to the start or the destination point of the route.
+	 * It is in meters.
+	 */
+	private static final double GEOVERTEX_SEARCH_RADIUS = 2000;
+
+	/**
+	 * The maximum number of geographic vertices to keep within the
+	 * above-mentioned circle. The closest are kept.
+	 * It means that we create at most
+	 * MAX_CLOSEST_GEOVERTICES WalkSegments from the start to
+	 * Stops, or from Stops to the destination.
+	 */
+	private static final int MAX_CLOSEST_GEOVERTICES = 5;
+
 	private final String startLatitude;
 	private final String startLongitude;
 	private final String targetLatitude;
@@ -26,6 +42,7 @@ public class PLAN2Query extends Query {
 	 * @param targetLongitude the longitude of the destination
 	 * @param optimizationChoice optimization method used
 	 * @param startTime starting time when the travel start
+	 * @throws NullPointerException if any argument is null except out
 	 */
 	public PLAN2Query(OutputStream out,
                       String startLatitude,
@@ -78,7 +95,7 @@ public class PLAN2Query extends Query {
 					startGV, network.getGeographicVertices());
 			List<GeographicVertex> closestGVs =
 					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
-							5, 2000, distanceMap);
+							MAX_CLOSEST_GEOVERTICES, GEOVERTEX_SEARCH_RADIUS, distanceMap);
 
 			for (GeographicVertex v : closestGVs) {
 				var ws = new WalkSegment(startGV, v);
@@ -92,7 +109,7 @@ public class PLAN2Query extends Query {
 					targetGV, network.getGeographicVertices());
 			List<GeographicVertex> closestGVs =
 					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
-							5, 2000, distanceMap);
+							MAX_CLOSEST_GEOVERTICES, GEOVERTEX_SEARCH_RADIUS, distanceMap);
 
 			for (GeographicVertex v : closestGVs) {
 				var ws = new WalkSegment(v, targetGV);

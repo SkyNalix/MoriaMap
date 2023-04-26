@@ -99,7 +99,18 @@ public class GeographicVertex implements Vertex {
     public static List<GeographicVertex> getNClosestGVsWithinRadius(
             int n, double radius,
             SortedMap<Double, GeographicVertex> distanceSortedMap) {
-        Object[] entries = distanceSortedMap.entrySet().toArray();
+        Set<Double> keys = distanceSortedMap.keySet();
+        Double[] results = (Double[])keys.stream()
+                .filter(d -> d <= radius)
+                .limit(Math.min(keys.size(), n))
+                .toArray();
+
+        List<GeographicVertex> ret = new ArrayList<>();
+        for (Double key : results) ret.add(distanceSortedMap.get(key));
+        return ret;
+
+        // Alternative working implementation
+        /*Object[] entries = distanceSortedMap.entrySet().toArray();
         int maxListSize = Math.min(entries.length, n);
         List<GeographicVertex> res = new ArrayList<>();
         for (int i = 0; i < maxListSize; i++) {
@@ -108,7 +119,7 @@ public class GeographicVertex implements Vertex {
             if (entry.getKey() <= radius) res.add(entry.getValue());
             else break;
         }
-        return res;
+        return res;*/
     }
 
     public static List<GeographicVertex> getNClosestGVsWithinRadiusOrLeastDistantGV(
