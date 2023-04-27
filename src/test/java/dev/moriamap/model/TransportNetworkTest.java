@@ -525,7 +525,7 @@ class TransportNetworkTest {
         tn.addWalkSegment(ws1);
         tn.addWalkSegment(ws2);
         tn.addEdge(edge);
-        assertEquals(2,tn.getWalkSegment().size());
+        assertEquals(2,tn.getWalkSegments().size());
     }
 
 }

@@ -351,12 +351,12 @@ public final class TransportNetwork extends Graph {
      * Return the List of all WalkSegment in the TransportNetwork
      * @return a List of WalkSegment
      */
-    public List<WalkSegment> getWalkSegment(){
+    public List<WalkSegment> getWalkSegments(){
         List<WalkSegment> result = new ArrayList<>();
-        for(Edge v : this.getEdges()){
-            if(v instanceof WalkSegment){
-                WalkSegment geoVertex = (WalkSegment) v;
-                result.add(geoVertex);
+        for(Edge e : this.getEdges()){
+            if(e instanceof WalkSegment){
+                WalkSegment walkSegment = (WalkSegment) e;
+                result.add(walkSegment);
             }
         }
         return result;
