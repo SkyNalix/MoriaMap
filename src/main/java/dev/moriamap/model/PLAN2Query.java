@@ -66,6 +66,22 @@ public class PLAN2Query extends Query {
 		this.startTime = startTime;
 	}
 
+	private void addWalkSegments(TransportNetwork network,
+			GeographicVertex gv, boolean outgoing) {
+		if (!(gv instanceof Stop)) { // We created the GeographicVertex
+			var distanceMap = GeographicVertex.makeDistanceSortedMap(
+					gv, network.getGeographicVertices());
+			List<GeographicVertex> closestGVs =
+					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
+							MAX_CLOSEST_GEOVERTICES, GEOVERTEX_SEARCH_RADIUS, distanceMap);
+
+			for (GeographicVertex v : closestGVs) {
+				var ws = outgoing ? new WalkSegment(gv, v) : new WalkSegment(v, gv);
+				network.addWalkSegment(ws);
+			}
+		}
+	}
+
 	/**
 	 * Returns an optimized route between two positions. If one of the positions
 	 * matches a Stop that is in the transport network, the route uses it
@@ -101,37 +117,8 @@ public class PLAN2Query extends Query {
 			network.addGeographicVertex(targetGV);
 		}
 
-		List<WalkSegment> addedWalkSegments = new ArrayList<>();
-
-		if (!(startGV instanceof Stop)) { // We created the GeographicVertex
-			var distanceMap = GeographicVertex.makeDistanceSortedMap(
-					startGV, network.getGeographicVertices());
-			List<GeographicVertex> closestGVs =
-					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
-							MAX_CLOSEST_GEOVERTICES, GEOVERTEX_SEARCH_RADIUS, distanceMap);
-
-			for (GeographicVertex v : closestGVs) {
-				var ws = new WalkSegment(startGV, v);
-				addedWalkSegments.add(ws);
-				network.addWalkSegment(ws);
-			}
-		}
-
-		if (!(targetGV instanceof Stop)) { // We created the GeographicVertex
-			var distanceMap = GeographicVertex.makeDistanceSortedMap(
-					targetGV, network.getGeographicVertices());
-			List<GeographicVertex> closestGVs =
-					GeographicVertex.getNClosestGVsWithinRadiusOrLeastDistantGV(
-							MAX_CLOSEST_GEOVERTICES, GEOVERTEX_SEARCH_RADIUS, distanceMap);
-
-			for (GeographicVertex v : closestGVs) {
-				var ws = new WalkSegment(v, targetGV);
-				addedWalkSegments.add(ws);
-				network.addWalkSegment(ws);
-			}
-		}
-
-
+		this.addWalkSegments(network, startGV, true);
+		this.addWalkSegments(network, targetGV, false);
 
 		BiFunction<Double, Edge, Double> optimizationBiFun;
 		if(optimizationChoice == RouteOptimization.DISTANCE)
@@ -145,20 +132,17 @@ public class PLAN2Query extends Query {
 
 		Map<Vertex, Edge> traversal =  network.traversal( startGV, targetGV,
 				optimizationBiFun, true );
-		String res;
+
 		try {
 			List<Edge> path = Graph.getRouteFromTraversal( traversal, startGV, targetGV );
-			res = network.getRouteDescription( path, startTime );
+			return network.getRouteDescription( path, startTime );
 		} catch( NoSuchElementException | IllegalStateException e ) {
-			res = null;
+			throw new QueryFailureException("Impossible to find a route");
+		} finally {
+			for (WalkSegment ws : network.getWalkSegments()) network.removeWalkSegment(ws);
+			if (!(startGV instanceof Stop)) network.removeGeographicVertex(startGV);
+			if (!(targetGV instanceof Stop)) network.removeGeographicVertex(targetGV);
 		}
-
-		for (WalkSegment ws : addedWalkSegments) network.removeWalkSegment(ws);
-		if (!(startGV instanceof Stop)) network.removeGeographicVertex(startGV);
-		if (!(targetGV instanceof Stop)) network.removeGeographicVertex(targetGV);
-
-		if (res == null) throw new QueryFailureException("Query failed");
-		else return res;
 	}
 
 }
