@@ -80,7 +80,8 @@ public class PLAN2Query extends Query {
 	 */
 	@Override
 	protected String run( TransportNetwork network ) throws QueryFailureException {
-		GeographicPosition startPosition, targetPosition;
+		GeographicPosition startPosition;
+		GeographicPosition targetPosition;
 		try {
 			startPosition = GeographicPosition.from(this.startLatitude, this.startLongitude);
 			targetPosition = GeographicPosition.from(this.targetLatitude, this.targetLongitude);
