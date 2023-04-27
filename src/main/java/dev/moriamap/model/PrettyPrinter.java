@@ -44,7 +44,9 @@ public class PrettyPrinter {
 	 */
 	public static String formatLocalTime(LocalTime lt) {
 		Objects.requireNonNull(lt);
-		return lt.getHour() + ":" + lt.getMinute() + ":" + lt.getSecond();
+		return (lt.getHour() < 10 ? "0" : "") + lt.getHour() + ":"
+			   + (lt.getMinute() < 10 ? "0" : "") + lt.getMinute() + ":"
+			   + (lt.getSecond() < 10 ? "0" : "") + lt.getSecond();
 	}
 
 	/**
