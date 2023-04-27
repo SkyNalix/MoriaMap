@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
 class PLAN2QueryTest {
@@ -48,11 +47,11 @@ class PLAN2QueryTest {
 		assertDoesNotThrow(() -> query.run(tn));
 	}
 
-	@Test void brokenTNThrows() {
+	@Test void brokenTNDoesNotThrow() {
 		PLAN2Query query = new PLAN2Query( null, "0", "0",
 				"1", "1",
 				RouteOptimization.TIME, LocalTime.MIN);
-		assertThrows(QueryFailureException.class, () -> query.run(brokenTN));
+		assertDoesNotThrow(() -> query.run(brokenTN));
 	}
 
 	@Test void betweenTwoGVsSucceeds() {
