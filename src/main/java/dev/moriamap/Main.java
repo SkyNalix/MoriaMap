@@ -106,6 +106,13 @@ class Main {
         else return "";
     }
 
+    private static String getPosition(String message, InputStream in, OutputStream out){
+        print(out, message);
+        String input = getInput(in);
+        if(input.isBlank()) return "";
+        return input;
+    }
+
     private static TransportNetwork createTransportNetwork(
             InputStream transportNetworkInputStream, InputStream timetablesInputStream,
             OutputStream out) {
@@ -158,6 +165,28 @@ class Main {
         return new PLAN1Query( out, startStopName, targetStopName, optimizationChoice, startTime );
     }
 
+    private static PLAN2Query makePlan2Query(TransportNetwork tn, InputStream in, OutputStream out){
+        String startLatitude = getPosition("Latitude of the starting position :", in, out);
+        String startLongitude = getPosition("Longitude of the starting position :", in, out);
+        String targetLatitude = getPosition("Latitude of the target position :", in, out);
+        String targetLongitude = getPosition("Longitude of the target position :", in, out);
+
+        print( out, getOptimizationChoicesDescription() );
+        RouteOptimization[] values = RouteOptimization.values();
+        RouteOptimization optimizationChoice = null;
+        while (optimizationChoice == null) {
+            try {
+                optimizationChoice = values[Integer.parseInt(getInput(in)) - 1];
+            } catch (Exception e) {
+                print(out, "Invalid input, retry\n");
+            }
+        }
+
+        LocalTime startTime = getTime(in, out);
+        
+        return new PLAN2Query(out, startLatitude, startLongitude, targetLatitude, targetLongitude, optimizationChoice, startTime);
+    }
+
     public static void main(String[] args) {
         InputStream in = System.in;
         OutputStream out = System.out;
@@ -176,17 +205,19 @@ class Main {
                       1 - Get the transport schedules of a stop
                       2 - Get a path from a stop to another
                       3 - Get an optimized path from a stop to another
-                      4 - Exit
+                      4 - Get an optimized path from a position to another
+                      5 - Exit
                     """);
             print(out, "Choice: ");
             String option = getInput(in);
 
-            if (option.equals("4")) break;
+            if (option.equals("5")) break;
 
             Query query = switch (option) {
                 case "1" -> makeLECTTIMEQuery(tn, in, out);
                 case "2" -> makePLAN0Query(tn, in, out);
                 case "3" -> makePLAN1Query(tn, in, out);
+                case "4" -> makePlan2Query(tn, in, out);
                 default -> null;
             };
 
