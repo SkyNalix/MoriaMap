@@ -76,4 +76,11 @@ public class GeographicVertex implements Vertex {
         hash += this.geographicPosition.hashCode();
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%2.2f,%2.2f)",
+                this.geographicPosition.getLatitude(),
+                this.geographicPosition.getLongitude());
+    }
 }
