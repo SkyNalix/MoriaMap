@@ -99,7 +99,7 @@ class Main {
         try {
             choiceInt = Integer.parseInt(choice) - 1;
         } catch (Exception e) {
-            return "";
+            return choice;
         }
         if (0 <= choiceInt && choiceInt < nearestStops.size())
             return nearestStops.get(choiceInt).getName();
