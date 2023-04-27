@@ -79,7 +79,7 @@ public class GeographicVertex implements Vertex {
 
     @Override
     public String toString() {
-        return String.format("(%2.2f,%2.2f)",
+        return String.format("(%3.2f,%3.2f)",
                 this.geographicPosition.getLatitude(),
                 this.geographicPosition.getLongitude());
     }
