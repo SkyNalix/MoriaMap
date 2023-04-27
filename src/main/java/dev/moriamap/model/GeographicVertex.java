@@ -79,6 +79,14 @@ public class GeographicVertex implements Vertex {
         return hash;
     }
 
+    /**
+     * Given a center and a list of GeographicVertices
+     * (which may include the center), returns a sorted map associating each GeographicVertex
+     * to its distance on Earth in meters from the center. The center is not in the sorted map.
+     * @param center the center used to calculate distances
+     * @param geographicVertices the vertices for which we want the sorted map
+     * @return a sorted map associating each GeographicVertex to its distance from the center
+     */
     public static SortedMap<Double, GeographicVertex> makeDistanceSortedMap(
             GeographicVertex center,
             List<GeographicVertex> geographicVertices
@@ -96,6 +104,17 @@ public class GeographicVertex implements Vertex {
         return res;
     }
 
+    /**
+     * {@return a list of between 0 and n elements, containing the geographic vertices
+     * of distanceSortedMap which are the closest to its center and inside the circle
+     * of radius radius}
+     * @param n the maximum number of GeographicVertices to return
+     * @param radius the radius of the circle inside which returned elements must
+     *               be, in meters
+     * @param distanceSortedMap the geographic vertices we want to consider, in
+     *                          a centered sorted map. See
+     *                          {@link #makeDistanceSortedMap(GeographicVertex, List)}
+     */
     public static List<GeographicVertex> getNClosestGVsWithinRadius(
             int n, double radius,
             SortedMap<Double, GeographicVertex> distanceSortedMap) {
@@ -108,20 +127,22 @@ public class GeographicVertex implements Vertex {
         List<GeographicVertex> ret = new ArrayList<>();
         for (Double key : results) ret.add(distanceSortedMap.get(key));
         return ret;
-
-        // Alternative working implementation
-        /*Object[] entries = distanceSortedMap.entrySet().toArray();
-        int maxListSize = Math.min(entries.length, n);
-        List<GeographicVertex> res = new ArrayList<>();
-        for (int i = 0; i < maxListSize; i++) {
-            Map.Entry<Double, GeographicVertex> entry =
-                    (Map.Entry<Double, GeographicVertex>)entries[i];
-            if (entry.getKey() <= radius) res.add(entry.getValue());
-            else break;
-        }
-        return res;*/
     }
 
+    /**
+     * {@return a list of between 0 and n elements, containing the geographic vertices
+     * of distanceSortedMap which are the closest to its center and inside the circle
+     * of radius radius. If none are inside the circle, we return a list containing
+     * only one element, which is the closest GeographicVertex to the center, no matter
+     * the distance}
+     * @param n the maximum number of GeographicVertices to return
+     * @param radius the radius of the circle inside which returned elements must
+     *               be, in meters
+     * @param distanceSortedMap the geographic vertices we want to consider, in
+     *                          a centered sorted map. See
+     *                          {@link #makeDistanceSortedMap(GeographicVertex, List)}
+     * @throws NoSuchElementException if distanceSortedMap is empty
+     */
     public static List<GeographicVertex> getNClosestGVsWithinRadiusOrLeastDistantGV(
             int n, double radius,
             SortedMap<Double, GeographicVertex> distanceSortedMap) {

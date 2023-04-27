@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 
 /**
  * Query that computes and prints the shortest path from a starting geographic
- * position to a target geographic position with the selected optimization way
+ * position to a target geographic position with the selected optimization method
  */
 public class PLAN2Query extends Query {
 	/**
@@ -66,6 +66,18 @@ public class PLAN2Query extends Query {
 		this.startTime = startTime;
 	}
 
+	/**
+	 * Returns an optimized route between two positions. If one of the positions
+	 * matches a Stop that is in the transport network, the route uses it
+	 * as start/destination. If the start or destination is not a Stop,
+	 * we add a few WalkSegments to connect it to the nearest Stops. Then we
+	 * apply a time or distance-optimized Dijkstra algorithm to get a good
+	 * route, and we finally remove the start, destination and WalkSegments
+	 * we added.
+	 * @param network the network this Query acts on
+	 * @return a route going from the start position to the destination position
+	 * @throws QueryFailureException if anything fails
+	 */
 	@Override
 	protected String run( TransportNetwork network ) throws QueryFailureException {
 		GeographicPosition startPosition, targetPosition;
