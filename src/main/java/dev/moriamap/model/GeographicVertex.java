@@ -119,13 +119,13 @@ public class GeographicVertex implements Vertex {
             int n, double radius,
             SortedMap<Double, GeographicVertex> distanceSortedMap) {
         Set<Double> keys = distanceSortedMap.keySet();
-        Double[] results = (Double[])keys.stream()
+        Object[] results = keys.stream()
                 .filter(d -> d <= radius)
                 .limit(Math.min(keys.size(), n))
                 .toArray();
 
         List<GeographicVertex> ret = new ArrayList<>();
-        for (Double key : results) ret.add(distanceSortedMap.get(key));
+        for (Object key : results) ret.add(distanceSortedMap.get(key));
         return ret;
     }
 
