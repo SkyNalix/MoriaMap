@@ -390,7 +390,7 @@ class TransportNetworkTest {
     @Test
     void addGeographicVertexNull() {
         TransportNetwork tn = TransportNetwork.empty();
-        assertThrows( IllegalArgumentException.class,
+        assertThrows( NullPointerException.class,
         () -> tn.addGeographicVertex(null) );
     }
 
@@ -408,7 +408,7 @@ class TransportNetworkTest {
     void removeGeographicVertexNull() {
         TransportNetwork tn = TransportNetwork.empty();
 
-        assertThrows( IllegalArgumentException.class,
+        assertThrows( NullPointerException.class,
         () -> tn.addGeographicVertex(null) );
     }
 
@@ -470,7 +470,7 @@ class TransportNetworkTest {
     @Test
     void addWalkSegmentNull() {
         TransportNetwork tn = TransportNetwork.empty();
-        assertThrows( IllegalArgumentException.class,
+        assertThrows( NullPointerException.class,
         () -> tn.addWalkSegment(null) );
     }
 

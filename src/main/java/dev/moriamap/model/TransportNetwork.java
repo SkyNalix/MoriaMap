@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Represents an arbitrary transport network. A TransportNetwork contains
@@ -278,9 +279,10 @@ public final class TransportNetwork extends Graph {
      * Adds the specified GeographicVertex to this TransportNetwork. If it is already present, does
      * nothing.
      * @param geoVertex the GeographicVertex to add
-     * @throws IllegalArgumentException if the given GeographicVertex is null
+     * @throws NullPointerException if the given GeographicVertex is null
      */
-    public void addGeographicVertex(GeographicVertex geoVertex) throws IllegalArgumentException{
+    public void addGeographicVertex(GeographicVertex geoVertex) {
+        Objects.requireNonNull(geoVertex);
         if(!this.contains(geoVertex))
             addVertex(geoVertex);
     }
@@ -289,11 +291,11 @@ public final class TransportNetwork extends Graph {
      * Removes the given GeographicVertex from the TransportNetwork and all edges
      * that have this GeographicVertex on either side.
      * @param geoVertex the GeographicVertex to be removed
-     * @throws IllegalArgumentException if geoVertex is null
      * @throws NoSuchElementException if the GeographicVertex is not found
+     * @throws NullPointerException if the given GeographicVertex is null
      */
-    public void removeGeographicVertex(GeographicVertex geoVertex)throws IllegalArgumentException,NoSuchElementException{
-        if(geoVertex == null) throw new IllegalArgumentException("GeographicVertex is null");
+    public void removeGeographicVertex(GeographicVertex geoVertex){
+        Objects.requireNonNull(geoVertex);
         this.removeVertex(geoVertex);
     }
     
@@ -318,9 +320,10 @@ public final class TransportNetwork extends Graph {
      * are not already in this TransportNetwork, they are added too. If the specified WalkSegment
      * is already present, does nothing.
      * @param walkSegment the WalkSegment to add
-     * @throws IllegalArgumentException if the given WalkSegment is null
+     * @throws NullPointerException if the WalkSegment is null
      */
-    public void addWalkSegment(WalkSegment walkSegment)throws IllegalArgumentException{
+    public void addWalkSegment(WalkSegment walkSegment){
+        Objects.requireNonNull(walkSegment);
         boolean containEdge = false;
         for(Edge e : this.getEdges()){
             if(e.equals(walkSegment))
@@ -336,7 +339,7 @@ public final class TransportNetwork extends Graph {
      * @throws NullPointerException if walkSegment is null
      * @throws NoSuchElementException if the WalkSegment is not found
      */
-    public void removeWalkSegment(WalkSegment walkSegment)throws NullPointerException,NoSuchElementException{
+    public void removeWalkSegment(WalkSegment walkSegment){
         this.removeEdge(walkSegment);
     }
 
