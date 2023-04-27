@@ -181,7 +181,7 @@ class Main {
             print(out, "Choice: ");
             String option = getInput(in);
 
-            if (option.equals("4")) System.exit(0);
+            if (option.equals("4")) break;
 
             Query query = switch (option) {
                 case "1" -> makeLECTTIMEQuery(tn, in, out);
