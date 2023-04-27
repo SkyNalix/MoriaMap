@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Moria Map
-Exec=bash -ic 'cd "$(dirname %k)" && java -jar ./MoriaMap.jar; $SHELL'
-Type=Application
-Terminal=true
-Icon=application-x-java
