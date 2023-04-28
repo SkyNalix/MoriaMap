@@ -168,8 +168,8 @@ class Main {
     }
 
     private static PLAN2Query makePLAN2Query(TransportNetwork tn, InputStream in, OutputStream out){
-        String startLatitude = getInputWithPrompt("Latitude of the starting position (for example: -4, 20.5, 24 12 35 N or 27 12 45 S):", in, out);
-        String startLongitude = getInputWithPrompt("Longitude of the starting position (for example: 98, -102.36745, 35 59 11 W, 0 56 32 E):", in, out);
+        String startLatitude = getInputWithPrompt("Latitude of the starting position \n(for example: -4, 20.5, 24 12 35 N or 27 12 45 S): ", in, out);
+        String startLongitude = getInputWithPrompt("Longitude of the starting position \n(for example: 98, -102.36745, 35 59 11 W, 0 56 32 E): ", in, out);
         String targetLatitude = getInputWithPrompt("Latitude of the target position: ", in, out);
         String targetLongitude = getInputWithPrompt("Longitude of the target position: ", in, out);
         RouteOptimization optimizationChoice = getRouteOptimization(in, out);
