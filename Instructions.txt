@@ -44,4 +44,4 @@ After the project is started, you will be asked to enter:
 
     - 5 if you want to exit the program
 
-Note: Pressing the Enter key without writing anything allow you to stop the program's execution, or press CTRL+C.
+Note: Pressing CTRL+C at any moment allow you to stop the program's execution.
