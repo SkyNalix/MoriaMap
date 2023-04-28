@@ -69,7 +69,7 @@ class Main {
             if(i < len-1)
                 res.append( ", " );
         }
-        res.append("\n    Option: ");
+        res.append("\n    Choice: ");
         return res.toString();
     }
 
@@ -108,8 +108,7 @@ class Main {
 
     private static String getInputWithPrompt(String message, InputStream in, OutputStream out){
         print(out, message);
-        String input = getInput(in);
-        return input;
+        return getInput( in );
     }
 
     private static RouteOptimization getRouteOptimization(InputStream in, OutputStream out){
@@ -167,15 +166,35 @@ class Main {
         return new PLAN1Query( out, startStopName, targetStopName, optimizationChoice, startTime );
     }
 
+    private static GeographicVertex getGeographicVertex(TransportNetwork tn, InputStream in, OutputStream out, String message) {
+        String choice = getInputWithPrompt("What is your " + message +
+                                           " point?\n   1 - A Stop, 2 - A position\n   Choice: ", in, out);
+        if(choice.equals( "1" )) {
+            String stopName = getStopName( "Name of the " + message + " stop: ", tn, in, out );
+            return tn.getStopByName( stopName );
+        } else {
+            String latitude = getInputWithPrompt( "Latitude of the " + message +
+                                                  " position \n(for example: -4, 20.5, 24 12 35 N or 27 12 45 S): ", in, out );
+            String longitude = getInputWithPrompt( "Longitude of the " + message +
+                                                   " position \n(for example: 98, -102.36745, 35 59 11 W, 0 56 32 E): ", in, out );
+            try {
+                return GeographicVertex.at( GeographicPosition.from( latitude, longitude ) );
+            } catch( Exception e ) {
+                print(out, "Invalid " + message + " latitude or longitude");
+                return null;
+            }
+        }
+    }
+
     private static PLAN2Query makePLAN2Query(TransportNetwork tn, InputStream in, OutputStream out){
-        String startLatitude = getInputWithPrompt("Latitude of the starting position \n(for example: -4, 20.5, 24 12 35 N or 27 12 45 S): ", in, out);
-        String startLongitude = getInputWithPrompt("Longitude of the starting position \n(for example: 98, -102.36745, 35 59 11 W, 0 56 32 E): ", in, out);
-        String targetLatitude = getInputWithPrompt("Latitude of the target position: ", in, out);
-        String targetLongitude = getInputWithPrompt("Longitude of the target position: ", in, out);
+        GeographicVertex startGeoVertex = getGeographicVertex(tn, in, out, "starting");
+        if(startGeoVertex == null) return null;
+        GeographicVertex targetGeoVertex = getGeographicVertex(tn, in, out, "target");
+        if(targetGeoVertex == null) return null;
         RouteOptimization optimizationChoice = getRouteOptimization(in, out);
         LocalTime startTime = getTime(in, out);
         
-        return new PLAN2Query(out, startLatitude, startLongitude, targetLatitude, targetLongitude, optimizationChoice, startTime);
+        return new PLAN2Query(out, startGeoVertex, targetGeoVertex, optimizationChoice, startTime);
     }
 
     public static void main(String[] args) {
