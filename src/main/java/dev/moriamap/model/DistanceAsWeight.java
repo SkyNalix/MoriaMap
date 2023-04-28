@@ -53,7 +53,7 @@ public class DistanceAsWeight implements BiFunction<Double, Edge, Double> {
                 return Double.POSITIVE_INFINITY;
             return ts.getDistance();
         } else if (edge instanceof WalkSegment ws) {
-            return ws.distance * WalkSegment.WALK_DRUDGERY;
+            return WalkSegment.WALK_DRUDGERY * ws.distance / 1000.0;
         } else {
             throw new UnsupportedOperationException("Unknown Edge");
         }
