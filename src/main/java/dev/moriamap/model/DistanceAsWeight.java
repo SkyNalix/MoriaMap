@@ -30,7 +30,7 @@ public class DistanceAsWeight implements BiFunction<Double, Edge, Double> {
 
     /**
      * Returns the weight of the given Edge, considering its distance from one
-     * end to the other. In the case of a TransportSegment, returns the distance
+     * end to the other in kilometers. In the case of a TransportSegment, returns the distance
      * between the Stops it links. In the case of a WalkSegment, returns the
      * Euclidean distance between the geographic points it links, multiplied
      * by a drudgery factor, to take into account that the action of walking
