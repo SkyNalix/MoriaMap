@@ -26,32 +26,32 @@ public class PLAN2Query extends Query {
 	 */
 	private static final int MAX_CLOSEST_GEOVERTICES = 5;
 
-	private final GeographicVertex startGV;
-	private final GeographicVertex targetGV;
+	private final GeographicVertex startPoint;
+	private final GeographicVertex targetPoint;
 	private final RouteOptimization optimizationChoice;
 	private final LocalTime startTime;
 
 	/**
 	 * Constructor of PLAN2Query
 	 * @param out the outputStream where the result will be written
-	 * @param startGV geographic Vertex of the starting point
-	 * @param targetGV geographic Vertex of the starting point
+	 * @param startPoint geographic Vertex of the starting point
+	 * @param targetPoint geographic Vertex of the starting point
 	 * @param optimizationChoice optimization method used
 	 * @param startTime starting time when the travel start
 	 * @throws NullPointerException if any argument is null except out
 	 */
 	public PLAN2Query(OutputStream out,
-					  GeographicVertex startGV ,
-					  GeographicVertex targetGV,
+					  GeographicVertex startPoint ,
+					  GeographicVertex targetPoint,
                       RouteOptimization optimizationChoice,
                       LocalTime startTime) {
 		super(out);
-		Objects.requireNonNull(startGV);
-		Objects.requireNonNull(targetGV);
+		Objects.requireNonNull(startPoint);
+		Objects.requireNonNull(targetPoint);
 		Objects.requireNonNull(optimizationChoice);
 		Objects.requireNonNull(startTime);
-		this.startGV = startGV;
-		this.targetGV = targetGV;
+		this.startPoint = startPoint;
+		this.targetPoint = targetPoint;
 		this.optimizationChoice = optimizationChoice;
 		this.startTime = startTime;
 	}
@@ -73,6 +73,25 @@ public class PLAN2Query extends Query {
 	}
 
 	/**
+	 * This method take a geographic vertex and try to find a Stop in the transport network
+	 * that have exactly the same position, if a Stop if found then it's returned,
+	 * otherwise it add the geographic vertex to the network and return the same geographic vertex;
+	 * @param network the network where we try to find the Stop
+	 * @param gv the geographic vertex we try to convert to a Stop
+	 * @return a geographic vertex, which is either instance of a Stop or the same gv as passed to method's arguments
+	 */
+	private GeographicVertex getStopFromGeoVertex(TransportNetwork network, GeographicVertex gv) {
+		if (!(gv instanceof Stop)) {
+			GeographicVertex startStop = network.getStopFromPosition( gv.getGeographicPosition() );
+			if(startStop == null) {
+				network.addGeographicVertex( gv );
+			} else
+				return startStop;
+		}
+		return gv;
+	}
+
+	/**
 	 * Returns an optimized route between two positions. If one of the positions
 	 * matches a Stop that is in the transport network, the route uses it
 	 * as start/destination. If the start or destination is not a Stop,
@@ -86,10 +105,8 @@ public class PLAN2Query extends Query {
 	 */
 	@Override
 	protected String run( TransportNetwork network ) throws QueryFailureException {
-		if (!(startGV instanceof Stop))
-			network.addGeographicVertex(startGV);
-		if (!(targetGV instanceof Stop))
-			network.addGeographicVertex(targetGV);
+		GeographicVertex startGV = getStopFromGeoVertex(network, startPoint);
+		GeographicVertex targetGV = getStopFromGeoVertex(network, targetPoint);
 
 		if (startGV.equals(targetGV))
 			throw new QueryFailureException("Start and target stop should be different");
