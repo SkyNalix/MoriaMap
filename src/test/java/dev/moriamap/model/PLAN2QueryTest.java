@@ -42,7 +42,7 @@ class PLAN2QueryTest {
 	@Test void destinationPointIsAStop() {
 		// Coordinates of Lourmel
 		PLAN2Query query = new PLAN2Query( null, GeographicVertex.at( 0,0 ),
-										   tn.getStopByName( "Lourmel" ),
+										   tn.getStopByName( "Porte de Charenton" ),
 										   RouteOptimization.DISTANCE, LocalTime.MIN);
 		assertDoesNotThrow(() -> query.run(tn));
 	}
