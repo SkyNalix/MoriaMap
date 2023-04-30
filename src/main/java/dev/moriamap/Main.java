@@ -152,18 +152,21 @@ class Main {
         return new LECTTIMEQuery( out, stopName );
     }
 
-    private static PLAN0Query makePLAN0Query(TransportNetwork tn) {
+    private static PLAN0Query makePLAN0Query( TransportNetwork tn ) {
         String startStopName = getStopName("Name of the starting stop: ",tn);
         String targetStopName = getStopName("Name of the destination stop: ",tn);
         return new PLAN0Query( out, startStopName, targetStopName );
     }
 
-    private static PLAN1Query makePLAN1Query(TransportNetwork tn) {
+    private static PLAN2Query makePLAN1Query(TransportNetwork tn) {
         String startStopName = getStopName("Name of the starting stop: ",tn);
+        Stop startStop = tn.getStopByName( startStopName );
         String targetStopName = getStopName("Name of the destination stop: ",tn);
+        Stop targetStop = tn.getStopByName( targetStopName );
+
         RouteOptimization optimizationChoice = getRouteOptimization();
         LocalTime startTime = getTime();
-        return new PLAN1Query( out, startStopName, targetStopName, optimizationChoice, startTime );
+        return new PLAN2Query( out, startStop, targetStop, optimizationChoice, startTime );
     }
 
     private static GeographicVertex getGeographicVertex(TransportNetwork tn, String message) {
@@ -189,7 +192,7 @@ class Main {
     private static PLAN2Query makePLAN2Query(TransportNetwork tn){
         GeographicVertex startGeoVertex = getGeographicVertex(tn, "starting");
         if(startGeoVertex == null) return null;
-        GeographicVertex targetGeoVertex = getGeographicVertex(tn, "target");
+        GeographicVertex targetGeoVertex = getGeographicVertex(tn, "destination");
         if(targetGeoVertex == null) return null;
         RouteOptimization optimizationChoice = getRouteOptimization();
         LocalTime startTime = getTime();
