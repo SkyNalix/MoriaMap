@@ -161,8 +161,11 @@ class Main {
     private static OptimizedRouteBetweenPositionsQuery makeOptimizedRouteBetweenStopsQuery( TransportNetwork tn ) {
         String startStopName = getStopName("Name of the starting stop: ",tn);
         Stop startStop = tn.getStopByName( startStopName );
+        if(startStop == null) return null;
+
         String targetStopName = getStopName("Name of the destination stop: ",tn);
         Stop targetStop = tn.getStopByName( targetStopName );
+        if(targetStop == null) return null;
 
         RouteOptimization optimizationChoice = getRouteOptimization();
         LocalTime startTime = getTime();
