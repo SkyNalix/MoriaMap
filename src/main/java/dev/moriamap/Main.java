@@ -10,6 +10,7 @@ import java.util.List;
 
 class Main {
 
+    private static final String INVALID_ENTRY = "Invalid input, retry\n";
     private static Scanner cachedScanner = null;
     private static InputStream in;
     private static OutputStream out;
@@ -52,7 +53,7 @@ class Main {
                         int minute = Integer.parseInt(minuteStr);
                         lt = LocalTime.of(hour, minute);
                     } catch (Exception e) {
-                        print("Invalid input, retry\n");
+                        print(INVALID_ENTRY);
                     }
                 }
             }
@@ -120,7 +121,7 @@ class Main {
                 print( getOptimizationChoicesDescription() );
                 optimizationChoice = values[Integer.parseInt(getInput()) - 1];
             } catch (Exception e) {
-                print("Invalid input, retry\n");
+                print(INVALID_ENTRY);
             }
         }
 
@@ -178,7 +179,7 @@ class Main {
         if(choice.equals( "1" )) {
             String stopName = getStopName( "Name of the " + message + " stop: ", tn);
             return tn.getStopByName( stopName );
-        } if(choice.equals( "2" )) {
+        } else if(choice.equals( "2" )) {
             String latitude = getInputWithPrompt( "Latitude of the " + message +
                                                   " position \n(for example: -4, 20.5, 24 12 35 N or 27 12 45 S): ");
             String longitude = getInputWithPrompt( "Longitude of the " + message +
@@ -190,7 +191,7 @@ class Main {
                 return null;
             }
         }
-        print("Invalid input, retry\n");
+        print(INVALID_ENTRY);
         return getGeographicVertex( tn, message );
     }
 
