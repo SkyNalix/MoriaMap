@@ -241,7 +241,7 @@ class Main {
                 query.execute(tn);
                 print("\n");
             } else {
-                print("Failed to create a query, check your inputs and repeat");
+                print("Failed to create a query, check your inputs and repeat\n\n");
             }
         }
     }
