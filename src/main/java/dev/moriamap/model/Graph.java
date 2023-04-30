@@ -209,7 +209,9 @@ public abstract class Graph {
      */
     protected void removeEdge(Edge e) {
         Objects.requireNonNull(e);
-        this.vertexToOutgoingEdges.get(e.getFrom()).remove(e);
+        List<Edge> edges = this.vertexToOutgoingEdges.get(e.getFrom());
+        if(edges != null)
+            edges.remove(e);
     }
 
     /**
