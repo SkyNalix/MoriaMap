@@ -242,6 +242,8 @@ class Main {
             if (query != null) {
                 query.execute(tn);
                 print("\n");
+            } else {
+                print("Failed to create a query, check your inputs and repeat");
             }
         }
     }
