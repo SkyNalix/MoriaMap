@@ -1,23 +1,23 @@
 # MoriaMap
 
 ## Features
-At the current state the program is able to load the transport network described in map_data.csv (LECT_NET) and the schedule described in schedule.csv.
-It is also able to take two stops and display a non-optimized path the user needs to take on the network to get from one stop to the other (PLAN_0),
-display the different transports passages for a given stop (LECT_TIME),
-show an optimized in time or distance path to take from given starting and destination stop (PLAN_1)
-and be able to have a starting or target point anywhere on earth and find an optimized path between
-them sometimes taking the transport network, or sometimes not (PLAN_2).
-As a separate feature we implemented a way for the optimized route to make it able to choose walking in the middle of the route
-if the time it take to wait for the next transport is taking more time than just walking (PLAN_3).
-The transport network is based off Paris transport network so the stops are named after real stations like "Lourmel".
+At the current state the program is able to load the transport network described in map_data.csv (LECT_NET) and the schedule described in schedule.csv.  
+It is also able to take two stops and display a non-optimized path the user needs to take on the network to get from one stop to the other (PLAN_0),  
+display the different transports passages for a given stop (LECT_TIME),  
+show an optimized in time or distance path to take from given starting and destination stop (PLAN_1)  
+and be able to have a starting or target point anywhere on earth and find an optimized path between  
+them sometimes taking the transport network, or sometimes not (PLAN_2).  
+As a separate feature we implemented a way for the optimized route to make it able to choose walking in the middle of the route  
+if the time it take to wait for the next transport is taking more time than just walking (PLAN_3).  
+The transport network is based off Paris transport network so the stops are named after real stations like "Lourmel".  
 
 ## Instructions
 
 ### Running
-Extract zip then if you're using Windows, you should double-click on the file named `RUN_WINDOWS.bat`.
-If you're on any linux distribution double-clicking the script `RUN_LINUX.sh` will allow you to run the program with gnome-terminal or konsole
-or in your current terminal if you executed it from one
-Or you may always open a terminal in the project's directory and just type `java -jar MoriaMap.jar`
+Extract zip then if you're using Windows, you should double-click on the file named `RUN_WINDOWS.bat`.  
+If you're on any linux distribution double-clicking the script `RUN_LINUX.sh` will allow you to run the program with gnome-terminal or konsole  
+or in your current terminal if you executed it from one  
+Or you may always open a terminal in the project's directory and just type `java -jar MoriaMap.jar`  
 
 ### Using
 After the project is started, you will be asked to enter:
