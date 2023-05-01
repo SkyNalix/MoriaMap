@@ -3,7 +3,6 @@ package dev.moriamap.model;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
-class EdgeTupleTest {
+class TransportRecordTest {
 
     TransportSegmentRecord e = new TransportSegmentRecord(
             "Olympiades",
