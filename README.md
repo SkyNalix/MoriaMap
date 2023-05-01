@@ -1,5 +1,10 @@
 # MoriaMap
 
+## Links
+Presentation video:
+UML diagram:
+Javadoc:
+
 ## Features
 At the current state the program is able to load the transport network described in map_data.csv (LECT_NET) and the schedule described in schedule.csv.  
 It is also able to take two stops and display a non-optimized path the user needs to take on the network to get from one stop to the other (PLAN_0),  
@@ -56,3 +61,34 @@ After the project is started, you will be asked to enter:
     - 6 if you want to exit the program.
 
 Note: Pressing CTRL+C at any moment allows you to stop the program's execution.
+
+## For developers
+### Gradle
+The project uses Gradle for building.
+- To build the project: `./gradlew assemble`
+- To run unit tests and integration tests: `./gradlew test`
+- To run SonarQube: `./gradlew test sonar` (see below for setup)
+- To generate the Javadoc: `./gradlew javadoc`
+- To run the program: `./gradlew run` or `./gradlew r`
+
+### GitHub mirror
+Our project is mirrored on GitHub (https://github.com/SkyNalix/MoriaMap, private).
+Our continuous integration pipeline that builds and tests the project is on GitHub.
+
+### How to make a release
+Merge develop in master, then in the master branch run the script `release.sh` (run without arguments for usage instructions)
+
+### Setting up SonarQube
+- Install Java 17 if it is not installed and make sure `java --version` returns 17.
+- Download SonarQube Community Edition from https://www.sonarsource.com/products/sonarqube/downloads
+  and unzip it into a directory which we will call `<SONARQUBE_HOME>`
+  (do not unzip into a directory starting with a digit).
+- Execute the following script to start the server:
+    - On Linux: `<SONARQUBE_HOME>/bin/linux-x86-64/sonar.sh start`
+    - On macOS: `<SONARQUBE_HOME>/bin/macosx-universal-64/sonar.sh start`
+    - On Windows: `<SONARQUBE_HOME>/bin/windows-x86-64/StartSonar.bat`
+- Login on http://localhost:9000 with username `admin` and password `admin`, then
+  change the password to `F9Erj73eUynRrGP`.
+- Now you can check out the branch you want to analyze e.g. `git checkout 11-my-feature` and
+  run `./gradlew test sonar`. You can then visit http://localhost:9000 to view the results
+  (SonarQube says the branch is `main`, but it actually analyzes the currently checked out branch).
