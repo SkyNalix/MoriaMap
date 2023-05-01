@@ -47,12 +47,12 @@ public record TransportSegmentRecord(String fromName,
     }
 
     /**
-     * Transforms a list of strings to an EdgeTuple.
+     * Transforms a list of strings to a TransportSegmentRecord .
      * <p>
      *     The format of fields is assumed to be correct.
      * </p>
      * @param fields the field of the given line
-     * @return an EdgeTuple represented by fields parameter
+     * @return a TransportSegmentRecord represented by fields parameter
      */
     private static TransportSegmentRecord fromLine(List<String> fields) {
         String [] longitudeAndLatitude = fields.get(1).split(", ");
@@ -80,9 +80,9 @@ public record TransportSegmentRecord(String fromName,
     }
 
     /**
-     * Transforms lines of a list of lists of strings into a list of EdgeTuples.
+     * Transforms lines of a list of lists of strings into a list of TransportSegmentRecords.
      * @param lines list containing information to create tuples
-     * @return a list of EdgeTuples
+     * @return a list of TransportSegmentRecords 
      */
     public static List<TransportSegmentRecord> fromTuples(List<List<String>> lines) {
         ArrayList<TransportSegmentRecord> res = new ArrayList<>();
