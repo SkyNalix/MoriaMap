@@ -53,7 +53,7 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
         while (!notVisited.isEmpty()) {
             Vertex a = findMin(distance, notVisited);
 
-            if (a.equals(dst) && singleDestination) 
+            if (hasToStop(a, dst, singleDestination))
                 return res;
 
             notVisited.remove(a);
@@ -74,6 +74,11 @@ public class DijkstraTraversalStrategy implements TraversalStrategy {
 
         }
         return res;
+    }
+
+    // Returns true if a and dst are equal and single destination is true
+    private boolean hasToStop(Vertex a, Vertex dst, boolean singleDestination) {
+        return a.equals(dst) && singleDestination;
     }
 
     // Returns the Vertex of vertices that has the minimal value associated in
