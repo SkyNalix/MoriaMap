@@ -2,7 +2,9 @@
 
 ## Links
 Presentation video:
+
 UML diagram:
+
 Javadoc:
 
 ## Features
