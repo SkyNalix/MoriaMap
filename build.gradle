@@ -73,11 +73,11 @@ spotless {
     java {
         target fileTree('.') {
             include '**/*.java'
-            exclude '**/build/**', '**/build-*/**'
+            exclude '**/build/**', '**/build-*/**', '**/bin/**'
         }
         toggleOffOn()
-        palantirJavaFormat()
-        //googleJavaFormat()
+        //palantirJavaFormat()
+        googleJavaFormat()
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
