@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
-class TransportRecordTest {
+class TransportSegmentRecordTest {
 
     TransportSegmentRecord e = new TransportSegmentRecord(
             "Olympiades",
