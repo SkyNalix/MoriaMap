@@ -43,7 +43,7 @@ public record TransportSegmentRecord(String fromName,
      */
     public TransportSegmentRecord {
         if( fromName == null || toName == null || lineName == null || variantName == null || duration == null )
-            throw new IllegalArgumentException("No non-primitive EdgeTuple values can be null");
+            throw new IllegalArgumentException("No non-primitive TransportSegmentRecord values can be null");
     }
 
     /**

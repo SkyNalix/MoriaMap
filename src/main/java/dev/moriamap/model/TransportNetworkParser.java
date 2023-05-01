@@ -12,10 +12,10 @@ public class TransportNetworkParser {
 
     /**
      * apply the algorithm described in diagrams/transport-network-generation-algorithm to produce a TransportNetwork
-     * @param tuples a List of EdgeTuple
+     * @param tuples a List of TransportSegmentRecord
      * @return a TransportNetwork corrsponding to the network given in argument
      */
-    public static TransportNetwork generateFromEdgeTuple(List<TransportSegmentRecord> tuples ){
+    public static TransportNetwork generateFromTransportSegmentRecord(List<TransportSegmentRecord> tuples ){
         TransportNetwork tn = TransportNetwork.empty();
 
         for(TransportSegmentRecord t : tuples){
@@ -45,11 +45,11 @@ public class TransportNetworkParser {
      */
     public static TransportNetwork generateFrom(InputStream transportNetworkFileContent) throws InconsistentCSVException{
         List<TransportSegmentRecord> tuples = TransportSegmentRecord.fromTuples(CSVParser.extractLines(transportNetworkFileContent));
-        return generateFromEdgeTuple(tuples);
+        return generateFromTransportSegmentRecord(tuples);
     }
     /**
      * @param l the Line that contains the Variant
-     * @param t the actual EdgeTuple that we are browsing
+     * @param t the actual TransportSegmentRecord that we are browsing
      * @return the Variant needed for the transportSegment contained in the Line or a new Variant
      */
     private static Variant generateVariant(Line l,TransportSegmentRecord t){
@@ -68,7 +68,7 @@ public class TransportNetworkParser {
 
 
     /**
-     * @param t the actual EdgeTuple that we are browsing
+     * @param t the actual TransportSegmentRecord that we are browsing
      * @param tn the TransportNetwork
      * @return the Line contained in the TransportNetwork or if null a new Line 
      */
