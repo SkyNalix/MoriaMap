@@ -14,7 +14,8 @@ exaggerated. If we were to walk at 4.5 km/h, Saint-Denis - Université to Basili
 Compare this to the transport segment on line 13 variant 6 which takes 15 m 34 s.
 
 When optimizing for distance, walking has a drudgery factor of 10 which means that a walk segment is 10 times
-longer than its real length. Unfortunately this is not enough because the length of transport segments in the
+longer than its real length, which is calculated using the geographic coordinates between the two points.
+Unfortunately this is not enough because the length of transport segments in the
 CSV file provided is greatly exaggerated, for example there is a distance of 100 km between Gare de Lyon and
 Châtelet (see below). As a result, distance-optimized routes only have walking sections. We are sorry.
 
