@@ -125,6 +125,16 @@ class Main {
         return getInput();
     }
 
+    public static String getInputWithPromptForced(String message) {
+        String path = "";
+        while(path.isBlank()) {
+            path = getInputWithPrompt( message );
+            if(path.isBlank())
+                print(INVALID_ENTRY);
+        }
+        return path;
+    }
+
     private static RouteOptimization getRouteOptimization(){
         RouteOptimization[] values = RouteOptimization.values();
         RouteOptimization optimizationChoice = null;
@@ -140,24 +150,18 @@ class Main {
         return optimizationChoice;
     }
 
-    private static TransportNetwork createTransportNetwork(
-            InputStream transportNetworkInputStream, InputStream timetablesInputStream) {
-        TransportNetwork res = null;
-
-        try {
-            res = TransportNetworkParser.generateFrom( transportNetworkInputStream );
-        } catch( InconsistentCSVException e ) {
-            print("An issue occurred while parsing the transport network\n");
-            System.exit( 1 );
+    private static TransportNetwork createTransportNetwork() {
+        while(true) {
+            String transportNetworkCSVPath = getInputWithPromptForced("\nPath to the network CSV file: ");
+            transportNetworkCSVPath = pathPreProcess( transportNetworkCSVPath );
+            try(InputStream inputStream = new FileInputStream( transportNetworkCSVPath )) {
+                return TransportNetworkParser.generateFrom( inputStream );
+            } catch( FileNotFoundException | SecurityException e ) {
+                print("Failed to open file: \"" + transportNetworkCSVPath + "\"\n");
+            } catch( Exception e ) {
+                print("An issue occurred while parsing the transport network\n");
+            }
         }
-        try {
-            DepartureParser.addDeparturesTo(res, timetablesInputStream );
-        } catch( InconsistentCSVException e ) {
-            print("An issue occurred while parsing the transport schedules\n");
-            System.exit( 1 );
-        }
-
-        return res;
     }
 
     private static TransportSchedulesQuery makeTransportSchedulesQuery( TransportNetwork tn ) {
@@ -229,13 +233,42 @@ class Main {
         return new OptimizedRouteBetweenPositionsWithWalkQuery( out, startGeoVertex, targetGeoVertex, optimizationChoice, startTime);
     }
 
+    private static String pathPreProcess(String path) {
+        if(path.startsWith( "~" )) {
+            String home = System.getProperty("user.home");
+            return home + path.substring( 1 );
+        }
+        return path;
+    }
+
+    private static void loadDeparturesToNetwork(TransportNetwork tn) {
+        boolean atLeastOneLoaded = false;
+        while(true) {
+            String path = getInputWithPrompt("\nPath to the departures CSV file (or press ENTER to continue): ");
+            path = pathPreProcess( path );
+            if(path.isBlank()) {
+                if(atLeastOneLoaded) break;
+                else
+                    print("At least one departures file must be loaded.\n");
+            } else {
+                try(InputStream inputStream = new FileInputStream( path )) {
+                    DepartureParser.addDeparturesTo( tn, inputStream );
+                    atLeastOneLoaded = true;
+                } catch( FileNotFoundException | SecurityException e ) {
+                    print( "Failed to open file: \"" + path + "\"\n" );
+                } catch( Exception e ) {
+                    print( "Failed to load the departures from \"" + path + "\" to the transport network\n" );
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         in = System.in;
         out = new PrintStream( new FileOutputStream( FileDescriptor.out));
 
-        TransportNetwork tn = createTransportNetwork(
-                Main.class.getResourceAsStream( "/map_data.csv" ),
-                Main.class.getResourceAsStream( "/timetables.csv" ) );
+        TransportNetwork tn = createTransportNetwork();
+        loadDeparturesToNetwork(tn);
 
         print("Press Ctrl+C at any moment to exit the program\n");
 
@@ -275,4 +308,6 @@ class Main {
             }
         }
     }
+
+
 }
