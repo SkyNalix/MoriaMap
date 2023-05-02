@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.moriamap.PrettyPrinter;
+import dev.moriamap.model.query.PrettyPrinter;
 
 /**
  * A Passages object represents every passage/departure of every transport

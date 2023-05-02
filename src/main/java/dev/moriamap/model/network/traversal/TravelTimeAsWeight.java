@@ -1,11 +1,11 @@
-package dev.moriamap.model.graph.traversal;
+package dev.moriamap.model.network.traversal;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import dev.moriamap.model.graph.Edge;
+import dev.moriamap.model.network.Edge;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.TransportSegment;

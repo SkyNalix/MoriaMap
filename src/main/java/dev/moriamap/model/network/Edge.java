@@ -1,4 +1,4 @@
-package dev.moriamap.model.graph;
+package dev.moriamap.model.network;
 
 /**
  * A directed and weighted edge of graph. An Edge going from a Vertex to the

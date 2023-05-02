@@ -1,4 +1,4 @@
-package dev.moriamap;
+package dev.moriamap.model.query;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import dev.moriamap.model.network.TransportNetwork;
-import dev.moriamap.model.graph.Edge;
+import dev.moriamap.model.network.Edge;
 import dev.moriamap.model.network.Line;
 import dev.moriamap.model.network.TransportSegment;
 import dev.moriamap.model.network.Variant;

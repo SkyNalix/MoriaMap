@@ -5,17 +5,17 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.function.BiFunction;
 
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.Graph;
-import dev.moriamap.model.graph.Vertex;
-import dev.moriamap.model.graph.traversal.DijkstraTraversalStrategy;
-import dev.moriamap.model.graph.traversal.DistanceAsWeight;
-import dev.moriamap.model.graph.traversal.RouteOptimization;
-import dev.moriamap.model.graph.traversal.TravelTimeAsWeight;
+import dev.moriamap.model.network.Edge;
+import dev.moriamap.model.network.GeographicVertex;
+import dev.moriamap.model.network.Graph;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
+import dev.moriamap.model.network.Vertex;
 import dev.moriamap.model.network.WalkSegment;
+import dev.moriamap.model.network.traversal.DijkstraTraversalStrategy;
+import dev.moriamap.model.network.traversal.DistanceAsWeight;
+import dev.moriamap.model.network.traversal.RouteOptimization;
+import dev.moriamap.model.network.traversal.TravelTimeAsWeight;
 
 /**
  * Query that computes and prints the shortest path from a starting geographic

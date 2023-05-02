@@ -10,12 +10,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import dev.moriamap.PrettyPrinter;
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.Graph;
-import dev.moriamap.model.graph.Vertex;
+import dev.moriamap.model.query.PrettyPrinter;
 
 /**
  * Represents an arbitrary transport network. A TransportNetwork contains

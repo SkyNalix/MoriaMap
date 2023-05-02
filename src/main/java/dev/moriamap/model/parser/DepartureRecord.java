@@ -1,4 +1,4 @@
-package dev.moriamap.model.network;
+package dev.moriamap.model.parser;
 
 import java.util.Objects;
 import java.util.List;

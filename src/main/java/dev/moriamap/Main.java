@@ -1,10 +1,10 @@
 package dev.moriamap;
 
-import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.traversal.RouteOptimization;
+import dev.moriamap.model.network.GeographicPosition;
+import dev.moriamap.model.network.GeographicVertex;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
+import dev.moriamap.model.network.traversal.RouteOptimization;
 import dev.moriamap.model.parser.DepartureParser;
 import dev.moriamap.model.parser.InconsistentCSVException;
 import dev.moriamap.model.parser.TransportNetworkParser;

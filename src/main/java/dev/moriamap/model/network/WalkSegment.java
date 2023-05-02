@@ -2,9 +2,6 @@ package dev.moriamap.model.network;
 
 import java.time.Duration;
 
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.GeographicVertex;
-
 /**
  * A WalkSegment represents the action of walking from a geographic vertex to
  * another geographic vertex.

@@ -1,8 +1,5 @@
 package dev.moriamap.model.network;
 
-import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.graph.GeographicVertex;
-
 /**
  * A Stop is a vertex of our Transport Graph
  */

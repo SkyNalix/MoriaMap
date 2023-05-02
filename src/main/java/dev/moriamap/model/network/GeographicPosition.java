@@ -1,4 +1,4 @@
-package dev.moriamap.model.graph;
+package dev.moriamap.model.network;
 
 import java.util.List;
 import java.util.ArrayList;

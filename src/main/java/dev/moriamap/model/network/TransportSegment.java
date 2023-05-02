@@ -2,8 +2,6 @@ package dev.moriamap.model.network;
 
 import java.time.Duration;
 
-import dev.moriamap.model.graph.Edge;
-
 /**
  * A TransportSegment is an Edge of our Graph
  */

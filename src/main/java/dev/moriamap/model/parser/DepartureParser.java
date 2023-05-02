@@ -3,7 +3,6 @@ package dev.moriamap.model.parser;
 import java.io.InputStream;
 import java.util.List;
 
-import dev.moriamap.model.network.DepartureRecord;
 import dev.moriamap.model.network.Line;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.Variant;

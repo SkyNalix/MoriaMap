@@ -1,4 +1,4 @@
-package dev.moriamap.model.graph;
+package dev.moriamap.model.network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-import dev.moriamap.model.graph.traversal.DFSTraversalStrategy;
-import dev.moriamap.model.graph.traversal.TraversalStrategy;
+import dev.moriamap.model.network.traversal.DFSTraversalStrategy;
+import dev.moriamap.model.network.traversal.TraversalStrategy;
 
 /**
  * A graph is a set of vertices and a set of edges between those vertices.

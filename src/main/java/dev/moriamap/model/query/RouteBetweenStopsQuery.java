@@ -4,13 +4,12 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
-import dev.moriamap.PrettyPrinter;
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.Graph;
-import dev.moriamap.model.graph.Vertex;
-import dev.moriamap.model.graph.traversal.DFSTraversalStrategy;
+import dev.moriamap.model.network.Edge;
+import dev.moriamap.model.network.Graph;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
+import dev.moriamap.model.network.Vertex;
+import dev.moriamap.model.network.traversal.DFSTraversalStrategy;
 
 /**
  * A RouteBetweenStopsQuery represent a request for a path from a starting stop to the target stop

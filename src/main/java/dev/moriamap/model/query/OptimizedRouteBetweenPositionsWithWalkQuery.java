@@ -4,11 +4,11 @@ import java.io.OutputStream;
 import java.time.LocalTime;
 import java.util.List;
 
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.traversal.RouteOptimization;
+import dev.moriamap.model.network.GeographicVertex;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.WalkSegment;
+import dev.moriamap.model.network.traversal.RouteOptimization;
 
 /**
  * Query that computes and prints the shortest path from a starting geographic

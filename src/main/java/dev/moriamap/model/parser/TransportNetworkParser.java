@@ -3,12 +3,11 @@ package dev.moriamap.model.parser;
 import java.io.InputStream;
 import java.util.List;
 
-import dev.moriamap.model.graph.GeographicPosition;
+import dev.moriamap.model.network.GeographicPosition;
 import dev.moriamap.model.network.Line;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.TransportSegment;
-import dev.moriamap.model.network.TransportSegmentRecord;
 import dev.moriamap.model.network.Variant;
 
 /**

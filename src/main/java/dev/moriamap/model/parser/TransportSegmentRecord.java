@@ -1,4 +1,4 @@
-package dev.moriamap.model.network;
+package dev.moriamap.model.parser;
 
 import java.time.Duration;
 import java.util.ArrayList;

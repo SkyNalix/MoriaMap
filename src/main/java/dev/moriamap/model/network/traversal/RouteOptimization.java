@@ -1,4 +1,4 @@
-package dev.moriamap.model.graph.traversal;
+package dev.moriamap.model.network.traversal;
 
 /**
  * An enum that specify what optimization will be used for traversal strategies

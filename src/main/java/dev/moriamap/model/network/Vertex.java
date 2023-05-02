@@ -1,4 +1,4 @@
-package dev.moriamap.model.graph;
+package dev.moriamap.model.network;
 
 /**
  * Represents a vertex of a graph
