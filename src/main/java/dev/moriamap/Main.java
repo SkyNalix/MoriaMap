@@ -6,7 +6,6 @@ import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.traversal.RouteOptimization;
 import dev.moriamap.model.parser.DepartureParser;
-import dev.moriamap.model.parser.InconsistentCSVException;
 import dev.moriamap.model.parser.TransportNetworkParser;
 import dev.moriamap.model.query.OptimizedRouteBetweenPositionsQuery;
 import dev.moriamap.model.query.OptimizedRouteBetweenPositionsWithWalkQuery;
