@@ -33,7 +33,7 @@ class TransportSegmentRecordTest {
         List<List<String>> lines = new ArrayList<>();
         try {
 
-            InputStream resouce = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+            InputStream resouce = TransportSegmentRecordTest.class.getResourceAsStream("/test_map_data.csv");
             lines = CSVParser.extractLines(resouce);
         } catch (Exception e) {
             e.printStackTrace();

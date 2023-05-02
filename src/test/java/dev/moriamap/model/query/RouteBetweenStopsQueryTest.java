@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import dev.moriamap.model.network.TransportNetwork;
-import dev.moriamap.model.parser.CSVParser;
 import dev.moriamap.model.parser.InconsistentCSVException;
 import dev.moriamap.model.parser.TransportNetworkParser;
 
@@ -15,7 +14,7 @@ class RouteBetweenStopsQueryTest {
 	TransportNetwork tn;
 	{
 		try {
-			tn = TransportNetworkParser.generateFrom(CSVParser.class.getResourceAsStream("/test_map_data.csv"));
+			tn = TransportNetworkParser.generateFrom(RouteBetweenStopsQueryTest.class.getResourceAsStream("/test_map_data.csv"));
 		} catch (InconsistentCSVException e) {
 			throw new RuntimeException(e);
 		}

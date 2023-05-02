@@ -1,11 +1,11 @@
-package dev.moriamap.model.network;
+package dev.moriamap.model.parser;
 
 import org.junit.jupiter.api.Test;
 
 import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.parser.CSVParser;
-import dev.moriamap.model.parser.InconsistentCSVException;
-import dev.moriamap.model.parser.TransportNetworkParser;
+import dev.moriamap.model.network.Line;
+import dev.moriamap.model.network.Stop;
+import dev.moriamap.model.network.TransportNetwork;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,14 +13,14 @@ import java.io.InputStream;
 
 class TransportNetworkParserTest {    
     @Test void testNumberOfTransportLine() throws InconsistentCSVException{
-        InputStream resource = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+        InputStream resource = TransportNetworkParserTest.class.getResourceAsStream("/test_map_data.csv");
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         assertEquals(3,tn.getLines().size());
     }
 
     @Test void testNumberOfVariant() throws InconsistentCSVException{
 
-        InputStream resource = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+        InputStream resource = TransportNetworkParserTest.class.getResourceAsStream("/test_map_data.csv");
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
 
         assertEquals(4,tn.getVariants().size());
@@ -28,7 +28,7 @@ class TransportNetworkParserTest {
     }
 
     @Test void findLineNameEqualTrue() throws InconsistentCSVException{
-        InputStream resource = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+        InputStream resource = TransportNetworkParserTest.class.getResourceAsStream("/test_map_data.csv");
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
 
@@ -36,7 +36,7 @@ class TransportNetworkParserTest {
     }
 
     @Test void findLineObjectEqualFalse()throws InconsistentCSVException{
-        InputStream resource = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+        InputStream resource = TransportNetworkParserTest.class.getResourceAsStream("/test_map_data.csv");
 
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         Line l = Line.of("8");
@@ -44,7 +44,7 @@ class TransportNetworkParserTest {
     }
 
     @Test void findStopObjectEqualtrue() throws InconsistentCSVException {
-        InputStream resource = CSVParser.class.getResourceAsStream("/test_map_data.csv");
+        InputStream resource = TransportNetworkParserTest.class.getResourceAsStream("/test_map_data.csv");
         TransportNetwork tn = TransportNetworkParser.generateFrom(resource);
         Stop stop = Stop.from("Lourmel", GeographicPosition.at(48.83866086365992, 2.2822419598550767));
        
