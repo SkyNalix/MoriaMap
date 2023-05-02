@@ -1,21 +1,21 @@
-package dev.moriamap;
+package dev.moriamap.model.query;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.Graph;
-import dev.moriamap.model.graph.Vertex;
-import dev.moriamap.model.graph.traversal.DFSTraversalStrategy;
+import dev.moriamap.model.network.Edge;
+import dev.moriamap.model.network.GeographicPosition;
+import dev.moriamap.model.network.GeographicVertex;
+import dev.moriamap.model.network.Graph;
 import dev.moriamap.model.network.Line;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
 import dev.moriamap.model.network.TransportSegment;
 import dev.moriamap.model.network.Variant;
+import dev.moriamap.model.network.Vertex;
 import dev.moriamap.model.network.WalkSegment;
+import dev.moriamap.model.network.traversal.DFSTraversalStrategy;
 
 import java.time.Duration;
 import java.time.LocalTime;

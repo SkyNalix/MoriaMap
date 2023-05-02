@@ -3,9 +3,9 @@ package dev.moriamap.model.query;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import dev.moriamap.model.graph.GeographicVertex;
-import dev.moriamap.model.graph.traversal.RouteOptimization;
+import dev.moriamap.model.network.GeographicVertex;
 import dev.moriamap.model.network.TransportNetwork;
+import dev.moriamap.model.network.traversal.RouteOptimization;
 import dev.moriamap.model.parser.DepartureParser;
 import dev.moriamap.model.parser.InconsistentCSVException;
 import dev.moriamap.model.parser.TransportNetworkParser;

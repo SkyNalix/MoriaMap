@@ -2,9 +2,6 @@ package dev.moriamap.model.network;
 
 import org.junit.jupiter.api.Test;
 
-import dev.moriamap.model.graph.GeographicPosition;
-import dev.moriamap.model.graph.GeographicVertex;
-
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

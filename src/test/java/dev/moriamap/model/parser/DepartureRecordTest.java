@@ -1,4 +1,4 @@
-package dev.moriamap.model.network;
+package dev.moriamap.model.parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;

@@ -1,9 +1,7 @@
-package dev.moriamap.model.network;
+package dev.moriamap.model.parser;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import dev.moriamap.model.parser.CSVParser;
 
 import java.io.InputStream;
 import java.time.Duration;

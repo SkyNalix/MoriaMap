@@ -1,10 +1,10 @@
-package dev.moriamap.model.graph.traversal;
+package dev.moriamap.model.network.traversal;
 
 import org.junit.jupiter.api.Test;
 
-import dev.moriamap.model.graph.Edge;
-import dev.moriamap.model.graph.Graph;
-import dev.moriamap.model.graph.Vertex;
+import dev.moriamap.model.network.Edge;
+import dev.moriamap.model.network.Graph;
+import dev.moriamap.model.network.Vertex;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;

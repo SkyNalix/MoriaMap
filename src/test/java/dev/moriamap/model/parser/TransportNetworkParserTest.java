@@ -2,7 +2,7 @@ package dev.moriamap.model.parser;
 
 import org.junit.jupiter.api.Test;
 
-import dev.moriamap.model.graph.GeographicPosition;
+import dev.moriamap.model.network.GeographicPosition;
 import dev.moriamap.model.network.Line;
 import dev.moriamap.model.network.Stop;
 import dev.moriamap.model.network.TransportNetwork;
