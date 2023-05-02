@@ -1,6 +1,18 @@
 package dev.moriamap;
 
-import dev.moriamap.model.*;
+import dev.moriamap.model.network.GeographicPosition;
+import dev.moriamap.model.network.GeographicVertex;
+import dev.moriamap.model.network.Stop;
+import dev.moriamap.model.network.TransportNetwork;
+import dev.moriamap.model.network.traversal.RouteOptimization;
+import dev.moriamap.model.parser.DepartureParser;
+import dev.moriamap.model.parser.InconsistentCSVException;
+import dev.moriamap.model.parser.TransportNetworkParser;
+import dev.moriamap.model.query.OptimizedRouteBetweenPositionsQuery;
+import dev.moriamap.model.query.OptimizedRouteBetweenPositionsWithWalkQuery;
+import dev.moriamap.model.query.Query;
+import dev.moriamap.model.query.RouteBetweenStopsQuery;
+import dev.moriamap.model.query.TransportSchedulesQuery;
 
 import java.io.*;
 import java.time.LocalTime;
@@ -66,8 +78,8 @@ class Main {
         int len = RouteOptimization.values().length;
         for( int i = 0; i < len; i++ ) {
             res.append( i+1 )
-                      .append( " for " )
-                      .append( RouteOptimization.values()[i] );
+               .append( " for " )
+               .append( RouteOptimization.values()[i] );
             if(i < len-1)
                 res.append( ", " );
         }
@@ -88,8 +100,8 @@ class Main {
         int len = nearestStops.size();
         for( int i = 0; i < len; i++ ) {
             askChoice.append( i+1 )
-                      .append(") ")
-                      .append( nearestStops.get(i).getName() );
+                     .append(") ")
+                     .append( nearestStops.get(i).getName() );
             if(i < len-1)
                 askChoice.append( ", " );
         }
@@ -261,7 +273,7 @@ class Main {
         print("Press Ctrl+C at any moment to exit the program\n");
 
         while(true) {
-           print("""
+            print("""
                     What do you want to do?
                       1 - Get the transport schedules of a stop
                       2 - Get a path from a stop to another
