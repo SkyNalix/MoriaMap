@@ -114,13 +114,13 @@ class Main {
     }
 
     public static String getInputWithPromptForced(String message) {
-        String path = "";
-        while(path.isBlank()) {
-            path = getInputWithPrompt( message );
-            if(path.isBlank())
+        String input = "";
+        while(input.isBlank()) {
+            input = getInputWithPrompt( message );
+            if(input.isBlank())
                 print(INVALID_ENTRY);
         }
-        return path;
+        return input;
     }
 
     private static RouteOptimization getRouteOptimization(){
