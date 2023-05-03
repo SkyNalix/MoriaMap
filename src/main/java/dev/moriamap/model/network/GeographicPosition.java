@@ -46,10 +46,10 @@ public final class GeographicPosition {
      */
     public static final double EARTH_RADIUS = 6371000.0;
 
-    // The angle between north and south poles on a sphere in Celsius degrees.
+    // The angle between north and south poles on a sphere in degrees.
     private final double latitude;
 
-    // The angle between west and east poles on a sphere in Celsius degrees.
+    // The angle between west and east poles on a sphere in degrees.
     private final double longitude;
 
     // Returns true if lat <= MAX_LATITUDE && lat >= MIN_LATITUDE
